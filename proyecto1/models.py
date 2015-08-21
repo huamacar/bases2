@@ -13,3 +13,4 @@ class Afiliado(models.Model):
 
     class Meta:
         db_table = 'Afiliado'
+
