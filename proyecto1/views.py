@@ -53,6 +53,12 @@ def insertarClientes(request):
 
     return render(request,'Clientes/Insertar.html',{'form':form})
 
+def Bloquear_Clientes(request,id):
+    u = Usuario.objects.get(id=id)
+    u.bloqueado = True
+    u.save()
+    return HttpResponse('<h1>Usuario Bloqueado</h1>')
+
 
 def Buscar_Clientes(request):
     form = BuscarCliente(request.POST)
