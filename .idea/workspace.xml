@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8e4027d9-f062-41d2-a709-0a706f6f8328" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/Clientes/Buscar.html" afterPath="$PROJECT_DIR$/templates/Clientes/Buscar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/Clientes/Editar.html" afterPath="$PROJECT_DIR$/templates/Clientes/Editar.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/Clientes/Insertar.html" afterPath="$PROJECT_DIR$/templates/Clientes/Insertar.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proyecto1/forms.py" afterPath="$PROJECT_DIR$/proyecto1/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bases2/urls.py" afterPath="$PROJECT_DIR$/bases2/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proyecto1/views.py" afterPath="$PROJECT_DIR$/proyecto1/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="bases2.iws" />
@@ -42,21 +39,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/proyecto1/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45595855">
-              <caret line="142" column="23" selection-start-line="142" selection-start-column="23" selection-end-line="142" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Insertar.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/Clientes/Insertar.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.625">
+              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="forms.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/proyecto1/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="42" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.4054054">
+              <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
               <folding>
                 <element signature="e#25#49#0" expanded="true" />
               </folding>
@@ -110,15 +117,15 @@
         <option value="$PROJECT_DIR$/proyecto1/__init__.py" />
         <option value="$PROJECT_DIR$/bases2/__init__.py" />
         <option value="$PROJECT_DIR$/bases2/settings.py" />
-        <option value="$PROJECT_DIR$/templates/Clientes/Insertar.html" />
         <option value="$PROJECT_DIR$/templates/Index.html" />
         <option value="$PROJECT_DIR$/templates/Clientes/Index.html" />
         <option value="$PROJECT_DIR$/proyecto1/models.py" />
-        <option value="$PROJECT_DIR$/proyecto1/forms.py" />
         <option value="$PROJECT_DIR$/bases2/urls.py" />
         <option value="$PROJECT_DIR$/templates/Clientes/Buscar.html" />
         <option value="$PROJECT_DIR$/templates/Clientes/Editar.html" />
         <option value="$PROJECT_DIR$/proyecto1/views.py" />
+        <option value="$PROJECT_DIR$/templates/Clientes/Insertar.html" />
+        <option value="$PROJECT_DIR$/proyecto1/forms.py" />
       </list>
     </option>
   </component>
@@ -551,7 +558,13 @@
       <option name="project" value="LOCAL" />
       <updated>1440223176878</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="A partir de acá se inicia el desarrollo de la edición">
+      <created>1440226426404</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1440226426404</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -564,7 +577,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935917" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.40229884" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40229884" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.245196" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -739,14 +752,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/Clientes/Insertar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.25">
-          <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bases2/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -797,14 +802,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/Clientes/Index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.625">
-          <caret line="9" column="50" selection-start-line="9" selection-start-column="50" selection-end-line="9" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bases2/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -831,6 +828,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/Clientes/Index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21028037">
+          <caret line="9" column="50" selection-start-line="9" selection-start-column="50" selection-end-line="9" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/proyecto1/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/Clientes/Editar.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.375">
@@ -839,21 +852,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/proyecto1/forms.py">
+    <entry file="file://$PROJECT_DIR$/templates/Clientes/Insertar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="42" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
-          <folding>
-            <element signature="e#25#49#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-5.625">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/proyecto1/views.py">
+    <entry file="file://$PROJECT_DIR$/proyecto1/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45595855">
-          <caret line="142" column="23" selection-start-line="142" selection-start-column="23" selection-end-line="142" selection-end-column="23" />
-          <folding />
+        <state vertical-scroll-proportion="0.4054054">
+          <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
+          <folding>
+            <element signature="e#25#49#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -16,8 +16,7 @@ class UsuarioForm(forms.Form):
 class UsuarioForm(ModelForm):
         class Meta:
             model = Usuario
-            fields = ['nombre','direccion','telefono','correo','fechaNacimiento','profesion','genero','bloqueado']
-
+            fields = '__all__'
 
 class EditarUsuarioForm(forms.Form):
         nombreAnterior = forms.CharField(label='Nombre anterior', max_length=100)
