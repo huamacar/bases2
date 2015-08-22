@@ -8,11 +8,34 @@
     <title>Amadeus Bank</title>
 </head>
 <body>
-<form action="/TipoAfiliado/insertar/" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit" />
-</form>
+<div id="wrapper">
+	<div id="header-wrapper">
+		<div id="header" class="container">
+			<div id="logo">
+				<h1><a href="#">Amadeus Bank</a></h1>
+			</div>
+		</div>
+        <div id="menu" class="container">
+			<ul >
+                <li><a href="/">Inicio</a></li>
+                <li><a href="{% url 'Insertar_TipoAfiliado' %}">Insertar</a></li>
+                <li><a href="{% url 'Buscar_TipoAfiliado' %}">Editar</a></li>
+            </ul>
+		</div>
+	</div>
+	<div id="page" class="container">
+        <form action="/TipoAfiliado/insertar/" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Crear" />
+        </form>
+	</div>
+</div>
+<div id="footer">
+	<p>Sistemas de Base de Datos 2 :: Grupo 1</p>
+</div>
+
+
 
 </body>
 </html>

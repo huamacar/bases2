@@ -8,10 +8,27 @@
     <title>Amadeus Bank</title>
 </head>
 <body>
-<ul >
-    <li><a href="{% url 'Insertar_TipoAfiliado' %}">Insertar</a></li>
-    <li><a href="{% url 'Buscar_TipoAfiliado' %}">Editar</a></li>
-</ul>
-    <form action="/" method="get"> <input type="submit" value="Regresar a inicio"></form><br>
+<div id="wrapper">
+	<div id="header-wrapper">
+		<div id="header" class="container">
+			<div id="logo">
+				<h1><a href="#">Amadeus Bank</a></h1>
+			</div>
+		</div>
+        <div id="menu" class="container">
+			<ul >
+                <li><a href="/">Inicio</a></li>
+                <li><a href="{% url 'Insertar_TipoAfiliado' %}">Insertar</a></li>
+                <li><a href="{% url 'Buscar_TipoAfiliado' %}">Editar</a></li>
+            </ul>
+		</div>
+	</div>
+	<div id="page" class="container">
+
+	</div>
+</div>
+<div id="footer">
+	<p>Sistemas de Base de Datos 2 :: Grupo 1</p>
+</div>
 </body>
 </html>
