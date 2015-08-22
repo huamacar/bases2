@@ -12,6 +12,9 @@ urlpatterns = patterns('',
 
     #clientes
     url(r'^Clientes/index/$', 'proyecto1.views.indexClientes', name='Clientes'),
-    url(r'^Clientes/insertar/$', 'proyecto1.views.insertarClientes', name='Insertar_Clientes')                       ,
-    url(r'^Clientes/editar/$', 'proyecto1.views.editarClientes', name='Editar_Clientes')
+    url(r'^Clientes/insertar/$', 'proyecto1.views.insertarClientes', name='Insertar_Clientes'),
+    url(r'^Clientes/editar/$', 'proyecto1.views.editarClientes', name='Editar_Clientes'),
+    url(r'^Cuentas/index/$', 'proyecto1.views.indexCuentas', name='Cuentas'),
+    url(r'^Cuentas/crear/$', 'proyecto1.views.crearCuenta', name='Crear_Cuenta'),
+    url(r'^Cuentas/asignar/$', 'proyecto1.views.asignarCuenta', name='Asignar_Cuenta')
 )
