@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar Usuario</title>
+</head>
+<body>
+<form action="/Clientes/buscar/" method="post">
+{% if form%}
+    {% csrf_token %}
+    {{ form }}
+{% endif %}
+<input type="submit" value="Buscar" />
+</form>
+
+{% if usuario %}
+    {{ usuario.nombre }}
+
+    <form action="/Clientes/eliminar/{{ usuario.nombre}}/" method="get"> <input type="submit" value="Eliminar" /> </form>
+
+{% endif %}
+</body>
+</html>

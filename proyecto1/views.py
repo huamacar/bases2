@@ -6,8 +6,9 @@ from django.http import HttpResponseRedirect
 # Create your views here.
 
 from .forms import UsuarioForm
-from .forms import EditarUsuarioForm
+from .forms import *
 from django import forms
+from django.http import HttpResponse
 
 def index(request):
     return render(request,'Index.html')
@@ -27,6 +28,21 @@ def insertarClientes(request):
         form = UsuarioForm()
 
     return render(request,'Clientes/Insertar.html',{'form':form})
+
+
+def Buscar_Clientes(request):
+    form = BuscarCliente(request.POST)
+    u = Usuario()
+    if form.is_valid():
+        u = Usuario.objects.get(nombre=form.cleaned_data['nombre'])
+    usuario = BuscarCliente()
+    return render(request,'Clientes/Buscar.html',{'form':usuario,'usuario':u})
+
+def Eliminar_Clientes(request,id):
+    Usuario.objects.get(id=id).delete()
+    return HttpResponse('<h1>Usuario Eliminado</h1>')
+
+
 
 def editarClientes(request):
     if request.method =='POST':

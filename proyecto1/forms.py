@@ -9,3 +9,6 @@ class EditarUsuarioForm(forms.Form):
         nombreAnterior = forms.CharField(label='Nombre anterior', max_length=100)
         nombre = forms.CharField(label='Nombre nuevo', max_length=100, required=False)
         eliminar = forms.BooleanField(required=False)
+
+class BuscarCliente(forms.Form):
+        nombre = forms.CharField(label="Cliente Buscado", max_length=100)
