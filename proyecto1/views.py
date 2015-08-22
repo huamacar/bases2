@@ -47,7 +47,7 @@ def insertarClientes(request):
             u.profesion = form.cleaned_data['profesion']
             u.genero = form.cleaned_data['genero']
             u.save()
-            return HttpResponseRedirect('/thanks/')
+            return HttpResponse('<h1>Cliente insertado</h1>')
     else:
         form = UsuarioForm()
 
@@ -88,7 +88,7 @@ def crearCuenta(request):
             c.limite = form.cleaned_data['limite']
             c.fechaCreacion = form.cleaned_data['fechaCreacion']
             c.save()
-            return HttpResponseRedirect('/thanks/')
+            return HttpResponse('<h1>Cuenta Insertada</h1>')
     else:
         form = CuentaForm()
 
@@ -103,7 +103,7 @@ def asignarCuenta(request):
             a.idUsuario = form.cleaned_data['idUsuario']
             a.idCuenta = form.cleaned_data['idCuenta']
             a.save()
-            return HttpResponseRedirect('/thanks/')
+            return HttpResponse('<h1>Cuenta Asignada</h1>')
     else:
         form = AsigCuentaForm()
 
@@ -121,7 +121,7 @@ def crearTarjeta(request):
             t.fechaCorte = form.cleaned_data['fechaCorte']
             t.fechaPago = form.cleaned_data['fechaPago']
             t.save()
-            return HttpResponseRedirect('/thanks/')
+            return HttpResponse('<h1>Tarjeta Creada</h1>')
     else:
         form = TarjetaForm()
 
@@ -137,7 +137,7 @@ def asignarTarjeta(request):
             a.noTarjeta = form.cleaned_data['noTarjeta']
             a.fechaAsignacion = form.cleaned_data['fechaAsignacion']
             a.save()
-            return HttpResponseRedirect('/thanks/')
+            return HttpResponse('<h1>Tarjeta Asignada</h1>')
     else:
         form = AsigTarjetaForm()
 
@@ -172,7 +172,7 @@ def insertarAfiliado(request):
             t.telefono = form.cleaned_data['telefono']
             t.correo = form.cleaned_data['correo']
             t.save()
-            return HttpResponseRedirect('/thanks/')
+            return HttpResponse('<h1>Afiliado insertado</h1>')
     else:
         form = AfiliadoForm()
 
@@ -194,11 +194,21 @@ def Eliminar_Afiliados(request,id):
     Afiliado.objects.get(id=id).delete()
     return HttpResponse('<h1>Afiliado Eliminado</h1>')
 
+def Eliminar_TipoAfiliados(request,id):
+    TipoAfiliado.objects.get(id=id).delete()
+    return HttpResponse('<h1>Tipo Afiliado Eliminado</h1>')
+
 def Bloquear_Afiliados(request,id):
     u = Afiliado.objects.get(id=id)
     u.bloqueado = True
     u.save()
     return HttpResponse('<h1>Afiliado Bloqueado</h1>')
+
+def Bloquear_TipoAfiliados(request,id):
+    u = TipoAfiliado.objects.get(id=id)
+    u.bloqueado = True
+    u.save()
+    return HttpResponse('<h1>Tipo Afiliado Bloqueado</h1>')
 
 def editarAfiliados(request,id):
     if request.method =='POST':
@@ -228,28 +238,15 @@ def insertarTipoAfiliado(request):
             t.descripcion = form.cleaned_data['descripcion']
             t.porcentaje = form.cleaned_data['porcentaje']
             t.save()
-            return HttpResponseRedirect('/thanks/')
+            return HttpResponse('<h1>Tipo afiliado insertado</h1>')
     else:
         form = TipoAfiliadoForm()
 
     return render(request,'TipoAfiliado/Insertar.html',{'form':form})
 
 
-def blabla(request):
-    input = request.GET.get('q')
-    try:
-        query = 1
-    except ValueError:
-        query = None
-        results = None
-    if query:
-        u = Usuario.objects.get(id=query)
-
-    context = RequestContext(request)
-    return render_to_response('Index.html',{"results":u,},context_instance=context)
-
 def BuscarTipoAfiliado(request):
-    form = Buscar_TipoAfiliado(request.POST)
+    form = BuscarCliente(request.POST)
     t = None
     if form.is_valid():
         try:
@@ -257,5 +254,23 @@ def BuscarTipoAfiliado(request):
         except :
             return HttpResponse('<h1>El Tipo de afiliado no existe en la Base de Datos</h1>')
 
-    tipoAfiliado = Buscar_TipoAfiliado()
-    return render(request,'TipoAfiliado/Buscar.html',{'form':tipoAfiliado,'usuario':t})
+    buscartipoafiliado = BuscarCliente()
+    return render(request,'TipoAfiliado/Buscar.html',{'form':buscartipoafiliado,'TipoAfiliado':t})
+##
+def editarTipoAfiliados(request,id):
+    if request.method =='POST':
+        u = TipoAfiliado.objects.get(id=id)
+        form = TipoAfiliadoForm(request.POST,instance=u)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('<h1>El tipo afiliado ha sido editado</h1>')
+    else:
+        u = TipoAfiliado()
+        try:
+            u = TipoAfiliado.objects.get(id=id)
+        except:
+            return HttpResponse('<h1>El tipo afiliado no existe en la Base de Datos</h1>')
+        form = TipoAfiliadoForm(instance=u)
+
+    idTipoafiliado = u.id
+    return render(request,'TipoAfiliado/Editar.html',{'form':form,'idTipoafiliado':idTipoafiliado})

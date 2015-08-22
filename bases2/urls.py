@@ -31,7 +31,11 @@ urlpatterns = patterns('',
     #TipoAfiliado
     url(r'^TipoAfiliado/index/$', 'proyecto1.views.indexTipoAfiliado', name='TipoAfiliado'),
     url(r'^TipoAfiliado/insertar/$', 'proyecto1.views.insertarTipoAfiliado', name='Insertar_TipoAfiliado'),
-   url(r'^TipoAfiliado/buscar/$', 'proyecto1.views.BuscarTipoAfiliado', name='Buscar_TipoAfiliado'),
+    url(r'^TipoAfiliado/buscar/$', 'proyecto1.views.BuscarTipoAfiliado', name='Buscar_TipoAfiliado'),
+
+    url(r'^TipoAfiliado/editar/(?P<id>\d+)/$', 'proyecto1.views.editarTipoAfiliados', name='Editar_TipoAfiliados'),
+    url(r'^TipoAfiliado/eliminar/(?P<id>\d+)/$', 'proyecto1.views.Eliminar_TipoAfiliados', name='Eliminar_TipoAfiliados'),
+    url(r'^TipoAfiliado/bloquear/(?P<id>\d+)/$', 'proyecto1.views.Bloquear_TipoAfiliados', name='Bloquear_TipoAfiliados'),
 
     #Afiliado
     url(r'^Afiliado/index/$', 'proyecto1.views.indexAfiliado', name='Afiliado'),

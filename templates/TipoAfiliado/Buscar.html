@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title></title>
@@ -13,16 +11,16 @@
 <input type="submit" value="Buscar" />
 </form>
 <br>
-{% if t %}
+{% if TipoAfiliado %}
 
-    Nombre : {{ t.nombre }} <br>
-    Descripción: {{ t.descripcion}}<br>
-    Porcentaje:{{ t.porcentaje }}<br>
+    Nombre : {{TipoAfiliado.nombre }} <br>
+    Descripción: {{ TipoAfiliado.descripcion}}<br>
+    Porcentaje:{{ TipoAfiliado.porcentaje }}<br>
 
     <br>
-    <form action="/TipoAfiliado/eliminar/{{ t.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form><br>
-    <form action="/TipoAfiliado/bloquear/{{ t.id}}/" method="get"> <input type="submit" value="Bloquear" /> </form><br>
-    <form action="/TipoAfiliado/editar/{{ t.id}}/" method="get"> <input type="submit" value="Editar" /> </form><br>
+    <form action="/TipoAfiliado/eliminar/{{ TipoAfiliado.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form><br>
+    <form action="/TipoAfiliado/bloquear/{{ TipoAfiliado.id}}/" method="get"> <input type="submit" value="Bloquear" /> </form><br>
+    <form action="/TipoAfiliado/editar/{{ TipoAfiliado.id}}/" method="get"> <input type="submit" value="Editar" /> </form><br>
 {% endif %}
     <form action="/TipoAfiliado/index/" method="get"> <input type="submit" value="Regresar a inicio"></form><br>
 </body>
