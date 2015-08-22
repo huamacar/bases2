@@ -1,33 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load staticfiles %}
 <head>
     <meta charset="UTF-8">
-    <title>Buscar Usuario</title>
+    <link href="{% static "default.css" %}" rel="stylesheet" type="text/css" media="all" />
+    <link href="{% static "fonts.css" %}" rel="stylesheet" type="text/css" media="all" />
+    <title>Amadeus Bank</title>
 </head>
 <body>
-<form action="/Clientes/buscar/" method="post">
-{% if form%}
-    {% csrf_token %}
-    {{ form.as_p }}
-{% endif %}
-<input type="submit" value="Buscar" />
-</form>
-<br>
-{% if usuario %}
+<div id="wrapper">
+	<div id="header-wrapper">
+		<div id="header" class="container">
+			<div id="logo">
+				<h1><a href="#">Amadeus Bank</a></h1>
+			</div>
+		</div>
+        <div id="menu" class="container">
+			<ul >
+                <li><a href="/">Inicio</a></li>
+                <li><a href="{% url 'Insertar_Clientes' %}">Insertar</a></li>
+                <li><a href="{% url 'Buscar_Clientes' %}">Editar</a></li>
+            </ul>
+		</div>
+	</div>
+	<div id="page" class="container">
+		<form action="/Clientes/buscar/" method="post">
+        {% if form%}
+            {% csrf_token %}
+            {{ form.as_p }}
+        {% endif %}
+        <input type="submit" value="Buscar" />
+        </form>
+        <br>
+        {% if usuario %}
 
-    Nombre Usuario: {{ usuario.nombre }} <br>
-    Dirección: {{ usuario.direccion }}<br>
-    Teléfono:{{ usuario.telefono }}<br>
-    Correo:{{ usuario.correo }}<br>
-    Fecha de Nacimiento:{{ usuario.fechaNacimiento }}<br>
-    Profesión:{{ usuario.profesion }}<br>
-    Genero:{{ usuario.genero }}<br>
+            Nombre Usuario: {{ usuario.nombre }} <br>
+            Dirección: {{ usuario.direccion }}<br>
+            Teléfono:{{ usuario.telefono }}<br>
+            Correo:{{ usuario.correo }}<br>
+            Fecha de Nacimiento:{{ usuario.fechaNacimiento }}<br>
+            Profesión:{{ usuario.profesion }}<br>
+            Genero:{{ usuario.genero }}<br>
 
-    <br>
-    <form action="/Clientes/eliminar/{{ usuario.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form><br>
-    <form action="/Clientes/bloquear/{{ usuario.id}}/" method="get"> <input type="submit" value="Bloquear" /> </form><br>
-    <form action="/Clientes/editar/{{ usuario.id}}/" method="get"> <input type="submit" value="Editar" /> </form><br>
-{% endif %}
-    <form action="/Clientes/index/" method="get"> <input type="submit" value="Regresar a inicio"></form><br>
+            <br>
+            <form action="/Clientes/eliminar/{{ usuario.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form><br>
+            <form action="/Clientes/bloquear/{{ usuario.id}}/" method="get"> <input type="submit" value="Bloquear" /> </form><br>
+            <form action="/Clientes/editar/{{ usuario.id}}/" method="get"> <input type="submit" value="Editar" /> </form><br>
+        {% endif %}
+	</div>
+</div>
+<div id="footer">
+	<p>Sistemas de Base de Datos 2 :: Grupo 1</p>
+</div>
+
+
 </body>
 </html>
