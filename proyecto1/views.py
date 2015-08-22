@@ -1,10 +1,6 @@
 from django.shortcuts import render
 from django.template import RequestContext
-from proyecto1.models import Usuario
-from proyecto1.models import Cuenta
-from proyecto1.models import AsignacionCuenta
-from proyecto1.models import Tarjeta
-from proyecto1.models import AsignacionTarjeta
+from proyecto1.models import *
 from django.shortcuts import  render_to_response
 from django.http import HttpResponseRedirect
 # Create your views here.
@@ -14,7 +10,6 @@ from .forms import CuentaForm
 from .forms import AsigCuentaForm
 from .forms import TarjetaForm
 from .forms import AsigTarjetaForm
-from .forms import EditarUsuarioForm
 from .forms import *
 from django import forms
 from django.http import HttpResponse
@@ -30,6 +25,12 @@ def indexCuentas(request):
 
 def indexTarjetas(request):
     return  render(request,'Tarjetas/Index.html')
+
+def indexAfiliado(request):
+    return  render(request,'Afiliado/Index.html')
+
+def indexTipoAfiliado(request):
+    return  render(request,'TipoAfiliado/Index.html')
 
 def insertarClientes(request):
     if request.method =='POST':
@@ -54,7 +55,7 @@ def insertarClientes(request):
 
 def Buscar_Clientes(request):
     form = BuscarCliente(request.POST)
-    u = Usuario()
+    u = None
     if form.is_valid():
         try:
             u = Usuario.objects.get(id=form.cleaned_data['id'])
@@ -135,25 +136,56 @@ def asignarTarjeta(request):
 
     return render(request,'Tarjetas/AsignarTarjeta.html',{'form':form})
 
-def editarClientes(request):
+def editarClientes(request,id):
     if request.method =='POST':
-        form = EditarUsuarioForm(request.POST)
+        u = Usuario.objects.get(id=id)
+        form = UsuarioForm(request.POST,instance=u)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('<h1>El usuario ha sido editado</h1>')
+    else:
+        u = Usuario()
+        try:
+            u = Usuario.objects.get(id=id)
+        except:
+            return HttpResponse('<h1>El usuario no existe en la Base de Datos</h1>')
+        form = UsuarioForm(instance=u)
+
+    idusuario = u.id
+    return render(request,'Clientes/Editar.html',{'form':form,'idusuario':idusuario})
+
+def insertarAfiliado(request):
+    if request.method =='POST':
+        form = AfiliadoForm(request.POST)
 
         if form.is_valid():
-            if form.cleaned_data['eliminar'] == True:
-                u = Usuario.objects.get(nombre=form.cleaned_data['nombreAnterior'])
-                u.delete()
-                return HttpResponseRedirect('/thanks/')
-            else:
-                u = Usuario.objects.get(nombre=form.cleaned_data['nombreAnterior'])
-                u.nombre = form.cleaned_data['nombre']
-                u.save()
-                return HttpResponseRedirect('/thanks/')
+            t = Afiliado()
+            t.nombre = form.cleaned_data['nombre']
+            t.direccion = form.cleaned_data['direccion']
+            t.telefono = form.cleaned_data['telefono']
+            t.correo = form.cleaned_data['correo']
+            t.save()
+            return HttpResponseRedirect('/thanks/')
     else:
-        form = EditarUsuarioForm()
+        form = AfiliadoForm()
 
-    return render(request,'Clientes/Editar.html',{'form':form})
+    return render(request,'Afiliado/Insertar.html',{'form':form})
 
+def insertarTipoAfiliado(request):
+    if request.method =='POST':
+        form = TipoAfiliadoForm(request.POST)
+
+        if form.is_valid():
+            t = TipoAfiliado()
+            t.nombre = form.cleaned_data['nombre']
+            t.descripcion = form.cleaned_data['descripcion']
+            t.porcentaje = form.cleaned_data['porcentaje']
+            t.save()
+            return HttpResponseRedirect('/thanks/')
+    else:
+        form = TipoAfiliadoForm()
+
+    return render(request,'TipoAfiliado/Insertar.html',{'form':form})
 
 
 def blabla(request):
