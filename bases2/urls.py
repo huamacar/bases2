@@ -32,5 +32,6 @@ urlpatterns = patterns('',
     url(r'^Afiliado/buscar/$', 'proyecto1.views.Buscar_Afiliados', name='Buscar_Afiliados'),
 
     url(r'^Afiliado/editar/(?P<id>\d+)/$', 'proyecto1.views.editarAfiliados', name='Editar_Afiliados'),
-    url(r'^Afiliado/eliminar/(?P<id>\d+)/$', 'proyecto1.views.Eliminar_Afiliados', name='Eliminar_Afiliados')
+    url(r'^Afiliado/eliminar/(?P<id>\d+)/$', 'proyecto1.views.Eliminar_Afiliados', name='Eliminar_Afiliados'),
+    url(r'^Afiliado/bloquear/(?P<id>\d+)/$', 'proyecto1.views.Bloquear_Afiliados', name='Bloquear_Afiliados')
 )

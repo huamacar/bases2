@@ -194,6 +194,12 @@ def Eliminar_Afiliados(request,id):
     Afiliado.objects.get(id=id).delete()
     return HttpResponse('<h1>Afiliado Eliminado</h1>')
 
+def Bloquear_Afiliados(request,id):
+    u = Afiliado.objects.get(id=id)
+    u.bloqueado = True
+    u.save()
+    return HttpResponse('<h1>Afiliado Bloqueado</h1>')
+
 def editarAfiliados(request,id):
     if request.method =='POST':
         u = Afiliado.objects.get(id=id)
