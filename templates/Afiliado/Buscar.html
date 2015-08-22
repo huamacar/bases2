@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar Afiliado</title>
+</head>
+<body>
+<form action="/Afiliado/buscar/" method="post">
+{% if form%}
+    {% csrf_token %}
+    {{ form.as_p }}
+{% endif %}
+<input type="submit" value="Buscar" />
+</form>
+<br>
+{% if afiliado %}
+
+    Nombre Afiliado: {{ afiliado.nombre }} <br>
+    Dirección: {{ afiliado.direccion }}<br>
+    Teléfono:{{ afiliado.telefono }}<br>
+    Correo:{{ afiliado.correo }}<br>
+
+    <br>
+    <form action="/Afiliado/eliminar/{{ afiliado.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form><br>
+    <form action="/Afiliado/editar/{{ afiliado.id}}/" method="get"> <input type="submit" value="Editar" /> </form><br>
+{% endif %}
+    <form action="/Afiliado/index/" method="get"> <input type="submit" value="Regresar a inicio"></form><br>
+</body>
+</html>

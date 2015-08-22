@@ -172,6 +172,40 @@ def insertarAfiliado(request):
 
     return render(request,'Afiliado/Insertar.html',{'form':form})
 
+def Buscar_Afiliados(request):
+    form = BuscarCliente(request.POST)
+    u = None
+    if form.is_valid():
+        try:
+            u = Afiliado.objects.get(id=form.cleaned_data['id'])
+        except :
+            return HttpResponse('<h1>El afiliado no existe en la Base de Datos</h1>')
+
+    afiliado = BuscarCliente()
+    return render(request,'Afiliado/Buscar.html',{'form':afiliado,'afiliado':u})
+
+def Eliminar_Afiliados(request,id):
+    Afiliado.objects.get(id=id).delete()
+    return HttpResponse('<h1>Afiliado Eliminado</h1>')
+
+def editarAfiliados(request,id):
+    if request.method =='POST':
+        u = Afiliado.objects.get(id=id)
+        form = AfiliadoForm(request.POST,instance=u)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('<h1>El afiliado ha sido editado</h1>')
+    else:
+        u = Afiliado()
+        try:
+            u = Afiliado.objects.get(id=id)
+        except:
+            return HttpResponse('<h1>El afiliado no existe en la Base de Datos</h1>')
+        form = AfiliadoForm(instance=u)
+
+    idafiliado = u.id
+    return render(request,'Afiliado/Editar.html',{'form':form,'idafiliado':idafiliado})
+
 def insertarTipoAfiliado(request):
     if request.method =='POST':
         form = TipoAfiliadoForm(request.POST)
