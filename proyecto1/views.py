@@ -247,3 +247,15 @@ def blabla(request):
 
     context = RequestContext(request)
     return render_to_response('Index.html',{"results":u,},context_instance=context)
+
+def BuscarTipoAfiliado(request):
+    form = Buscar_TipoAfiliado(request.POST)
+    t = None
+    if form.is_valid():
+        try:
+            t = TipoAfiliado.objects.get(id=form.cleaned_data['id'])
+        except :
+            return HttpResponse('<h1>El Tipo de afiliado no existe en la Base de Datos</h1>')
+
+    tipoAfiliado = Buscar_TipoAfiliado()
+    return render(request,'TipoAfiliado/Buscar.html',{'form':tipoAfiliado,'usuario':t})
