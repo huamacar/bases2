@@ -194,11 +194,21 @@ def Eliminar_Afiliados(request,id):
     Afiliado.objects.get(id=id).delete()
     return HttpResponse('<h1>Afiliado Eliminado</h1>')
 
+def Eliminar_TipoAfiliados(request,id):
+    TipoAfiliado.objects.get(id=id).delete()
+    return HttpResponse('<h1>Tipo Afiliado Eliminado</h1>')
+
 def Bloquear_Afiliados(request,id):
     u = Afiliado.objects.get(id=id)
     u.bloqueado = True
     u.save()
     return HttpResponse('<h1>Afiliado Bloqueado</h1>')
+
+def Bloquear_TipoAfiliados(request,id):
+    u = TipoAfiliado.objects.get(id=id)
+    u.bloqueado = True
+    u.save()
+    return HttpResponse('<h1>Tipo Afiliado Bloqueado</h1>')
 
 def editarAfiliados(request,id):
     if request.method =='POST':
@@ -235,21 +245,8 @@ def insertarTipoAfiliado(request):
     return render(request,'TipoAfiliado/Insertar.html',{'form':form})
 
 
-def blabla(request):
-    input = request.GET.get('q')
-    try:
-        query = 1
-    except ValueError:
-        query = None
-        results = None
-    if query:
-        u = Usuario.objects.get(id=query)
-
-    context = RequestContext(request)
-    return render_to_response('Index.html',{"results":u,},context_instance=context)
-
 def BuscarTipoAfiliado(request):
-    form = Buscar_TipoAfiliado(request.POST)
+    form = BuscarCliente(request.POST)
     t = None
     if form.is_valid():
         try:
@@ -257,5 +254,23 @@ def BuscarTipoAfiliado(request):
         except :
             return HttpResponse('<h1>El Tipo de afiliado no existe en la Base de Datos</h1>')
 
-    tipoAfiliado = Buscar_TipoAfiliado()
-    return render(request,'TipoAfiliado/Buscar.html',{'form':tipoAfiliado,'usuario':t})
+    buscartipoafiliado = BuscarCliente()
+    return render(request,'TipoAfiliado/Buscar.html',{'form':buscartipoafiliado,'TipoAfiliado':t})
+
+def editarTipoAfiliados(request,id):
+    if request.method =='POST':
+        u = TipoAfiliado.objects.get(id=id)
+        form = TipoAfiliadoForm(request.POST,instance=u)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('<h1>El tipo afiliado ha sido editado</h1>')
+    else:
+        u = TipoAfiliado()
+        try:
+            u = TipoAfiliado.objects.get(id=id)
+        except:
+            return HttpResponse('<h1>El tipo afiliado no existe en la Base de Datos</h1>')
+        form = TipoAfiliadoForm(instance=u)
+
+    idTipoafiliado = u.id
+    return render(request,'TipoAfiliado/Editar.html',{'form':form,'idTipoafiliado':idTipoafiliado})
