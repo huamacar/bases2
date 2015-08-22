@@ -9,6 +9,11 @@
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Salvar" />
+
+</form>
+
+<form action="/Clientes/buscar/" method="get">
+    <input type="submit" value="Regresar a inicio">
 </form>
 
 </body>
