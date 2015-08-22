@@ -1,15 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load staticfiles %}
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <link href="{% static "default.css" %}" rel="stylesheet" type="text/css" media="all" />
+    <link href="{% static "fonts.css" %}" rel="stylesheet" type="text/css" media="all" />
+    <title>Amadeus Bank</title>
 </head>
 <body>
-<form action="/Afiliado/insertar/" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit" />
-</form>
+<div id="wrapper">
+	<div id="header-wrapper">
+		<div id="header" class="container">
+			<div id="logo">
+				<h1><a href="#">Amadeus Bank</a></h1>
+			</div>
+		</div>
+        <div id="menu" class="container">
+			<ul >
+                <li><a href="/">Inicio</a></li>
+                <li><a href="{% url 'Insertar_Afiliado' %}">Insertar</a></li>
+                <li><a href="{% url 'Buscar_Afiliados' %}">Editar</a></li>
+            </ul>
+		</div>
+	</div>
+	<div id="page" class="container">
+        <form action="/Afiliado/insertar/" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Insertar" />
+        </form>
+	</div>
+</div>
+<div id="footer">
+	<p>Sistemas de Base de Datos 2 :: Grupo 1</p>
+</div>
 
 </body>
 </html>
