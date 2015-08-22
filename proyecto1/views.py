@@ -47,7 +47,7 @@ def insertarClientes(request):
             u.profesion = form.cleaned_data['profesion']
             u.genero = form.cleaned_data['genero']
             u.save()
-            return HttpResponseRedirect('/thanks/')
+            return HttpResponse('<h1>Cliente insertado</h1>')
     else:
         form = UsuarioForm()
 
@@ -88,7 +88,7 @@ def crearCuenta(request):
             c.limite = form.cleaned_data['limite']
             c.fechaCreacion = form.cleaned_data['fechaCreacion']
             c.save()
-            return HttpResponseRedirect('/thanks/')
+            return HttpResponse('<h1>Cuenta Insertada</h1>')
     else:
         form = CuentaForm()
 
@@ -103,7 +103,7 @@ def asignarCuenta(request):
             a.idUsuario = form.cleaned_data['idUsuario']
             a.idCuenta = form.cleaned_data['idCuenta']
             a.save()
-            return HttpResponseRedirect('/thanks/')
+            return HttpResponse('<h1>Cuenta Asignada</h1>')
     else:
         form = AsigCuentaForm()
 
@@ -121,7 +121,7 @@ def crearTarjeta(request):
             t.fechaCorte = form.cleaned_data['fechaCorte']
             t.fechaPago = form.cleaned_data['fechaPago']
             t.save()
-            return HttpResponseRedirect('/thanks/')
+            return HttpResponse('<h1>Tarjeta Creada</h1>')
     else:
         form = TarjetaForm()
 
@@ -137,7 +137,7 @@ def asignarTarjeta(request):
             a.noTarjeta = form.cleaned_data['noTarjeta']
             a.fechaAsignacion = form.cleaned_data['fechaAsignacion']
             a.save()
-            return HttpResponseRedirect('/thanks/')
+            return HttpResponse('<h1>Tarjeta Asignada</h1>')
     else:
         form = AsigTarjetaForm()
 
@@ -172,7 +172,7 @@ def insertarAfiliado(request):
             t.telefono = form.cleaned_data['telefono']
             t.correo = form.cleaned_data['correo']
             t.save()
-            return HttpResponseRedirect('/thanks/')
+            return HttpResponse('<h1>Afiliado insertado</h1>')
     else:
         form = AfiliadoForm()
 
@@ -238,7 +238,7 @@ def insertarTipoAfiliado(request):
             t.descripcion = form.cleaned_data['descripcion']
             t.porcentaje = form.cleaned_data['porcentaje']
             t.save()
-            return HttpResponseRedirect('/thanks/')
+            return HttpResponse('<h1>Tipo afiliado insertado</h1>')
     else:
         form = TipoAfiliadoForm()
 
