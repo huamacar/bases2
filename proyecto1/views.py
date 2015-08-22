@@ -1,10 +1,6 @@
 from django.shortcuts import render
 from django.template import RequestContext
-from proyecto1.models import Usuario
-from proyecto1.models import Cuenta
-from proyecto1.models import AsignacionCuenta
-from proyecto1.models import Tarjeta
-from proyecto1.models import AsignacionTarjeta
+from proyecto1.models import *
 from django.shortcuts import  render_to_response
 from django.http import HttpResponseRedirect
 # Create your views here.
@@ -29,6 +25,12 @@ def indexCuentas(request):
 
 def indexTarjetas(request):
     return  render(request,'Tarjetas/Index.html')
+
+def indexAfiliado(request):
+    return  render(request,'Afiliado/Index.html')
+
+def indexTipoAfiliado(request):
+    return  render(request,'TipoAfiliado/Index.html')
 
 def insertarClientes(request):
     if request.method =='POST':
@@ -152,6 +154,38 @@ def editarClientes(request,id):
     idusuario = u.id
     return render(request,'Clientes/Editar.html',{'form':form,'idusuario':idusuario})
 
+def insertarAfiliado(request):
+    if request.method =='POST':
+        form = AfiliadoForm(request.POST)
+
+        if form.is_valid():
+            t = Afiliado()
+            t.nombre = form.cleaned_data['nombre']
+            t.direccion = form.cleaned_data['direccion']
+            t.telefono = form.cleaned_data['telefono']
+            t.correo = form.cleaned_data['correo']
+            t.save()
+            return HttpResponseRedirect('/thanks/')
+    else:
+        form = AfiliadoForm()
+
+    return render(request,'Afiliado/Insertar.html',{'form':form})
+
+def insertarTipoAfiliado(request):
+    if request.method =='POST':
+        form = TipoAfiliadoForm(request.POST)
+
+        if form.is_valid():
+            t = TipoAfiliado()
+            t.nombre = form.cleaned_data['nombre']
+            t.descripcion = form.cleaned_data['descripcion']
+            t.porcentaje = form.cleaned_data['porcentaje']
+            t.save()
+            return HttpResponseRedirect('/thanks/')
+    else:
+        form = TipoAfiliadoForm()
+
+    return render(request,'TipoAfiliado/Insertar.html',{'form':form})
 
 
 def blabla(request):

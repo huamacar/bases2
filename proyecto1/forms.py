@@ -45,3 +45,13 @@ class AsigTarjetaForm(ModelForm):
         class Meta:
             model = AsignacionTarjeta
             fields = '__all__'
+
+class AfiliadoForm(ModelForm):
+        class Meta:
+            model = Afiliado
+            fields = '__all__'
+
+class TipoAfiliadoForm(ModelForm):
+        class Meta:
+            model = TipoAfiliado
+            fields = '__all__'
