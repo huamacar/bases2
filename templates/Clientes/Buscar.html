@@ -8,7 +8,7 @@
 <form action="/Clientes/buscar/" method="post">
 {% if form%}
     {% csrf_token %}
-    {{ form }}
+    {{ form.as_p }}
 {% endif %}
 <input type="submit" value="Buscar" />
 </form>

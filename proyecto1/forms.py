@@ -17,32 +17,31 @@ class UsuarioForm(ModelForm):
         class Meta:
             model = Usuario
             fields = '__all__'
-
-class EditarUsuarioForm(forms.Form):
+'''
+class EditarUsuarioForm(ModelForm):
         nombreAnterior = forms.CharField(label='Nombre anterior', max_length=100)
         nombre = forms.CharField(label='Nombre nuevo', max_length=100, required=False)
         eliminar = forms.BooleanField(required=False)
-
+'''
 class BuscarCliente(forms.Form):
         id = forms.IntegerField(label="Cliente Buscado")
 
-class CuentaForm(forms.Form):
-        tipo = forms.CharField(label='Tipo de Cuenta', max_length=100)
-        limite = forms.FloatField(label='Limite')
-        fechaCreacion = forms.DateField(label='Fecha de Creacion')
+class CuentaForm(ModelForm):
+        class Meta:
+            model = Cuenta
+            fields = '__all__'
 
-class AsigCuentaForm(forms.Form):
-        idUsuario = forms.IntegerField(label='Id Usuario')
-        idCuenta = forms.IntegerField(label='Id Cuenta')
+class AsigCuentaForm(ModelForm):
+        class Meta:
+            model = AsignacionCuenta
+            fields = '__all__'
 
-class TarjetaForm(forms.Form):
-        noTarjeta = forms.IntegerField(label='No Tarjeta')
-        tipo = forms.CharField(label='Tipo de Tarjeta', max_length=100)
-        limite = forms.FloatField(label='Limite')
-        fechaCorte = forms.DateField(label='Fecha de Corte')
-        fechaPago = forms.DateField(label='Fecha de Pago')
+class TarjetaForm(ModelForm):
+        class Meta:
+            model = Tarjeta
+            fields = '__all__'
 
-class AsigTarjetaForm(forms.Form):
-        idCuenta = forms.IntegerField(label='Id Cuenta')
-        noTarjeta = forms.IntegerField(label='No Tarjeta')
-        fechaAsignacion = forms.DateField(label='Fecha de Asignacion')
+class AsigTarjetaForm(ModelForm):
+        class Meta:
+            model = AsignacionTarjeta
+            fields = '__all__'

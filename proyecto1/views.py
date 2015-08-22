@@ -14,7 +14,6 @@ from .forms import CuentaForm
 from .forms import AsigCuentaForm
 from .forms import TarjetaForm
 from .forms import AsigTarjetaForm
-from .forms import EditarUsuarioForm
 from .forms import *
 from django import forms
 from django.http import HttpResponse
