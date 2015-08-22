@@ -24,9 +24,9 @@
     Genero:{{ usuario.genero }}<br>
 
     <br>
-    <form action="/Clientes/eliminar/{{ usuario.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form>
-    <form action="/Clientes/editar/{{ usuario.id}}/" method="get"> <input type="submit" value="Editar" /> </form>
-
+    <form action="/Clientes/eliminar/{{ usuario.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form><br>
+    <form action="/Clientes/editar/{{ usuario.id}}/" method="get"> <input type="submit" value="Editar" /> </form><br>
 {% endif %}
+    <form action="/Clientes/index/" method="get"> <input type="submit" value="Regresar a inicio"></form><br>
 </body>
 </html>

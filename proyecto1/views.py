@@ -13,6 +13,7 @@ from .forms import AsigTarjetaForm
 from .forms import *
 from django import forms
 from django.http import HttpResponse
+from django.shortcuts import redirect
 
 def index(request):
     return render(request,'Index.html')
