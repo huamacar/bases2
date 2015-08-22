@@ -1,30 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load staticfiles %}
 <head>
     <meta charset="UTF-8">
-    <title>Buscar Afiliado</title>
+    <link href="{% static "default.css" %}" rel="stylesheet" type="text/css" media="all" />
+    <link href="{% static "fonts.css" %}" rel="stylesheet" type="text/css" media="all" />
+    <title>Amadeus Bank</title>
 </head>
 <body>
-<form action="/Afiliado/buscar/" method="post">
-{% if form%}
-    {% csrf_token %}
-    {{ form.as_p }}
-{% endif %}
-<input type="submit" value="Buscar" />
-</form>
-<br>
-{% if afiliado %}
+<div id="wrapper">
+	<div id="header-wrapper">
+		<div id="header" class="container">
+			<div id="logo">
+				<h1><a href="#">Amadeus Bank</a></h1>
+			</div>
+		</div>
+        <div id="menu" class="container">
+			<ul >
+                <li><a href="/">Inicio</a></li>
+                <li><a href="{% url 'Insertar_Afiliado' %}">Insertar</a></li>
+                <li><a href="{% url 'Buscar_Afiliados' %}">Editar</a></li>
+            </ul>
+		</div>
+	</div>
+	<div id="page" class="container">
+		<form action="/Afiliado/buscar/" method="post">
+        {% if form%}
+            {% csrf_token %}
+            {{ form.as_p }}
+        {% endif %}
+        <input type="submit" value="Buscar" />
+        </form>
+        <br>
+        {% if afiliado %}
 
-    Nombre Afiliado: {{ afiliado.nombre }} <br>
-    Dirección: {{ afiliado.direccion }}<br>
-    Teléfono:{{ afiliado.telefono }}<br>
-    Correo:{{ afiliado.correo }}<br>
+            Nombre Afiliado: {{ afiliado.nombre }} <br>
+            Dirección: {{ afiliado.direccion }}<br>
+            Teléfono:{{ afiliado.telefono }}<br>
+            Correo:{{ afiliado.correo }}<br>
 
-    <br>
-    <form action="/Afiliado/eliminar/{{ afiliado.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form><br>
-    <form action="/Afiliado/bloquear/{{ afiliado.id}}/" method="get"> <input type="submit" value="Bloquear" /> </form><br>
-    <form action="/Afiliado/editar/{{ afiliado.id}}/" method="get"> <input type="submit" value="Editar" /> </form><br>
-{% endif %}
-    <form action="/Afiliado/index/" method="get"> <input type="submit" value="Regresar a inicio"></form><br>
+            <br>
+            <form action="/Afiliado/eliminar/{{ afiliado.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form><br>
+            <form action="/Afiliado/bloquear/{{ afiliado.id}}/" method="get"> <input type="submit" value="Bloquear" /> </form><br>
+            <form action="/Afiliado/editar/{{ afiliado.id}}/" method="get"> <input type="submit" value="Editar" /> </form><br>
+        {% endif %}
+	</div>
+</div>
+<div id="footer">
+	<p>Sistemas de Base de Datos 2 :: Grupo 1</p>
+</div>
+
 </body>
 </html>
