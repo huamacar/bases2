@@ -5,10 +5,10 @@
     <title></title>
 </head>
 <body>
-<form action="/Clientes/editar/" method="post">
+<form action="/Clientes/editar/{{ idusuario }}/" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Submit" />
+    <input type="submit" value="Salvar" />
 </form>
 
 </body>

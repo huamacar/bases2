@@ -1,7 +1,9 @@
 __author__ = 'huamacar'
 
 from django import forms
-
+from django.forms import ModelForm
+from proyecto1.models import *
+'''
 class UsuarioForm(forms.Form):
         nombre = forms.CharField(label='Nombre cliente', max_length=100)
         direccion = forms.CharField(label='Direccion', max_length=100)
@@ -10,6 +12,12 @@ class UsuarioForm(forms.Form):
         fechaNacimiento = forms.DateField(label='Fecha Nacimiento')
         profesion = forms.CharField(label='Profesion', max_length=100)
         genero = forms.CharField(label='Genero', max_length=100)
+'''
+class UsuarioForm(ModelForm):
+        class Meta:
+            model = Usuario
+            fields = ['nombre','direccion','telefono','correo','fechaNacimiento','profesion','genero','bloqueado']
+
 
 class EditarUsuarioForm(forms.Form):
         nombreAnterior = forms.CharField(label='Nombre anterior', max_length=100)

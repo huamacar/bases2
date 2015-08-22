@@ -54,7 +54,7 @@ def insertarClientes(request):
 
 def Buscar_Clientes(request):
     form = BuscarCliente(request.POST)
-    u = Usuario()
+    u = None
     if form.is_valid():
         try:
             u = Usuario.objects.get(id=form.cleaned_data['id'])
@@ -135,24 +135,23 @@ def asignarTarjeta(request):
 
     return render(request,'Tarjetas/AsignarTarjeta.html',{'form':form})
 
-def editarClientes(request):
+def editarClientes(request,id):
     if request.method =='POST':
-        form = EditarUsuarioForm(request.POST)
-
+        u = Usuario.objects.get(id=id)
+        form = UsuarioForm(request.POST,instance=u)
         if form.is_valid():
-            if form.cleaned_data['eliminar'] == True:
-                u = Usuario.objects.get(nombre=form.cleaned_data['nombreAnterior'])
-                u.delete()
-                return HttpResponseRedirect('/thanks/')
-            else:
-                u = Usuario.objects.get(nombre=form.cleaned_data['nombreAnterior'])
-                u.nombre = form.cleaned_data['nombre']
-                u.save()
-                return HttpResponseRedirect('/thanks/')
+            form.save()
+            return HttpResponse('<h1>El usuario ha sido editado</h1>')
     else:
-        form = EditarUsuarioForm()
+        u = Usuario()
+        try:
+            u = Usuario.objects.get(id=id)
+        except:
+            return HttpResponse('<h1>El usuario no existe en la Base de Datos</h1>')
+        form = UsuarioForm(instance=u)
 
-    return render(request,'Clientes/Editar.html',{'form':form})
+    idusuario = u.id
+    return render(request,'Clientes/Editar.html',{'form':form,'idusuario':idusuario})
 
 
 
