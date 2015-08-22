@@ -17,7 +17,7 @@ class EditarUsuarioForm(forms.Form):
         eliminar = forms.BooleanField(required=False)
 
 class BuscarCliente(forms.Form):
-        nombre = forms.CharField(label="Cliente Buscado", max_length=100)        eliminar = forms.BooleanField(required=False)
+        id = forms.IntegerField(label="Cliente Buscado")
 
 class CuentaForm(forms.Form):
         tipo = forms.CharField(label='Tipo de Cuenta', max_length=100)

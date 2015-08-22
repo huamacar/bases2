@@ -12,11 +12,15 @@
 {% endif %}
 <input type="submit" value="Buscar" />
 </form>
-
+<br>
 {% if usuario %}
-    {{ usuario.nombre }}
 
-    <form action="/Clientes/eliminar/{{ usuario.nombre}}/" method="get"> <input type="submit" value="Eliminar" /> </form>
+
+    Nombre Usuario: {{ usuario.nombre }}
+
+
+    <br>
+    <form action="/Clientes/eliminar/{{ usuario.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form>
 
 {% endif %}
 </body>

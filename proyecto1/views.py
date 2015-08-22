@@ -56,7 +56,11 @@ def Buscar_Clientes(request):
     form = BuscarCliente(request.POST)
     u = Usuario()
     if form.is_valid():
-        u = Usuario.objects.get(nombre=form.cleaned_data['nombre'])
+        try:
+            u = Usuario.objects.get(id=form.cleaned_data['id'])
+        except :
+            return HttpResponse('<h1>El usuario no existe en la Base de Datos</h1>')
+
     usuario = BuscarCliente()
     return render(request,'Clientes/Buscar.html',{'form':usuario,'usuario':u})
 
