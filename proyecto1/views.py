@@ -3,6 +3,8 @@ from django.template import RequestContext
 from proyecto1.models import Usuario
 from proyecto1.models import Cuenta
 from proyecto1.models import AsignacionCuenta
+from proyecto1.models import Tarjeta
+from proyecto1.models import AsignacionTarjeta
 from django.shortcuts import  render_to_response
 from django.http import HttpResponseRedirect
 # Create your views here.
@@ -10,6 +12,8 @@ from django.http import HttpResponseRedirect
 from .forms import UsuarioForm
 from .forms import CuentaForm
 from .forms import AsigCuentaForm
+from .forms import TarjetaForm
+from .forms import AsigTarjetaForm
 from .forms import EditarUsuarioForm
 from django import forms
 
@@ -21,6 +25,9 @@ def indexClientes(request):
 
 def indexCuentas(request):
     return  render(request,'Cuentas/Index.html')
+
+def indexTarjetas(request):
+    return  render(request,'Tarjetas/Index.html')
 
 def insertarClientes(request):
     if request.method =='POST':
@@ -72,6 +79,40 @@ def asignarCuenta(request):
         form = AsigCuentaForm()
 
     return render(request,'Cuentas/AsignarCuenta.html',{'form':form})
+
+def crearTarjeta(request):
+    if request.method =='POST':
+        form = TarjetaForm(request.POST)
+
+        if form.is_valid():
+            t = Tarjeta()
+            t.noTarjeta = form.cleaned_data['noTarjeta']
+            t.tipo = form.cleaned_data['tipo']
+            t.limite = form.cleaned_data['limite']
+            t.fechaCorte = form.cleaned_data['fechaCorte']
+            t.fechaPago = form.cleaned_data['fechaPago']
+            t.save()
+            return HttpResponseRedirect('/thanks/')
+    else:
+        form = TarjetaForm()
+
+    return render(request,'Tarjetas/CrearTarjeta.html',{'form':form})
+
+def asignarTarjeta(request):
+    if request.method =='POST':
+        form = AsigTarjetaForm(request.POST)
+
+        if form.is_valid():
+            a = AsignacionTarjeta()
+            a.idCuenta = form.cleaned_data['idCuenta']
+            a.noTarjeta = form.cleaned_data['noTarjeta']
+            a.fechaAsignacion = form.cleaned_data['fechaAsignacion']
+            a.save()
+            return HttpResponseRedirect('/thanks/')
+    else:
+        form = AsigTarjetaForm()
+
+    return render(request,'Tarjetas/AsignarTarjeta.html',{'form':form})
 
 def editarClientes(request):
     if request.method =='POST':

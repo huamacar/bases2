@@ -24,3 +24,15 @@ class CuentaForm(forms.Form):
 class AsigCuentaForm(forms.Form):
         idUsuario = forms.IntegerField(label='Id Usuario')
         idCuenta = forms.IntegerField(label='Id Cuenta')
+
+class TarjetaForm(forms.Form):
+        noTarjeta = forms.IntegerField(label='No Tarjeta')
+        tipo = forms.CharField(label='Tipo de Tarjeta', max_length=100)
+        limite = forms.FloatField(label='Limite')
+        fechaCorte = forms.DateField(label='Fecha de Corte')
+        fechaPago = forms.DateField(label='Fecha de Pago')
+
+class AsigTarjetaForm(forms.Form):
+        idCuenta = forms.IntegerField(label='Id Cuenta')
+        noTarjeta = forms.IntegerField(label='No Tarjeta')
+        fechaAsignacion = forms.DateField(label='Fecha de Asignacion')

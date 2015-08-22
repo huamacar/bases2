@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8e4027d9-f062-41d2-a709-0a706f6f8328" name="Default" comment="Se termino de agregar models, creo.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/Cuentas/AsignarCuenta.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/Cuentas/Crear.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/Cuentas/Index.html" />
+    <list default="true" id="8e4027d9-f062-41d2-a709-0a706f6f8328" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/Tarjetas/AsignarTarjeta.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/Tarjetas/CrearTarjeta.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/Tarjetas/Index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/Index.html" afterPath="$PROJECT_DIR$/templates/Index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/Cuentas/Index.html" afterPath="$PROJECT_DIR$/templates/Cuentas/Index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proyecto1/forms.py" afterPath="$PROJECT_DIR$/proyecto1/forms.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bases2/urls.py" afterPath="$PROJECT_DIR$/bases2/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/proyecto1/views.py" afterPath="$PROJECT_DIR$/proyecto1/views.py" />
@@ -37,8 +38,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/proyecto1/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4851752">
-              <caret line="36" column="48" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="48" />
+            <state vertical-scroll-proportion="0.44474393">
+              <caret line="89" column="18" selection-start-line="89" selection-start-column="18" selection-end-line="89" selection-end-column="18" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -50,7 +51,7 @@
         <entry file="file://$PROJECT_DIR$/proyecto1/forms.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="46" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
+              <caret line="37" column="68" selection-start-line="37" selection-start-column="68" selection-end-line="37" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -60,7 +61,7 @@
         <entry file="file://$PROJECT_DIR$/proyecto1/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="44" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="44" />
+              <caret line="31" column="23" selection-start-line="31" selection-start-column="6" selection-end-line="31" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -70,7 +71,7 @@
         <entry file="file://$PROJECT_DIR$/bases2/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="61" selection-start-line="18" selection-start-column="48" selection-end-line="18" selection-end-column="61" />
+              <caret line="21" column="63" selection-start-line="21" selection-start-column="63" selection-end-line="21" selection-end-column="63" />
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
               </folding>
@@ -105,13 +106,16 @@
         <option value="$PROJECT_DIR$/templates/Clientes/Insertar.html" />
         <option value="$PROJECT_DIR$/templates/Clientes/Index.html" />
         <option value="$PROJECT_DIR$/templates/Clientes/Editar.html" />
-        <option value="$PROJECT_DIR$/templates/Cuentas/Index.html" />
-        <option value="$PROJECT_DIR$/templates/Index.html" />
-        <option value="$PROJECT_DIR$/bases2/urls.py" />
         <option value="$PROJECT_DIR$/templates/Cuentas/Crear.html" />
         <option value="$PROJECT_DIR$/templates/Cuentas/AsignarCuenta.html" />
         <option value="$PROJECT_DIR$/proyecto1/models.py" />
+        <option value="$PROJECT_DIR$/templates/Cuentas/Index.html" />
+        <option value="$PROJECT_DIR$/templates/Tarjetas/Index.html" />
+        <option value="$PROJECT_DIR$/templates/Index.html" />
+        <option value="$PROJECT_DIR$/templates/Tarjetas/CrearTarjeta.html" />
+        <option value="$PROJECT_DIR$/templates/Tarjetas/AsignarTarjeta.html" />
         <option value="$PROJECT_DIR$/proyecto1/forms.py" />
+        <option value="$PROJECT_DIR$/bases2/urls.py" />
         <option value="$PROJECT_DIR$/proyecto1/views.py" />
       </list>
     </option>
@@ -190,6 +194,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bases2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bases2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tarjetas" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -683,7 +705,13 @@
       <option name="project" value="LOCAL" />
       <updated>1440213517432</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Se actualizo la insercion de Usuario.&#10;Se agrego el ingreso y asignacion de Cuentas.">
+      <created>1440217112859</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1440217112859</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -730,7 +758,8 @@
     <MESSAGE value="Se completo el model de Usuario" />
     <MESSAGE value="Se agrego mas models" />
     <MESSAGE value="Se termino de agregar models, creo." />
-    <option name="LAST_COMMIT_MESSAGE" value="Se termino de agregar models, creo." />
+    <MESSAGE value="Se actualizo la insercion de Usuario.&#10;Se agrego el ingreso y asignacion de Cuentas." />
+    <option name="LAST_COMMIT_MESSAGE" value="Se actualizo la insercion de Usuario.&#10;Se agrego el ingreso y asignacion de Cuentas." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -929,14 +958,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/Index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.389049">
-          <caret line="9" column="45" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/Clientes/Insertar.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0">
@@ -945,10 +966,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/Cuentas/AsignarCuenta.html">
+    <entry file="file://$PROJECT_DIR$/templates/Tarjetas/Index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.389049">
+          <caret line="9" column="40" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/Cuentas/Index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.08645533">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/Index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43227667">
+          <caret line="10" column="47" selection-start-line="10" selection-start-column="47" selection-end-line="10" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/Tarjetas/CrearTarjeta.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.375">
-          <caret line="7" column="30" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
+          <caret line="7" column="29" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/Tarjetas/AsignarTarjeta.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.30259365">
+          <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
           <folding />
         </state>
       </provider>
@@ -961,10 +1014,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/Cuentas/Index.html">
+    <entry file="file://$PROJECT_DIR$/templates/Cuentas/AsignarCuenta.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.389049">
-          <caret line="9" column="39" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="14" selection-end-column="7" />
           <folding />
         </state>
       </provider>
@@ -972,33 +1025,33 @@
     <entry file="file://$PROJECT_DIR$/bases2/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="61" selection-start-line="18" selection-start-column="48" selection-end-line="18" selection-end-column="61" />
+          <caret line="21" column="63" selection-start-line="21" selection-start-column="63" selection-end-line="21" selection-end-column="63" />
           <folding>
             <element signature="e#0#51#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/proyecto1/forms.py">
+    <entry file="file://$PROJECT_DIR$/proyecto1/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="46" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
+          <caret line="31" column="23" selection-start-line="31" selection-start-column="6" selection-end-line="31" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/proyecto1/models.py">
+    <entry file="file://$PROJECT_DIR$/proyecto1/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="44" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="44" />
+          <caret line="37" column="68" selection-start-line="37" selection-start-column="68" selection-end-line="37" selection-end-column="68" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/proyecto1/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4851752">
-          <caret line="36" column="48" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="48" />
+        <state vertical-scroll-proportion="0.44474393">
+          <caret line="89" column="18" selection-start-line="89" selection-start-column="18" selection-end-line="89" selection-end-column="18" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>

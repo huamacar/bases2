@@ -16,5 +16,8 @@ urlpatterns = patterns('',
     url(r'^Clientes/editar/$', 'proyecto1.views.editarClientes', name='Editar_Clientes'),
     url(r'^Cuentas/index/$', 'proyecto1.views.indexCuentas', name='Cuentas'),
     url(r'^Cuentas/crear/$', 'proyecto1.views.crearCuenta', name='Crear_Cuenta'),
-    url(r'^Cuentas/asignar/$', 'proyecto1.views.asignarCuenta', name='Asignar_Cuenta')
+    url(r'^Cuentas/asignar/$', 'proyecto1.views.asignarCuenta', name='Asignar_Cuenta'),
+    url(r'^Tarjetas/index/$', 'proyecto1.views.indexTarjetas', name='Tarjetas'),
+    url(r'^Tarjetas/crear/$', 'proyecto1.views.crearTarjeta', name='Crear_Tarjeta'),
+    url(r'^Tarjetas/asignar/$', 'proyecto1.views.asignarTarjeta', name='Asignar_Tarjeta')
 )
