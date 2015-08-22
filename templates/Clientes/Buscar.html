@@ -15,12 +15,17 @@
 <br>
 {% if usuario %}
 
-
-    Nombre Usuario: {{ usuario.nombre }}
-
+    Nombre Usuario: {{ usuario.nombre }} <br>
+    Dirección: {{ usuario.direccion }}<br>
+    Teléfono:{{ usuario.telefono }}<br>
+    Correo:{{ usuario.correo }}<br>
+    Fecha de Nacimiento:{{ usuario.fechaNacimiento }}<br>
+    Profesión:{{ usuario.profesion }}<br>
+    Genero:{{ usuario.genero }}<br>
 
     <br>
     <form action="/Clientes/eliminar/{{ usuario.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form>
+    <form action="/Clientes/editar/{{ usuario.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form>
 
 {% endif %}
 </body>
