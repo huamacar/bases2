@@ -72,6 +72,7 @@ class Afiliado(models.Model):
     direccion = models.CharField(max_length=200)
     telefono = models.IntegerField()
     correo = models.EmailField()
+    bloqueado = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'Afiliado'
@@ -80,6 +81,7 @@ class TipoAfiliado(models.Model):
     nombre = models.CharField(max_length=200)
     descripcion = models.CharField(max_length=200)
     porcentaje = models.FloatField()
+    bloqueado = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'TipoAfiliado'

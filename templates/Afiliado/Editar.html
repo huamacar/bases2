@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<form action="/Afiliado/editar/{{ idafiliado }}/" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Salvar" />
+
+</form>
+
+<form action="/Afiliado/buscar/" method="get">
+    <input type="submit" value="Regresar a inicio">
+</form>
+
+</body>
+</html>
