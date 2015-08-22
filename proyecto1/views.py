@@ -256,7 +256,7 @@ def BuscarTipoAfiliado(request):
 
     buscartipoafiliado = BuscarCliente()
     return render(request,'TipoAfiliado/Buscar.html',{'form':buscartipoafiliado,'TipoAfiliado':t})
-#
+##
 def editarTipoAfiliados(request,id):
     if request.method =='POST':
         u = TipoAfiliado.objects.get(id=id)
