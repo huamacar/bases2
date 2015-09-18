@@ -10,15 +10,31 @@
 <body>
 <div id="wrapper">
 	<div id="header-wrapper">
+        <div align="right">
+            {% if not user.is_authenticated %}
+                <form action="/login/" method="get">
+                    <input type="submit" value="login">
+                </form>
+            {% else %}
+                <form action="/logout/" method="get">
+                    <input type="submit" value="logout">
+                </form>
+            {% endif %}
+        </div>
+
 		<div id="header" class="container">
 			<div id="logo">
 				<h1><a href="#">Amadeus Bank</a></h1>
 			</div>
 		</div>
+
+
 		<div id="menu" class="container">
             {% block sidebar %}
+
             {% endblock %}
 		</div>
+
 	</div>
 	<div id="page" class="container">
 		{% block content %}{% endblock %}

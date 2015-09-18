@@ -4,13 +4,15 @@
         Amadeus Bank
     {% endblock %}
     {% block sidebar %}
-        <ul>
-            <li><a href="{% url 'Clientes' %}">Clientes</a></li>
-            <li><a href="{% url 'Cuentas' %}">Cuentas</a></li>
-            <li><a href="{% url 'Tarjetas' %}">Tarjetas</a></li>
-            <li><a href="{% url 'TipoAfiliado' %}">Tipo Afiliado</a></li>
-            <li><a href="{% url 'Afiliado' %}">Afiliado</a></li>
-        </ul>
+        {% if user.is_authenticated %}
+            <ul>
+                <li><a href="{% url 'Clientes' %}">Clientes</a></li>
+                <li><a href="{% url 'Cuentas' %}">Cuentas</a></li>
+                <li><a href="{% url 'Tarjetas' %}">Tarjetas</a></li>
+                <li><a href="{% url 'TipoAfiliado' %}">Tipo Afiliado</a></li>
+                <li><a href="{% url 'Afiliado' %}">Afiliado</a></li>
+            </ul>
+        {% endif %}
     {%  endblock %}
     {%  block content  %}
         <div class="column1">

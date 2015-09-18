@@ -5,33 +5,34 @@ from .forms import *
 from django.http import HttpResponse
 from django.db.models import Q
 from django.contrib import messages  # para emitir aletrs
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
     return render(request, 'Index.html')
 
-
+@login_required(login_url='/login')
 def indexClientes(request):
     messages.add_message(request, messages.INFO, 'Hello world.')
     return render(request, 'Clientes/Index.html')
 
-
+@login_required(login_url='/login')
 def indexCuentas(request):
     return render(request, 'Cuentas/Index.html')
 
-
+@login_required(login_url='/login')
 def indexTarjetas(request):
     return render(request, 'Tarjetas/Index.html')
 
-
+@login_required(login_url='/login')
 def indexAfiliado(request):
     return render(request, 'Afiliado/Index.html')
 
-
+@login_required(login_url='/login')
 def indexTipoAfiliado(request):
     return render(request, 'TipoAfiliado/Index.html')
 
-
+@login_required(login_url='/login')
 def insertarClientes(request):
     if request.method == 'POST':
         form = ClienteForm(request.POST)
@@ -45,19 +46,19 @@ def insertarClientes(request):
 
     return render(request, 'Clientes/Insertar.html', {'form': form})
 
-
+@login_required(login_url='/login')
 def Bloquear_Clientes(request, id):
     u = Usuario.objects.get(id=id)
     u.bloqueado = True
     u.save()
     return HttpResponse('<h1>Usuario Bloqueado</h1>')
 
-
+@login_required(login_url='/login')
 def Lista_Clientes(request):
     usuarios = Usuario.objects.all()
     return render(request, 'Clientes/ListaUsuarios.html', {'usuarios': usuarios})
 
-
+@login_required(login_url='/login')
 def Buscar_Clientes(request):
     if request.method == 'POST':
         form = BuscarCliente(request.POST)
@@ -76,12 +77,12 @@ def Buscar_Clientes(request):
 
     return render(request, 'Clientes/Buscar.html', {'form': form})
 
-
+@login_required(login_url='/login')
 def Eliminar_Clientes(request, id):
     Usuario.objects.get(id=id).delete()
     return HttpResponse('<h1>Usuario Eliminado</h1>')
 
-
+@login_required(login_url='/login')
 def crearCuenta(request):
     if request.method == 'POST':
         form = CuentaForm(request.POST)
@@ -94,7 +95,7 @@ def crearCuenta(request):
 
     return render(request, 'Cuentas/Crear.html', {'form': form})
 
-
+@login_required(login_url='/login')
 def crearTipoCuenta(request):
     if request.method == 'POST':
         form = TipoCuentaForm(request.POST)
@@ -107,7 +108,7 @@ def crearTipoCuenta(request):
 
     return render(request, 'Cuentas/CrearTipo.html', {'form': form})
 
-
+@login_required(login_url='/login')
 def asignarCuenta(request):
     if request.method == 'POST':
         form = AsigCuentaForm(request.POST)
@@ -120,7 +121,7 @@ def asignarCuenta(request):
 
     return render(request, 'Cuentas/AsignarCuenta.html', {'form': form})
 
-
+@login_required(login_url='/login')
 def crearTarjeta(request):
     if request.method == 'POST':
         form = TarjetaForm(request.POST)
@@ -133,7 +134,7 @@ def crearTarjeta(request):
 
     return render(request, 'Tarjetas/CrearTarjeta.html', {'form': form})
 
-
+@login_required(login_url='/login')
 def asignarTarjeta(request):
     if request.method == 'POST':
         form = AsigTarjetaForm(request.POST)
@@ -146,7 +147,7 @@ def asignarTarjeta(request):
 
     return render(request, 'Tarjetas/AsignarTarjeta.html', {'form': form})
 
-
+@login_required(login_url='/login')
 def editarClientes(request, id):
     if request.method == 'POST':
         u = Cliente.objects.get(id=id)
@@ -165,7 +166,7 @@ def editarClientes(request, id):
     idusuario = u.id
     return render(request, 'Clientes/Editar.html', {'form': form, 'idusuario': idusuario})
 
-
+@login_required(login_url='/login')
 def insertarAfiliado(request):
     if request.method == 'POST':
         form = AfiliadoForm(request.POST)
@@ -178,7 +179,7 @@ def insertarAfiliado(request):
 
     return render(request, 'Afiliado/Insertar.html', {'form': form})
 
-
+@login_required(login_url='/login')
 def Buscar_Afiliados(request):
     form = BuscarCliente(request.POST)
     u = None
@@ -191,31 +192,31 @@ def Buscar_Afiliados(request):
     afiliado = BuscarCliente()
     return render(request, 'Afiliado/Buscar.html', {'form': afiliado, 'afiliado': u})
 
-
+@login_required(login_url='/login')
 def Eliminar_Afiliados(request, id):
     Afiliado.objects.get(id=id).delete()
     return HttpResponse('<h1>Afiliado Eliminado</h1>')
 
-
+@login_required(login_url='/login')
 def Eliminar_TipoAfiliados(request, id):
     TipoAfiliado.objects.get(id=id).delete()
     return HttpResponse('<h1>Tipo Afiliado Eliminado</h1>')
 
-
+@login_required(login_url='/login')
 def Bloquear_Afiliados(request, id):
     u = Afiliado.objects.get(id=id)
     u.bloqueado = True
     u.save()
     return HttpResponse('<h1>Afiliado Bloqueado</h1>')
 
-
+@login_required(login_url='/login')
 def Bloquear_TipoAfiliados(request, id):
     u = TipoAfiliado.objects.get(id=id)
     u.bloqueado = True
     u.save()
     return HttpResponse('<h1>Tipo Afiliado Bloqueado</h1>')
 
-
+@login_required(login_url='/login')
 def editarAfiliados(request, id):
     if request.method == 'POST':
         u = Afiliado.objects.get(id=id)
@@ -234,7 +235,7 @@ def editarAfiliados(request, id):
     idafiliado = u.id
     return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': idafiliado})
 
-
+@login_required(login_url='/login')
 def insertarTipoAfiliado(request):
     if request.method == 'POST':
         form = TipoAfiliadoForm(request.POST)
@@ -247,7 +248,7 @@ def insertarTipoAfiliado(request):
 
     return render(request, 'TipoAfiliado/Insertar.html', {'form': form})
 
-
+@login_required(login_url='/login')
 def BuscarTipoAfiliado(request):
     form = BuscarCliente(request.POST)
     t = None
@@ -261,7 +262,7 @@ def BuscarTipoAfiliado(request):
     return render(request, 'TipoAfiliado/Buscar.html', {'form': buscartipoafiliado, 'TipoAfiliado': t})
 
 
-##
+@login_required(login_url='/login')
 def editarTipoAfiliados(request, id):
     if request.method == 'POST':
         u = TipoAfiliado.objects.get(id=id)
