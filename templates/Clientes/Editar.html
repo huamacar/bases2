@@ -1,5 +1,5 @@
 {% extends "Clientes/Base.html" %}
-{
+{% block content %}
     <form action="/Clientes/editar/{{ idusuario }}/" method="post">
         {% csrf_token %}
         {{ form.as_p }}
@@ -10,3 +10,4 @@
     <form action="/Clientes/buscar/" method="get">
         <input type="submit" value="Regresar a inicio">
     </form>
+{% endblock %}
