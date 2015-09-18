@@ -13,11 +13,11 @@
         <div align="right">
             {% if not user.is_authenticated %}
                 <form action="/login/" method="get">
-                    <input type="submit" value="login">
+                    <input type="submit" value="login" class="boton">
                 </form>
             {% else %}
                 <form action="/logout/" method="get">
-                    <input type="submit" value="logout">
+                    <input type="submit" value="logout" class="boton">
                 </form>
             {% endif %}
         </div>

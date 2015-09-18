@@ -1,7 +1,7 @@
 {% extends "Base.html" %}
     {% load staticfiles %}
     {% block title %}
-        Amadeus Bank
+        <title> Amadeus Bank</title>
     {% endblock %}
     {% block sidebar %}
         {% if user.is_authenticated %}
@@ -17,17 +17,17 @@
     {%  block content  %}
         <div class="column1">
             <div class="title">
-                <h2>CO-FUNDADOR</h2>
-            </div>
-            <img src="{% static "images/chat.jpg" %}" width="282" height="150" alt="" />
-            <p>Inicios del proyecto creditos de "Amadeus Bank".</p>
-        </div>
-        <div class="column2">
-            <div class="title">
                 <h2>Vision</h2>
             </div>
             <img src="{% static "images/banco.jpeg" %}" width="282" height="150" alt="" />
             <p>Ofrecer los mejores servicios de cretido a los clientes, y afiliados, bindandoles la confianza del prestamo. </p>
+        </div>
+        <div class="column2">
+            <div class="title">
+                <h2>Ahorro</h2>
+            </div>
+            <img src="{% static "images/ahorro.jpeg" %}" width="282" height="150" alt="" />
+            <p>Ahorros con mejor control.</p>
         </div>
         <div class="column3">
             <div class="title">

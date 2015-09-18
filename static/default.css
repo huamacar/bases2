@@ -5,7 +5,7 @@ html, body {
 body {
 	margin: 0px;
 	padding: 0px;
-	background: #3e86d8;
+	background: rgba(47, 47, 45, 0.66);
 	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 12pt;
 	font-weight: 400;
@@ -121,7 +121,7 @@ hr {
 #header {
 	position: relative;
 	overflow: hidden;
-	height: 200px;
+	height: 300px;
 }
 
 #social
@@ -177,7 +177,7 @@ hr {
 
 #menu {
 	overflow: hidden;
-	background: #3e86d8;
+	background: rgba(116, 114, 113, 0.78);
 }
 
 #menu ul {
@@ -534,7 +534,52 @@ ul.style3 .first {
 		font-size: 1em;
 		color: #FFF;
 	}
-	
+
+	.boton {
+		width: 100px;
+		height: 40px;
+		background: #040910;
+		font-family: "Arial";
+		background-image: linear-gradient(bottom, #747271 0%, #040910 100%);
+
+		background-image: -o-linear-gradient(bottom, #747271 0%, #040910 100%);
+
+		background-image: -moz-linear-gradient(bottom, #747271 0%, #040910 100%);
+
+		background-image: -webkit-linear-gradient(bottom, #747271 0%, #747271 100%);
+
+		background-image: -ms-linear-gradient(bottom, #747271 0%, #040910 100%);
+
+		background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #747271), color-stop(1, #040910));
+
+		background-clip: padding-box;
+
+		border-top: 1px solid #040910;
+
+		border-right: 1px solid #040910;
+
+		border-bottom: 1px solid #040910;
+
+		border-left: 1px solid #040910;
+
+		border-radius: 5px;
+
+		box-shadow: inset 0 1px 0 0 #747271, 0 1px 2px 0 #b3b3b3;
+
+		color: #fff;
+
+		font-size: 18px;
+
+		font-weight: bold;
+
+		line-height: 1;
+
+		padding: 5px 10px;
+
+		text-align: center;
+
+		text-shadow: 0 -1px 1px #747271;
+	}
 /*********************************************************************************/
 /* Social Icon Styles                                                            */
 /*********************************************************************************/
