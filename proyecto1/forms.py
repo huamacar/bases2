@@ -31,6 +31,11 @@ class CuentaForm(ModelForm):
             model = Cuenta
             fields = '__all__'
 
+class TipoCuentaForm(ModelForm):
+        class Meta:
+            model = TipoCuenta
+            fields = '__all__'
+
 class AsigCuentaForm(ModelForm):
         class Meta:
             model = AsignacionCuenta

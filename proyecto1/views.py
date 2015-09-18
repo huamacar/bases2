@@ -75,6 +75,18 @@ def crearCuenta(request):
 
     return render(request,'Cuentas/Crear.html',{'form':form})
 
+def crearTipoCuenta(request):
+    if request.method =='POST':
+        form = TipoCuentaForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponse('<h1>Tipo Cuenta Insertada</h1>')
+    else:
+        form = TipoCuentaForm()
+
+    return render(request,'Cuentas/CrearTipo.html',{'form':form})
+
 def asignarCuenta(request):
     if request.method =='POST':
         form = AsigCuentaForm(request.POST)
