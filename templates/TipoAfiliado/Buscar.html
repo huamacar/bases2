@@ -1,53 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-{% load staticfiles %}
-<head>
-    <meta charset="UTF-8">
-    <link href="{% static "default.css" %}" rel="stylesheet" type="text/css" media="all" />
-    <link href="{% static "fonts.css" %}" rel="stylesheet" type="text/css" media="all" />
-    <title>Amadeus Bank</title>
-</head>
-<body>
-<div id="wrapper">
-	<div id="header-wrapper">
-		<div id="header" class="container">
-			<div id="logo">
-				<h1><a href="#">Amadeus Bank</a></h1>
-			</div>
-		</div>
-        <div id="menu" class="container">
-			<ul >
-                <li><a href="/">Inicio</a></li>
-                <li><a href="{% url 'Insertar_TipoAfiliado' %}">Insertar</a></li>
-                <li><a href="{% url 'Buscar_TipoAfiliado' %}">Editar</a></li>
-            </ul>
-		</div>
-	</div>
-	<div id="page" class="container">
-        <form action="/TipoAfiliado/buscar/" method="post">
-        {% if form%}
-            {% csrf_token %}
-            {{ form.as_p }}
-        {% endif %}
-        <input type="submit" value="Buscar" />
-        </form>
+{% extends "TipoAfiliado/Base.html" %}
+
+{% block content %}
+    <form action="/TipoAfiliado/buscar/" method="post">
+    {% if form%}
+        {% csrf_token %}
+        {{ form.as_p }}
+    {% endif %}
+    <input type="submit" value="Buscar" />
+    </form>
+    <br>
+    {% if TipoAfiliado %}
+
+        Nombre : {{TipoAfiliado.nombre }} <br>
+        Descripción: {{ TipoAfiliado.descripcion}}<br>
+        Porcentaje:{{ TipoAfiliado.porcentaje }}<br>
+
         <br>
-        {% if TipoAfiliado %}
+        <form action="/TipoAfiliado/eliminar/{{ TipoAfiliado.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form><br>
+        <form action="/TipoAfiliado/bloquear/{{ TipoAfiliado.id}}/" method="get"> <input type="submit" value="Bloquear" /> </form><br>
+        <form action="/TipoAfiliado/editar/{{ TipoAfiliado.id}}/" method="get"> <input type="submit" value="Editar" /> </form><br>
+    {% endif %}
 
-            Nombre : {{TipoAfiliado.nombre }} <br>
-            Descripción: {{ TipoAfiliado.descripcion}}<br>
-            Porcentaje:{{ TipoAfiliado.porcentaje }}<br>
-
-            <br>
-            <form action="/TipoAfiliado/eliminar/{{ TipoAfiliado.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form><br>
-            <form action="/TipoAfiliado/bloquear/{{ TipoAfiliado.id}}/" method="get"> <input type="submit" value="Bloquear" /> </form><br>
-            <form action="/TipoAfiliado/editar/{{ TipoAfiliado.id}}/" method="get"> <input type="submit" value="Editar" /> </form><br>
-        {% endif %}
-	</div>
-</div>
-<div id="footer">
-	<p>Sistemas de Base de Datos 2 :: Grupo 1</p>
-</div>
-
-</body>
-</html>
+{% endblock %}

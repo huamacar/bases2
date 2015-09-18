@@ -1,0 +1,16 @@
+{%  extends "Base.html" %}
+    {% load staticfiles %}
+    {% block title %}
+        Tipo Afiliado
+    {% endblock %}
+    {% block sidebar %}
+        <ul >
+            <li><a href="/">Inicio</a></li>
+            <li><a href="{% url 'Insertar_TipoAfiliado' %}">Insertar</a></li>
+            <li><a href="{% url 'Buscar_TipoAfiliado' %}">Editar</a></li>
+        </ul>
+    {% endblock %}
+
+    {% block content %}
+
+    {% endblock %}

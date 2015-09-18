@@ -1,35 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-{% load staticfiles %}
-<head>
-    <meta charset="UTF-8">
-    <link href="{% static "default.css" %}" rel="stylesheet" type="text/css" media="all" />
-    <link href="{% static "fonts.css" %}" rel="stylesheet" type="text/css" media="all" />
-    <title>Amadeus Bank</title>
-</head>
-<body>
-<div id="wrapper">
-	<div id="header-wrapper">
-		<div id="header" class="container">
-			<div id="logo">
-				<h1><a href="#">Amadeus Bank</a></h1>
-			</div>
-		</div>
-        <div id="menu" class="container">
-			<ul >
-                <li><a href="/">Inicio</a></li>
-                <li><a href="{% url 'Crear_Tarjeta' %}">Crear</a></li>
-                <li><a href="{% url 'Asignar_Tarjeta' %}">Asignar</a></li>
-            </ul>
-		</div>
-	</div>
-	<div id="page" class="container">
+{% extends "Tarjetas/Base.html" %}
+{% block content %}
 
-	</div>
-</div>
-<div id="footer">
-	<p>Sistemas de Base de Datos 2 :: Grupo 1</p>
-</div>
-
-</body>
-</html>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+{% endblock %}

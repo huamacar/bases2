@@ -1,0 +1,16 @@
+{%  extends "Base.html" %}
+    {% load staticfiles %}
+    {% block title %}
+        Tarjetas
+    {% endblock %}
+    {% block sidebar %}
+        <ul >
+            <li><a href="/">Inicio</a></li>
+            <li><a href="{% url 'Crear_Tarjeta' %}">Crear</a></li>
+            <li><a href="{% url 'Asignar_Tarjeta' %}">Asignar</a></li>
+        </ul>
+    {% endblock %}
+
+    {% block content %}
+
+    {% endblock %}

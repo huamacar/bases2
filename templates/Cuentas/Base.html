@@ -1,0 +1,16 @@
+{%  extends "Base.html" %}
+    {% load staticfiles %}
+    {% block title %}
+        Cuentas
+    {% endblock %}
+    {% block sidebar %}
+        <ul >
+            <li><a href="/">Inicio</a></li>
+            <li><a href="{% url 'Crear_Cuenta' %}">Crear</a></li>
+            <li><a href="{% url 'Asignar_Cuenta' %}">Asignar</a></li>
+        </ul>
+    {% endblock %}
+
+    {% block content %}
+
+    {% endblock %}
