@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static "default.css" %}" rel="stylesheet" type="text/css" media="all" />
+    <link href="{% static "fonts.css" %}" rel="stylesheet" type="text/css" media="all" />
+    <title>{% block title %} {% endblock %}</title>
+</head>
+<body>
+<div id="wrapper">
+	<div id="header-wrapper">
+		<div id="header" class="container">
+			<div id="logo">
+				<h1><a href="#">Amadeus Bank</a></h1>
+			</div>
+		</div>
+		<div id="menu" class="container">
+            {% block sidebar %}
+            {% endblock %}
+		</div>
+	</div>
+	<div id="page" class="container">
+		{% block content %}{% endblock %}
+	</div>
+</div>
+<div id="footer">
+	<p>Sistemas de Base de Datos 2 :: Grupo 1</p>
+</div>
+</body>
+</html>
+

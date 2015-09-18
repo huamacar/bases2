@@ -1,25 +1,17 @@
 from django.shortcuts import render
-from django.template import RequestContext
-from proyecto1.models import *
-from django.shortcuts import  render_to_response
-from django.http import HttpResponseRedirect
 # Create your views here.
 
-from .forms import UsuarioForm
-from .forms import CuentaForm
-from .forms import AsigCuentaForm
-from .forms import TarjetaForm
-from .forms import AsigTarjetaForm
 from .forms import *
-from django import forms
 from django.http import HttpResponse
-from django.shortcuts import redirect
 
+from django.contrib import messages #para emitir aletrs
 def index(request):
     return render(request,'Index.html')
 
 def indexClientes(request):
+    messages.add_message(request, messages.INFO, 'Hello world.')
     return  render(request,'Clientes/Index.html')
+
 
 def indexCuentas(request):
     return  render(request,'Cuentas/Index.html')
@@ -38,15 +30,8 @@ def insertarClientes(request):
         form = UsuarioForm(request.POST)
 
         if form.is_valid():
-            u = Usuario()
-            u.nombre = form.cleaned_data['nombre']
-            u.direccion = form.cleaned_data['direccion']
-            u.telefono = form.cleaned_data['telefono']
-            u.correo = form.cleaned_data['correo']
-            u.fechaNacimiento = form.cleaned_data['fechaNacimiento']
-            u.profesion = form.cleaned_data['profesion']
-            u.genero = form.cleaned_data['genero']
-            u.save()
+            usuario = form.save()       #con esto no hay necesidad de igualar los datos ya se salva a la base de datos
+
             return HttpResponse('<h1>Cliente insertado</h1>')
     else:
         form = UsuarioForm()
