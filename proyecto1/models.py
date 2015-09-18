@@ -203,6 +203,7 @@ class AsignacionLoteUsuario(models.Model):
         db_table = 'AsignacionLoteUsuario'
 
 class Nota(models.Model):
+    idRecibo = models.ForeignKey(Recibo)
     nota = models.CharField(max_length=100)
     fecha = models.DateField()
     descripcion = models.CharField(max_length=200)
@@ -237,7 +238,6 @@ class Voucher(models.Model):
 
 class Recibo(models.Model):
     idUsuario = models.ForeignKey(Usuario)
-    idNota = models.ForeignKey(Nota)
     idLote = models.ForeignKey(Lote)
     idTrasaccion = models.ForeignKey(Transaccion)
     fecha = models.DateField()
