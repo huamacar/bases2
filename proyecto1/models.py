@@ -1,8 +1,9 @@
 from django.db import models
+from django.core.validators import *
 # Amadeus was here 2
 # Create your models here.
 class Cliente(models.Model):
-    nombre = models.CharField(max_length=200)
+    nombre = models.CharField(max_length=200, validators=[RegexValidator(r'^[a-zA-Z\' \']*$', 'El nombre solo permite letras de A-Z')])
     direccion = models.CharField(max_length=200)
     telefono = models.IntegerField()
     correo = models.EmailField()
@@ -22,7 +23,7 @@ class TipoCuenta(models.Model):
 
 class Cuenta(models.Model):
     idTipoCuenta = models.ForeignKey(TipoCuenta)
-    limite = models.FloatField()
+    limite = models.FloatField(validators=[MinValueValidator(0.0)])
     fechaCreacion = models.DateField()
     diasMorosos = models.IntegerField()
 
