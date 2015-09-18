@@ -3,6 +3,7 @@ __author__ = 'huamacar'
 from django import forms
 from django.forms import ModelForm
 from proyecto1.models import *
+from django.core.validators import *
 '''
 class UsuarioForm(forms.Form):
         nombre = forms.CharField(label='Nombre cliente', max_length=100)
@@ -13,7 +14,7 @@ class UsuarioForm(forms.Form):
         profesion = forms.CharField(label='Profesion', max_length=100)
         genero = forms.CharField(label='Genero', max_length=100)
 '''
-class UsuarioForm(ModelForm):
+class ClienteForm(ModelForm):
         class Meta:
             model = Cliente
             fields = '__all__'
@@ -24,7 +25,9 @@ class EditarUsuarioForm(ModelForm):
         eliminar = forms.BooleanField(required=False)
 '''
 class BuscarCliente(forms.Form):
-        id = forms.IntegerField(label="Cliente Buscado")
+        nombre = forms.CharField(max_length=200)
+
+
 
 class CuentaForm(ModelForm):
         class Meta:

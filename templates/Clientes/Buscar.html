@@ -8,20 +8,4 @@
     {% endif %}
     <input type="submit" value="Buscar" />
     </form>
-    <br>
-    {% if usuario %}
-
-        Nombre Usuario: {{ usuario.nombre }} <br>
-        Dirección: {{ usuario.direccion }}<br>
-        Teléfono:{{ usuario.telefono }}<br>
-        Correo:{{ usuario.correo }}<br>
-        Fecha de Nacimiento:{{ usuario.fechaNacimiento }}<br>
-        Profesión:{{ usuario.profesion }}<br>
-        Genero:{{ usuario.genero }}<br>
-
-        <br>
-        <form action="/Clientes/eliminar/{{ usuario.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form><br>
-        <form action="/Clientes/bloquear/{{ usuario.id}}/" method="get"> <input type="submit" value="Bloquear" /> </form><br>
-        <form action="/Clientes/editar/{{ usuario.id}}/" method="get"> <input type="submit" value="Editar" /> </form><br>
-    {% endif %}
 {% endblock %}

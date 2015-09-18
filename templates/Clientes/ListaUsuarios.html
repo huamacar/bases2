@@ -1,0 +1,27 @@
+{% extends "Clientes/Base.html" %}
+
+{% block content %}
+    {% if clientes.count  %}
+        <table style="width:100%">
+        <tr>
+            <th>Nombre</th>
+            <th>Dirección</th>
+            <th>Correo</th>
+        </tr>
+            {% for cliente in clientes %}
+            <tr>
+                <td>{{ cliente.nombre}}</td>
+                <td>{{ cliente.direccion }}</td>
+                <td>{{ cliente.correo}}</td>
+                <td><form action="/Clientes/editar/{{ cliente.id}}/" method="get"> <input type="submit" value="Editar" /> </form></td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    {% else %}
+        No hubo resultados en la busqueda
+        <form action="/Clientes/buscar/" method="get">
+        <input type="submit" value="Regresar">
+    </form>
+    {% endif %}
+{% endblock %}
