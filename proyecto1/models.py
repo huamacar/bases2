@@ -103,7 +103,7 @@ class PagoMinimo(models.Model):
     monto = models.FloatField()
 
     class Meta:
-        db_table = 'InteresEmisor'
+        db_table = 'PagoMinimo'
 
 class TipoEstado(models.Model):
     tipoEstado = models.CharField(max_length=100)

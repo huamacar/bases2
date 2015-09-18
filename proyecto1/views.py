@@ -30,7 +30,7 @@ def insertarClientes(request):
         form = UsuarioForm(request.POST)
 
         if form.is_valid():
-            usuario = form.save()       #con esto no hay necesidad de igualar los datos ya se salva a la base de datos
+            form.save()       #con esto no hay necesidad de igualar los datos ya se salva a la base de datos
 
             return HttpResponse('<h1>Cliente insertado</h1>')
     else:
