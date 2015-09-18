@@ -15,7 +15,7 @@ class UsuarioForm(forms.Form):
 '''
 class UsuarioForm(ModelForm):
         class Meta:
-            model = Usuario
+            model = Cliente
             fields = '__all__'
 '''
 class EditarUsuarioForm(ModelForm):

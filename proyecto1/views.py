@@ -68,11 +68,7 @@ def crearCuenta(request):
         form = CuentaForm(request.POST)
 
         if form.is_valid():
-            c = Cuenta()
-            c.tipo = form.cleaned_data['tipo']
-            c.limite = form.cleaned_data['limite']
-            c.fechaCreacion = form.cleaned_data['fechaCreacion']
-            c.save()
+            form.save()
             return HttpResponse('<h1>Cuenta Insertada</h1>')
     else:
         form = CuentaForm()
@@ -84,10 +80,7 @@ def asignarCuenta(request):
         form = AsigCuentaForm(request.POST)
 
         if form.is_valid():
-            a = AsignacionCuenta()
-            a.idUsuario = form.cleaned_data['idUsuario']
-            a.idCuenta = form.cleaned_data['idCuenta']
-            a.save()
+            form.save()
             return HttpResponse('<h1>Cuenta Asignada</h1>')
     else:
         form = AsigCuentaForm()
@@ -99,13 +92,7 @@ def crearTarjeta(request):
         form = TarjetaForm(request.POST)
 
         if form.is_valid():
-            t = Tarjeta()
-            t.noTarjeta = form.cleaned_data['noTarjeta']
-            t.tipo = form.cleaned_data['tipo']
-            t.limite = form.cleaned_data['limite']
-            t.fechaCorte = form.cleaned_data['fechaCorte']
-            t.fechaPago = form.cleaned_data['fechaPago']
-            t.save()
+            form.save()
             return HttpResponse('<h1>Tarjeta Creada</h1>')
     else:
         form = TarjetaForm()
@@ -117,11 +104,7 @@ def asignarTarjeta(request):
         form = AsigTarjetaForm(request.POST)
 
         if form.is_valid():
-            a = AsignacionTarjeta()
-            a.idCuenta = form.cleaned_data['idCuenta']
-            a.noTarjeta = form.cleaned_data['noTarjeta']
-            a.fechaAsignacion = form.cleaned_data['fechaAsignacion']
-            a.save()
+            form.save()
             return HttpResponse('<h1>Tarjeta Asignada</h1>')
     else:
         form = AsigTarjetaForm()
@@ -151,12 +134,7 @@ def insertarAfiliado(request):
         form = AfiliadoForm(request.POST)
 
         if form.is_valid():
-            t = Afiliado()
-            t.nombre = form.cleaned_data['nombre']
-            t.direccion = form.cleaned_data['direccion']
-            t.telefono = form.cleaned_data['telefono']
-            t.correo = form.cleaned_data['correo']
-            t.save()
+            form.save()
             return HttpResponse('<h1>Afiliado insertado</h1>')
     else:
         form = AfiliadoForm()
@@ -218,11 +196,7 @@ def insertarTipoAfiliado(request):
         form = TipoAfiliadoForm(request.POST)
 
         if form.is_valid():
-            t = TipoAfiliado()
-            t.nombre = form.cleaned_data['nombre']
-            t.descripcion = form.cleaned_data['descripcion']
-            t.porcentaje = form.cleaned_data['porcentaje']
-            t.save()
+            form.save()
             return HttpResponse('<h1>Tipo afiliado insertado</h1>')
     else:
         form = TipoAfiliadoForm()
