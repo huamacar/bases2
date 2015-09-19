@@ -700,7 +700,7 @@ def retirar(request,id):
                 messages.add_message(request, messages.INFO, 'El monto no puede ser mayor al saldo')
 
                 t = Transaccion()
-                t.tipoTrasaccion = 'debito'
+                t.tipoTrasaccion = 'credito'
                 t.fecha = datetime.datetime.now()
                 t.hora = datetime.datetime.now()
                 t.monto = cantidad
@@ -731,7 +731,7 @@ def retirar(request,id):
                 c.save()
 
                 t = Transaccion()
-                t.tipoTrasaccion = 'debito'
+                t.tipoTrasaccion = 'credito'
                 t.fecha = datetime.datetime.now()
                 t.hora = datetime.datetime.now()
                 t.monto = cantidad
