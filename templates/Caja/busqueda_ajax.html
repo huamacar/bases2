@@ -1,0 +1,8 @@
+{% if cuentas.count > 0 %}
+    {% for cuenta in cuentas %}
+        <li><a href="/Caja/pago/{{ cuenta.id }}/">No cuenta: {{ cuenta.id }}</a></li>
+    {% endfor %}
+
+{% else %}
+    <li> No hay resultados en su busqueda</li>
+{% endif %}

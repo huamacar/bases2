@@ -344,11 +344,11 @@ def BuscarCuenta(request):
         form = BuscarCuentaForm(request.POST)
         if form.is_valid():
 
-            return render(request,'Cuenta/Buscar.html',{'form':form})
+            return render(request, 'Caja/Buscar.html',{'form':form})
     else:
         form = BuscarCuentaForm()
 
-    return render(request,'Cuenta/Buscar.html',{'form':form})
+    return render(request, 'Caja/Buscar.html',{'form':form})
 
 
 def BuscarCuentaAjax(request):
@@ -358,23 +358,29 @@ def BuscarCuentaAjax(request):
         search_text = 0
 
     cuentas = Cuenta.objects.filter(id__startswith=search_text)
-    #cuentas = Cuenta.objects.all().values()
+    #cuentas = Caja.objects.all().values()
 
-    return render(request,'Cuenta/busqueda_ajax.html',{'cuentas':cuentas})
+    return render(request, 'Caja/busqueda_ajax.html',{'cuentas':cuentas})
 
 def PagarCuenta(request,id):
     if request.method =='POST':
         c = Cuenta.objects.get(id=id)
-        form = CuentaForm(request.POST, instance=c)
+        form = PagarCuentaForm(request.POST)
         if form.is_valid():
-            form.save()
-            return render(request,'Cuenta/pago.html',{'form':form})
+            monto = float(form.data['monto'])
+            if monto > c.saldo:
+                messages.add_message(request, messages.INFO, 'El monto no puede ser mayor al saldo')
+            else:
+                c.saldo = c.saldo - monto
+                c.save()
+                messages.add_message(request, messages.INFO, 'El pago ha sido realizado')
+
+
+            return render(request, 'Caja/pago.html',{'form':form, 'cuenta':c})
     else:
         c = Cuenta()
-        try:
-            c = Cuenta.objects.get(id=id)
-        except:
-            return HttpResponse('<h1>El usuario no existe en la Base de Datos</h1>')
-        form = CuentaForm(instance=c)
-    return render(request,'Cuenta/pago.html',{'form':form})
+        c = Cuenta.objects.get(id=id)
+
+        form = PagarCuentaForm()
+    return render(request, 'Caja/pago.html',{'form':form, 'cuenta':c})
 

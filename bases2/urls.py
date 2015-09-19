@@ -57,9 +57,9 @@ urlpatterns = patterns('',
     url(r'^Usuarios/registrar/$','proyecto1.views.RegistrarUsuario', name='Registrar_Usuario'),
 
     #CAJA
-    url(r'^Cuenta/buscar/$','proyecto1.views.BuscarCuenta',name='Buscar_Cuenta'),
-    url(r'^Cuenta/busqueda/$','proyecto1.views.BuscarCuentaAjax',name='Buscar_Cuenta'),
-    url(r'^Cuenta/pago/(?P<id>\d+)/$', 'proyecto1.views.PagarCuenta', name='Pagar_Cuenta'),
+    url(r'^Caja/buscar/$','proyecto1.views.BuscarCuenta',name='Buscar_Cuenta'),
+    url(r'^Caja/busqueda/$','proyecto1.views.BuscarCuentaAjax',name='Buscar_Cuenta'),
+    url(r'^Caja/pago/(?P<id>\d+)/$', 'proyecto1.views.PagarCuenta', name='Pagar_Cuenta'),
 
 
     #auth

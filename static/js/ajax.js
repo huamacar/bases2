@@ -5,7 +5,7 @@ $(function(){
     $('#search').keyup(function(){
         $.ajax({
             type: "POST",
-            url: "/Cuenta/busqueda/",
+            url: "/Caja/busqueda/",
             data:{
                 'search_text'   :   $('#search').val(),
                 'csrfmiddlewaretoken'   :   $("input[name=csrfmiddlewaretoken]").val()
