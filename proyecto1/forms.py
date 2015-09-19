@@ -32,6 +32,9 @@ class EditarUsuarioForm(ModelForm):
 class BuscarCliente(forms.Form):
         nombre = forms.CharField(max_length=200)
 
+class BuscarSenda(forms.Form):
+        cuenta = forms.IntegerField()
+
 class RetirarEfectivo(forms.Form):
         cantidad = forms.FloatField(validators=[MinValueValidator(0.0)])
 

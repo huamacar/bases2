@@ -1,0 +1,45 @@
+{% extends "Senda/Base.html" %}
+
+{% block content %}
+    {% if logs.count %}
+        <table style="width:100%">
+        <tr>
+            <th>Id</th>
+            <th>idUsuario</th>
+            <th>idTrasaccion</th>
+            <th>idCuenta</th>
+            <th>idPrograma</th>
+            <th>fecha</th>
+            <th>hora</th>
+            <th>saldo_inicial</th>
+            <th>saldo</th>
+            <th>debito</th>
+            <th>credito</th>
+            <th>autorizacion</th>
+            <th>rechazo</th>
+            <th>razonRechazo</th>
+        </tr>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.id}}</td>
+                <td>{{ log.idUsuario.id }}</td>
+                <td>{{ log.idTrasaccion.id}}</td>
+                <td>{{ log.idCuenta.id}}</td>
+                <td>{{ log.idPrograma.id}}</td>
+                <td>{{ log.fecha}}</td>
+                <td>{{ log.hora}}</td>
+                <td>{{ log.saldo_inicial}}</td>
+                <td>{{ log.saldo}}</td>
+                <td>{{ log.debito}}</td>
+                <td>{{ log.credito}}</td>
+                <td>{{ log.autorizacion}}</td>
+                <td>{{ log.rechazo}}</td>
+                <td>{{ log.razonRechazo}}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    {% else %}
+        No hay logs para mostrar
+    {% endif %}
+{% endblock %}

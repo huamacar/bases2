@@ -26,6 +26,10 @@ def indexAutorizacion(request):
     messages.add_message(request, messages.INFO, 'Hello world.')
     return render(request, 'Autorizacion/Index.html')
 
+@login_required(login_url='/login')
+def indexSenda(request):
+    messages.add_message(request, messages.INFO, 'Ver Senda.')
+    return render(request, 'Senda/Index.html')
 
 @login_required(login_url='/login')
 def indexCuentas(request):
@@ -113,6 +117,29 @@ def consumo(request):
 
     return render(request, 'Autorizacion/Consumo.html', {'transacciones': transacciones})
 
+@login_required(login_url='/login')
+def senda(request):
+    logs = Log.objects.all()
+
+    return render(request, 'Senda/Senda.html', {'logs': logs})
+
+@login_required(login_url='/login')
+def buscarSenda(request):
+    if request.method == 'POST':
+        form = BuscarSenda(request.POST)
+        if form.is_valid():
+            noCuenta = form.data['cuenta']
+            try:
+                logs = Log.objects.filter(Q(
+                    idCuenta__gte=noCuenta)).all()
+
+                return render(request, 'Senda/Senda.html', {'logs': logs})
+            except:
+                return render(request, 'Senda/Senda.html')
+
+    else:
+        form = BuscarSenda()
+        return render(request, 'Senda/Buscar.html', {'form': form})
 
 @login_required(login_url='/login')
 def autorizar(request, id):
