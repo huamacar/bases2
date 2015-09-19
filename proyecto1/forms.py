@@ -85,3 +85,8 @@ class BuscarCuentaForm(forms.Form):
 
 class PagarCuentaForm(forms.Form):
         monto = forms.FloatField(label="Monto a pagar", validators=[MinValueValidator(0)])
+
+class TransferenciaCuentasForm(forms.Form):
+        cuentaorigen = forms.IntegerField(label="Cuenta Origen", validators=[MinValueValidator(0)])
+        cuentadestino = forms.IntegerField(label="Cuenta Destino", validators=[MinValueValidator(0)])
+        monto = forms.FloatField(label="Monto a pagar", validators=[MinValueValidator(0)])
