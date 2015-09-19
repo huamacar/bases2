@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import render, render_to_response
 # Create your views here.
 
@@ -408,14 +410,70 @@ def BuscarCuentaAjax(request):
 def PagarCuenta(request, id):
     if request.method == 'POST':
         c = Cuenta.objects.get(id=id)
+        saldoInicial = c.saldo
         form = PagarCuentaForm(request.POST)
         if form.is_valid():
             monto = float(form.data['monto'])
             if monto > c.saldo:
                 messages.add_message(request, messages.INFO, 'El monto no puede ser mayor al saldo')
+
+                t = Transaccion()
+                t.tipoTrasaccion = 'debito'
+                t.fecha = datetime.datetime.now()
+                t.hora = datetime.datetime.now()
+                t.monto = monto
+                t.save()
+
+                l = Log()
+
+                u = Usuario.objects.get(usuario=request.user.get_username())
+                p = Programa.objects.get(id=1)
+
+                l.idTrasaccion = t
+                l.idCuenta = c
+                l.idPrograma = p
+                l.idUsuario = u
+                l.fecha = datetime.datetime.now()
+                l.hora = datetime.datetime.now()
+                l.saldo_inicial = c.saldo
+                l.saldo = c.saldo
+                l.debito = monto
+                l.credito = 0
+                l.autorizacion = 0
+                l.rechazo = 1
+                l.razonRechazo = 'El monto no puede ser mayor al saldo'
+                l.save()
             else:
                 c.saldo = c.saldo - monto
                 c.save()
+
+                t = Transaccion()
+                t.tipoTrasaccion = 'debito'
+                t.fecha = datetime.datetime.now()
+                t.hora = datetime.datetime.now()
+                t.monto = monto
+                t.save()
+
+                l = Log()
+
+                u = Usuario.objects.get(usuario=request.user.get_username())
+                p = Programa.objects.get(id=1)
+
+                l.idTrasaccion = t
+                l.idCuenta = c
+                l.idPrograma = p
+                l.idUsuario = u
+                l.fecha = datetime.datetime.now()
+                l.hora = datetime.datetime.now()
+                l.saldo_inicial = saldoInicial
+                l.saldo = c.saldo
+                l.debito = monto
+                l.credito = 0
+                l.autorizacion = 1
+                l.rechazo = 0
+                l.razonRechazo = ''
+                l.save()
+
                 messages.add_message(request, messages.INFO, 'El pago ha sido realizado')
 
             return render(request, 'Caja/pago.html', {'form': form, 'cuenta': c})
@@ -451,14 +509,71 @@ def TransferenciaCuentas(request):
 
             if not errores:
                 if cOrigen.saldo >= monto:
+                    saldoInicial = cDestino.saldo
+
                     cOrigen.saldo = cOrigen.saldo - monto
                     cDestino.saldo = cDestino.saldo + monto
 
                     cOrigen.save()
                     cDestino.save()
+
+                    t = Transaccion()
+                    t.tipoTrasaccion = 'debito'
+                    t.fecha = datetime.datetime.now()
+                    t.hora = datetime.datetime.now()
+                    t.monto = monto
+                    t.save()
+
+                    l = Log()
+
+                    u = Usuario.objects.get(usuario=request.user.get_username())
+                    p = Programa.objects.get(id=1)
+
+                    l.idTrasaccion = t
+                    l.idCuenta = cDestino
+                    l.idPrograma = p
+                    l.idUsuario = u
+                    l.fecha = datetime.datetime.now()
+                    l.hora = datetime.datetime.now()
+                    l.saldo_inicial = saldoInicial
+                    l.saldo = cDestino.saldo
+                    l.debito = monto
+                    l.credito = 0
+                    l.autorizacion = 1
+                    l.rechazo = 0
+                    l.razonRechazo = ''
+                    l.save()
+
                     messages.add_message(request, messages.INFO, 'Transaccion realizada con exito')
                     t = True;
                 else:
+                    t = Transaccion()
+                    t.tipoTrasaccion = 'debito'
+                    t.fecha = datetime.datetime.now()
+                    t.hora = datetime.datetime.now()
+                    t.monto = monto
+                    t.save()
+
+                    l = Log()
+
+                    u = Usuario.objects.get(usuario=request.user.get_username())
+                    p = Programa.objects.get(id=1)
+
+                    l.idTrasaccion = t
+                    l.idCuenta = cDestino
+                    l.idPrograma = p
+                    l.idUsuario = u
+                    l.fecha = datetime.datetime.now()
+                    l.hora = datetime.datetime.now()
+                    l.saldo_inicial = cDestino.saldo
+                    l.saldo = cDestino.saldo
+                    l.debito = monto
+                    l.credito = 0
+                    l.autorizacion = 0
+                    l.rechazo = 1
+                    l.razonRechazo = 'La cuenta no tiene suficientes fondos'
+                    l.save()
+
                     messages.add_message(request, messages.INFO, 'La cuenta no tiene suficientes fondos')
 
 
@@ -546,15 +661,70 @@ def BuscarCuentaAjax2(request):
 def retirar(request,id):
     if request.method =='POST':
         c = Cuenta.objects.get(id=id)
+        saldoInicial = c.saldo
         form = RetirarEfectivo(request.POST)
         if form.is_valid():
             cantidad = float(form.data['cantidad'])
             if cantidad >= c.saldo:
                 messages.add_message(request, messages.INFO, 'El monto no puede ser mayor al saldo')
+
+                t = Transaccion()
+                t.tipoTrasaccion = 'debito'
+                t.fecha = datetime.datetime.now()
+                t.hora = datetime.datetime.now()
+                t.monto = cantidad
+                t.save()
+
+                l = Log()
+
+                u = Usuario.objects.get(usuario=request.user.get_username())
+                p = Programa.objects.get(id=1)
+
+                l.idTrasaccion = t
+                l.idCuenta = c
+                l.idPrograma = p
+                l.idUsuario = u
+                l.fecha = datetime.datetime.now()
+                l.hora = datetime.datetime.now()
+                l.saldo_inicial = c.saldo
+                l.saldo = c.saldo
+                l.debito = cantidad
+                l.credito = 0
+                l.autorizacion = 0
+                l.rechazo = 1
+                l.razonRechazo = 'El monto no puede ser mayor al saldo'
+                l.save()
             else:
                 messages.add_message(request, messages.INFO, 'El retiro ha sido realizado')
                 c.saldo = c.saldo + cantidad
                 c.save()
+
+                t = Transaccion()
+                t.tipoTrasaccion = 'debito'
+                t.fecha = datetime.datetime.now()
+                t.hora = datetime.datetime.now()
+                t.monto = cantidad
+                t.save()
+
+                l = Log()
+
+                u = Usuario.objects.get(usuario=request.user.get_username())
+                p = Programa.objects.get(id=1)
+
+                l.idTrasaccion = t
+                l.idCuenta = c
+                l.idPrograma = p
+                l.idUsuario = u
+                l.fecha = datetime.datetime.now()
+                l.hora = datetime.datetime.now()
+                l.saldo_inicial = saldoInicial
+                l.saldo = c.saldo
+                l.debito = cantidad
+                l.credito = 0
+                l.autorizacion = 1
+                l.rechazo = 0
+                l.razonRechazo = ''
+                l.save()
         return render(request, 'Autorizacion/Retiro.html',{'form':form, 'cuenta':c})
     else:
         c = Cuenta()

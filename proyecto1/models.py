@@ -204,17 +204,13 @@ class AsignacionLoteUsuario(models.Model):
     class Meta:
         db_table = 'AsignacionLoteUsuario'
 
-
-
-class TipoTransaccion(models.Model):
-    tipoTransaccion = models.CharField(max_length=50)
-    descripcion = models.CharField(max_length=200)
-
-    class Meta:
-        db_table = 'TipoTransaccion'
+NOTASTIPO_CHOICES = (
+    ('debito', 'debito'),
+    ('credito', 'credito'),
+)
 
 class Transaccion(models.Model):
-    idTipoTrasaccion = models.ForeignKey(TipoTransaccion)
+    tipoTrasaccion = models.CharField(max_length=100, choices=NOTASTIPO_CHOICES)
     fecha = models.DateField()
     hora = models.DateTimeField()
     monto = models.FloatField()
@@ -240,11 +236,6 @@ class Recibo(models.Model):
 
     class Meta:
         db_table = 'Recibo'
-
-NOTASTIPO_CHOICES = (
-    ('debito', 'debito'),
-    ('credito', 'credito'),
-)
 
 class Nota(models.Model):
     idRecibo = models.ForeignKey(Recibo)
