@@ -98,6 +98,7 @@ def autorizar(request, id):
         if form.is_valid():
             form.save()
             return HttpResponse('<h1>El usuario ha sido editado</h1>')
+
     else:
         u = Transaccion()
         try:
