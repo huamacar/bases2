@@ -759,7 +759,7 @@ def consultar_Saldo(request):
         if form.is_valid():
             numerocuenta = form.data['idCuenta']
             try:
-                saldo = Cuenta.objects.get(id=1)
+                saldo = Cuenta.objects.get(id=numerocuenta)
 
                 return render(request, 'Cuentas/ListaCuentas.html', {'saldo': saldo})
             except:
