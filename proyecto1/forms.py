@@ -90,3 +90,23 @@ class TransferenciaCuentasForm(forms.Form):
         cuentaorigen = forms.IntegerField(label="Cuenta Origen", validators=[MinValueValidator(0)])
         cuentadestino = forms.IntegerField(label="Cuenta Destino", validators=[MinValueValidator(0)])
         monto = forms.FloatField(label="Monto a pagar", validators=[MinValueValidator(0)])
+
+class LoteForm(ModelForm):
+        class Meta:
+            model = Lote
+            fields = '__all__'
+
+class AsigLoteForm(ModelForm):
+        class Meta:
+            model = AsignacionLoteUsuario
+            fields = '__all__'
+
+class NotasForm(ModelForm):
+        class Meta:
+            model = Nota
+            fields = '__all__'
+
+class CrearEstadoTarjetaForm(ModelForm):
+        class Meta:
+            model = TipoEstado
+            fields = '__all__'

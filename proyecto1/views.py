@@ -48,6 +48,13 @@ def indexAfiliado(request):
 def indexTipoAfiliado(request):
     return render(request, 'TipoAfiliado/Index.html')
 
+@login_required(login_url='/login')
+def indexLotes(request):
+    return render(request, 'Lote/Index.html')
+
+@login_required(login_url='/login')
+def indexNotas(request):
+    return render(request, 'Notas/Index.html')
 
 @login_required(login_url='/login')
 def insertarClientes(request):
@@ -460,3 +467,55 @@ def TransferenciaCuentas(request):
         form = TransferenciaCuentasForm()
 
     return render(request, 'Caja/transferencia.html', {'form': form})
+
+@login_required(login_url='/login')
+def crearEstadoTarjeta(request):
+    if request.method == 'POST':
+        form = CrearEstadoTarjetaForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponse('<h1>Tarjeta Asignada</h1>')
+    else:
+        form = CrearEstadoTarjetaForm()
+
+    return render(request, 'Tarjetas/AsignarTarjeta.html', {'form': form})
+
+@login_required(login_url='/login')
+def crearNota(request):
+    if request.method == 'POST':
+        form = NotasForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponse('<h1>Nota Creado</h1>')
+    else:
+        form = NotasForm()
+
+    return render(request, 'Notas/Crear.html', {'form': form})
+
+@login_required(login_url='/login')
+def asignarLote(request):
+    if request.method == 'POST':
+        form = AsigLoteForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponse('<h1>Lote Asignado</h1>')
+    else:
+        form = AsigLoteForm()
+
+    return render(request, 'Lote/AsignarLote.html', {'form': form})
+
+@login_required(login_url='/login')
+def crearLote(request):
+    if request.method == 'POST':
+        form = LoteForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponse('<h1>Lote Creado</h1>')
+    else:
+        form = LoteForm()
+
+    return render(request, 'Lote/Crear.html', {'form': form})
