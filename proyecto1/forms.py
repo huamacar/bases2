@@ -65,7 +65,7 @@ class AsigCuentaForm(ModelForm):
 
 class TarjetaForm(ModelForm):
         def __init__(self, *args, **kwargs):
-            super(CuentaForm, self).__init__(*args, **kwargs)
+            super(TarjetaForm, self).__init__(*args, **kwargs)
             self.fields['fechaCorte'].widget=DateInput()
             self.fields['fechaPago'].widget=DateInput()
         class Meta:
@@ -73,6 +73,10 @@ class TarjetaForm(ModelForm):
             fields = '__all__'
 
 class AsigTarjetaForm(ModelForm):
+        def __init__(self, *args, **kwargs):
+            super(AsigTarjetaForm, self).__init__(*args, **kwargs)
+            self.fields['fechaAsignacion'].widget=DateInput()
+
         class Meta:
             model = AsignacionTarjeta
             fields = '__all__'
