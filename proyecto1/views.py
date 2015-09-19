@@ -146,13 +146,15 @@ def Eliminar_Clientes(request, id):
 def crearCuenta(request):
     if request.method == 'POST':
         form = CuentaForm(request.POST)
-
+        idform = form.data['idTipoCuenta']
+        form.data = form.data.copy()
+        form.data['idTipoCuenta'] = TipoCuenta.objects.filter(tipoCuenta=idform).values_list('id', flat=True)
         if form.is_valid():
             form.save()
             return HttpResponse('<h1>Cuenta Insertada</h1>')
     else:
         form = CuentaForm()
-
+        form.fields["idTipoCuenta"].queryset = TipoCuenta.objects.all().values_list('tipoCuenta',flat=True)
     return render(request, 'Cuentas/Crear.html', {'form': form})
 
 
@@ -236,13 +238,15 @@ def editarClientes(request, id):
 def insertarAfiliado(request):
     if request.method == 'POST':
         form = AfiliadoForm(request.POST)
-
+        idafiliado = form.data['tipoAfiliado']
+        form.data.copy()
+        form.data['tipoAfiliado'] = TipoAfiliado.objects.filter(nombre=idafiliado).values_list('id',flat=True)
         if form.is_valid():
             form.save()
             return HttpResponse('<h1>Afiliado insertado</h1>')
     else:
         form = AfiliadoForm()
-
+        form.fields['tipoAfiliado'].queryset = TipoAfiliado.objects.all().values_list('nombre',flat=True)
     return render(request, 'Afiliado/Insertar.html', {'form': form})
 
 
@@ -736,11 +740,13 @@ def retirar(request,id):
 def declararCambios(request):
     if request.method == 'POST':
         form = DeclaCambioForm(request.POST)
-
+        idform = form.data['idEstado']
+        form.data = form.data.copy()
+        form.data['idEstado'] = TipoEstado.objects.filter(tipoEstado=idform).values_list('id', flat=True)
         if form.is_valid():
             form.save()
             return HttpResponse('<h1>Lote Creado</h1>')
     else:
         form = DeclaCambioForm()
-
+        form.fields["idEstado"].queryset = TipoEstado.objects.all().values_list('tipoEstado',flat=True)
     return render(request, 'Tarjetas/DeclaracionCambios.html', {'form': form})

@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import *
+from django import forms
 # Amadeus was here 2
 # Create your models here.
 class Cliente(models.Model):
