@@ -120,6 +120,9 @@ class AsigLoteForm(ModelForm):
             fields = '__all__'
 
 class NotasForm(ModelForm):
+        def __init__(self, *args, **kwargs):
+           super(NotasForm, self).__init__(*args, **kwargs)
+           self.fields['fecha'].widget=DateInput()
         class Meta:
             model = Nota
             fields = '__all__'
