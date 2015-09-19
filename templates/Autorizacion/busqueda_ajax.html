@@ -1,6 +1,6 @@
 {% if cuentas.count > 0 %}
     {% for cuenta in cuentas %}
-        <li><a href="/Autorizacion/retiro/{{ cuenta.id }}/">No cuenta: {{ cuenta.id }}</a></li>
+        <li><a href="/Autorizacion/retirar/{{ cuenta.id }}/">No cuenta: {{ cuenta.id }}</a></li>
     {% endfor %}
 
 {% else %}

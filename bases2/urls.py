@@ -24,7 +24,7 @@ urlpatterns = patterns('',
     url(r'^Autorizacion/autorizar/(?P<id>\d+)/$', 'proyecto1.views.autorizar', name='Autorizar'),
     url(r'^Autorizacion/buscar/$','proyecto1.views.BuscarCuenta2',name='Buscar_Cuenta2'),
     url(r'^Autorizacion/busqueda/$','proyecto1.views.BuscarCuentaAjax2',name='Buscar_CuentaA'),
-    url(r'^Autorizacion/retiro/(?P<id>\d+)/$', 'proyecto1.views.retiro', name='Retiro'),
+
     url(r'^Autorizacion/retirar/(?P<id>\d+)/$', 'proyecto1.views.retirar', name='Retirar'),
 
     #Cuentas
