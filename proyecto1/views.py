@@ -570,3 +570,16 @@ def retirar(request,id):
         c.saldo = nuevo
         c.save()
         return HttpResponse('<h1>El efectivo a sido retiradoo</h1>')
+
+@login_required(login_url='/login')
+def declararCambios(request):
+    if request.method == 'POST':
+        form = DeclaCambioForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponse('<h1>Lote Creado</h1>')
+    else:
+        form = DeclaCambioForm()
+
+    return render(request, 'Tarjetas/DeclaracionCambios.html', {'form': form})
