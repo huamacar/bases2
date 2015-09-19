@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.db.models import Q
 from django.contrib import messages  # para emitir aletrs
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.models import User
 
 def index(request):
     return render(request, 'Index.html')
@@ -312,3 +312,26 @@ def editarTipoAfiliados(request, id):
 
     idTipoafiliado = u.id
     return render(request, 'TipoAfiliado/Editar.html', {'form': form, 'idTipoafiliado': idTipoafiliado})
+
+@login_required(login_url='/login')
+def registrarUsuario(request):
+
+    if request.method == 'POST':
+
+        form = UsuarioForm(request.POST)
+
+        #se coloca el valor valido en el form, es decir el id en vez del nombre
+        idform= form.data['idRol']
+        form.data = form.data.copy()
+        form.data['idRol']= Rol.objects.filter(rol = idform).values_list('id',flat=True)
+
+        if form.is_valid():
+            User.objects.create_user(form.data['usuario'], form.data['correo'], form.data['password']) #se guarda en la tabla de django
+            form.save()
+            messages.add_message(request, messages.INFO, 'The user has been created')
+            return render(request,'Usuarios/Registrar.html',{'form':form})
+        form.fields["idRol"].queryset = Rol.objects.all().values_list('rol',flat=True)#se llena el form con los valores de nuevo si hay error
+    else:
+        form = UsuarioForm()
+        form.fields["idRol"].queryset = Rol.objects.all().values_list('rol',flat=True)#se llena el form con los valores
+    return render(request,'Usuarios/Registrar.html',{'form':form})
