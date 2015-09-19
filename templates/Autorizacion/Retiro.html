@@ -1,0 +1,13 @@
+{% extends "Autorizacion/Base.html" %}
+{% block content %}
+    <form>
+        {% csrf_token %}
+        {{ form.as_p }}
+    </form>
+
+    <form action="/Autorizacion/retirar/{{ idusuario }}/" method="post">
+        {% csrf_token %}
+        <input type="number" id ="cantidad" name="cantidad">
+        <input type="submit" value="Retirar">
+    </form>
+{% endblock %}

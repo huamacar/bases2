@@ -18,10 +18,14 @@ urlpatterns = patterns('',
     url(r'^Clientes/eliminar/(?P<id>\d+)/$', 'proyecto1.views.Eliminar_Clientes', name='Eliminar_Cliente'),
     url(r'^Clientes/bloquear/(?P<id>\d+)/$', 'proyecto1.views.Bloquear_Clientes', name='Bloquear_Cliente'),
 
-    #clientes
+   #autorizacion
     url(r'^Autorizacion/index/$', 'proyecto1.views.indexAutorizacion', name='Autorizacion'),
     url(r'^Autorizacion/consumo/$', 'proyecto1.views.consumo', name='Consumo'),
     url(r'^Autorizacion/autorizar/(?P<id>\d+)/$', 'proyecto1.views.autorizar', name='Autorizar'),
+    url(r'^Autorizacion/buscar/$','proyecto1.views.BuscarCuenta2',name='Buscar_Cuenta2'),
+    url(r'^Autorizacion/busqueda/$','proyecto1.views.BuscarCuentaAjax2',name='Buscar_CuentaA'),
+    url(r'^Autorizacion/retiro/(?P<id>\d+)/$', 'proyecto1.views.retiro', name='Retiro'),
+    url(r'^Autorizacion/retirar/(?P<id>\d+)/$', 'proyecto1.views.retirar', name='Retirar'),
 
     #Cuentas
     url(r'^Cuentas/index/$', 'proyecto1.views.indexCuentas', name='Cuentas'),

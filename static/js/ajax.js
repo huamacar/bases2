@@ -17,6 +17,20 @@ $(function(){
 
     });
 
+    $('#search2').keyup(function(){
+    $.ajax({
+        type: "POST",
+        url: "/Autorizacion/busqueda/",
+        data:{
+            'search_text'   :   $('#search2').val(),
+            'csrfmiddlewaretoken'   :   $("input[name=csrfmiddlewaretoken]").val()
+        },
+        success: searchSuccess,
+        dataType:'html'
+
+    });
+
+    });
 });
 
 function searchSuccess(data, textStatus, jqXHR)

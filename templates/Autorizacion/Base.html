@@ -1,12 +1,13 @@
 {%  extends "Base.html" %}
     {% load staticfiles %}
     {% block title %}
-        <title> Autorizaciones</title>
+        Autorizaciones
     {% endblock %}
     {% block sidebar %}
         <ul >
             <li><a href="/">Inicio</a></li>
             <li><a href="{% url 'Consumo' %}">Autorizacion de Consumo</a></li>
+            <li><a href="{% url 'Buscar_Cuenta2' %}">Retiro de Efectivo</a></li>
         </ul>
     {% endblock %}
 

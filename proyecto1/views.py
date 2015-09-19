@@ -519,3 +519,55 @@ def crearLote(request):
         form = LoteForm()
 
     return render(request, 'Lote/Crear.html', {'form': form})
+
+@login_required(login_url='/login')
+def BuscarCuenta2(request):
+    if request.method == 'POST':
+        form = BuscarCuentaForm(request.POST)
+        if form.is_valid():
+
+            return render(request,'Autorizacion/Buscar.html',{'form':form})
+    else:
+        form = BuscarCuentaForm()
+
+    return render(request,'Autorizacion/Buscar.html',{'form':form})
+
+
+def BuscarCuentaAjax2(request):
+    if request.method == 'POST':
+        search_text = int(request.POST['search_text'])
+    else:
+        search_text = 0
+
+    cuentas = Cuenta.objects.filter(id__startswith=search_text)
+
+    return render(request,'Autorizacion/busqueda_ajax.html',{'cuentas':cuentas})
+
+def retiro(request,id):
+    if request.method =='POST':
+        c = Cuenta.objects.get(id=id)
+        form = CuentaForm(request.POST, instance=c)
+        if form.is_valid():
+            form.save()
+            return render(request,'Autorizacion/Retiro.html',{'form':form})
+    else:
+        c = Cuenta()
+        try:
+            c = Cuenta.objects.get(id=id)
+        except:
+            return HttpResponse('<h1>El usuario no existe en la Base de Datos</h1>')
+        form = CuentaForm(instance=c)
+
+    idusuario = c.id
+    return render(request,'Autorizacion/Retiro.html',{'form':form, 'idusuario': idusuario})
+
+def retirar(request,id):
+    if request.method =='POST':
+        c = Cuenta.objects.get(id=id)
+        cantidad = request.POST.get('cantidad')
+        inicial = c.saldo
+        nuevo = inicial - float(cantidad)
+        c.saldo = nuevo
+        form = CuentaForm(instance=c)
+        form.save()
+        return HttpResponse('<h1>El efectivo a sido retiradoo</h1>')
