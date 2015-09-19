@@ -568,6 +568,5 @@ def retirar(request,id):
         inicial = c.saldo
         nuevo = inicial - float(cantidad)
         c.saldo = nuevo
-        form = CuentaForm(instance=c)
-        form.save()
+        c.save()
         return HttpResponse('<h1>El efectivo a sido retiradoo</h1>')
