@@ -315,7 +315,7 @@ def editarTipoAfiliados(request, id):
     return render(request, 'TipoAfiliado/Editar.html', {'form': form, 'idTipoafiliado': idTipoafiliado})
 
 @login_required(login_url='/login')
-def registrarUsuario(request):
+def RegistrarUsuario(request):
 
     if request.method == 'POST':
 

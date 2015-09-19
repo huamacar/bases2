@@ -54,6 +54,8 @@ urlpatterns = patterns('',
 
     #usuarios
     url(r'^Clientes/Lista/$','proyecto1.views.Lista_Clientes', name='Lista_Clientes'),
+    url(r'^Usuarios/registrar/$','proyecto1.views.RegistrarUsuario', name='Registrar_Usuario'),
+
 
     #auth
     url(r'^login/$', 'django.contrib.auth.views.login',{'template_name': 'login.html'}),

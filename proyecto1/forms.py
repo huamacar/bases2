@@ -74,3 +74,8 @@ class TipoAfiliadoForm(ModelForm):
 
 class Buscar_TipoAfiliado(forms.Form):
         id = forms.IntegerField(label="Cliente Buscado")
+
+class UsuarioForm(ModelForm):
+        class Meta:
+            model = Usuario
+            fields = '__all__'
