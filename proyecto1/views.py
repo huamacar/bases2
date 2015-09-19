@@ -69,8 +69,8 @@ def insertarClientes(request):
 
         if form.is_valid():
             form.save()  # con esto no hay necesidad de igualar los datos ya se salva a la base de datos
-
-            return HttpResponse('<h1>Cliente insertado</h1>')
+            messages.add_message(request, messages.INFO, 'El Cliente se ha insertado')
+            return render(request, 'Clientes/Insertar.html', {'form': form})
     else:
         form = ClienteForm()
 
@@ -82,7 +82,8 @@ def Bloquear_Clientes(request, id):
     u = Usuario.objects.get(id=id)
     u.bloqueado = True
     u.save()
-    return HttpResponse('<h1>Usuario Bloqueado</h1>')
+    messages.add_message(request, messages.INFO, 'El usuario ha sido bloqueado')
+    return render(request, 'Clientes/Buscar.html', {'form': form})
 
 
 @login_required(login_url='/login')
@@ -149,14 +150,15 @@ def autorizar(request, id):
         form = TransaccionForm(request.POST, instance=u)
         if form.is_valid():
             form.save()
-
-
+            messages.add_message(request, messages.INFO, 'La transaccion ha sido autorizada')
+            return render(request, 'Autorizacion/Autorizar.html', {'form': form, 'idusuario': idusuario})
     else:
         u = Transaccion()
         try:
             u = Transaccion.objects.get(id=id)
         except:
-            return HttpResponse('<h1>El usuario no existe en la Base de Datos</h1>')
+            messages.add_message(request, messages.INFO, 'El usuario no existe en la base de datos')
+            return render(request, 'Autorizacion/Autorizar.html', {'form': form, 'idusuario': idusuario})
         form = TransaccionForm(instance=u)
 
     idusuario = u.id
@@ -166,7 +168,8 @@ def autorizar(request, id):
 @login_required(login_url='/login')
 def Eliminar_Clientes(request, id):
     Usuario.objects.get(id=id).delete()
-    return HttpResponse('<h1>Usuario Eliminado</h1>')
+    messages.add_message(request, messages.INFO, 'El usuario ha sido eliminado')
+    return render(request, 'Clientes/Buscar.html', {'form': form})
 
 
 @login_required(login_url='/login')
@@ -178,7 +181,8 @@ def crearCuenta(request):
         form.data['idTipoCuenta'] = TipoCuenta.objects.filter(tipoCuenta=idform).values_list('id', flat=True)
         if form.is_valid():
             form.save()
-            return HttpResponse('<h1>Cuenta Insertada</h1>')
+            messages.add_message(request, messages.INFO, 'La cuenta se ha creado')
+            return render(request, 'Cuentas/Crear.html', {'form': form})
     else:
         form = CuentaForm()
         form.fields["idTipoCuenta"].queryset = TipoCuenta.objects.all().values_list('tipoCuenta',flat=True)
@@ -192,7 +196,8 @@ def crearTipoCuenta(request):
 
         if form.is_valid():
             form.save()
-            return HttpResponse('<h1>Tipo Cuenta Insertada</h1>')
+            messages.add_message(request, messages.INFO, 'El tipo de cuenta ha sido creada')
+            return render(request, 'Cuentas/CrearTipo.html', {'form': form})
     else:
         form = TipoCuentaForm()
 
@@ -206,7 +211,8 @@ def asignarCuenta(request):
 
         if form.is_valid():
             form.save()
-            return HttpResponse('<h1>Cuenta Asignada</h1>')
+            messages.add_message(request, messages.INFO, 'La cuenta ha sido asignada')
+            return render(request, 'Cuentas/AsignarCuenta.html', {'form': form})
     else:
         form = AsigCuentaForm()
 
@@ -220,7 +226,8 @@ def crearTarjeta(request):
 
         if form.is_valid():
             form.save()
-            return HttpResponse('<h1>Tarjeta Creada</h1>')
+            messages.add_message(request, messages.INFO, 'La tarjeta ha sido creada')
+            return render(request, 'Tarjetas/CrearTarjeta.html', {'form': form})
     else:
         form = TarjetaForm()
 
@@ -234,7 +241,8 @@ def asignarTarjeta(request):
 
         if form.is_valid():
             form.save()
-            return HttpResponse('<h1>Tarjeta Asignada</h1>')
+            messages.add_message(request, messages.INFO, 'La tarjeta ha sido asignada')
+            return render(request, 'Tarjetas/AsignarTarjeta.html', {'form': form})
     else:
         form = AsigTarjetaForm()
 
@@ -248,13 +256,15 @@ def editarClientes(request, id):
         form = ClienteForm(request.POST, instance=u)
         if form.is_valid():
             form.save()
-            return HttpResponse('<h1>El usuario ha sido editado</h1>')
+            messages.add_message(request, messages.INFO, 'El usuario ha sido editado')
+            return render(request, 'Clientes/Editar.html', {'form': form, 'idusuario': idusuario})
     else:
         u = Cliente()
         try:
             u = Cliente.objects.get(id=id)
         except:
-            return HttpResponse('<h1>El usuario no existe en la Base de Datos</h1>')
+            messages.add_message(request, messages.INFO, 'El usuario no existe en la base de datos')
+            return render(request, 'Clientes/Editar.html', {'form': form, 'idusuario': idusuario})
         form = ClienteForm(instance=u)
 
     idusuario = u.id
@@ -270,7 +280,8 @@ def insertarAfiliado(request):
         form.data['tipoAfiliado'] = TipoAfiliado.objects.filter(nombre=idafiliado).values_list('id',flat=True)
         if form.is_valid():
             form.save()
-            return HttpResponse('<h1>Afiliado insertado</h1>')
+            messages.add_message(request, messages.INFO, 'El afiliado ha sido insertado')
+            return render(request, 'Afiliado/Insertar.html', {'form': form})
     else:
         form = AfiliadoForm()
         form.fields['tipoAfiliado'].queryset = TipoAfiliado.objects.all().values_list('nombre',flat=True)
@@ -285,7 +296,8 @@ def Buscar_Afiliados(request):
         try:
             u = Afiliado.objects.get(id=form.cleaned_data['id'])
         except:
-            return HttpResponse('<h1>El afiliado no existe en la Base de Datos</h1>')
+            messages.add_message(request, messages.INFO, 'El afiliado no existe en la base de datos')
+            return render(request, 'Afiliado/Buscar.html', {'form': afiliado, 'afiliado': u})
 
     afiliado = BuscarCliente()
     return render(request, 'Afiliado/Buscar.html', {'form': afiliado, 'afiliado': u})
@@ -294,13 +306,15 @@ def Buscar_Afiliados(request):
 @login_required(login_url='/login')
 def Eliminar_Afiliados(request, id):
     Afiliado.objects.get(id=id).delete()
-    return HttpResponse('<h1>Afiliado Eliminado</h1>')
+    messages.add_message(request, messages.INFO, 'El afiliado ha sido eliminado')
+    return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': idafiliado})
 
 
 @login_required(login_url='/login')
 def Eliminar_TipoAfiliados(request, id):
     TipoAfiliado.objects.get(id=id).delete()
-    return HttpResponse('<h1>Tipo Afiliado Eliminado</h1>')
+    messages.add_message(request, messages.INFO, 'El tipo de afiliado ha sido eliminado')
+    return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': idafiliado})
 
 
 @login_required(login_url='/login')
@@ -308,7 +322,8 @@ def Bloquear_Afiliados(request, id):
     u = Afiliado.objects.get(id=id)
     u.bloqueado = True
     u.save()
-    return HttpResponse('<h1>Afiliado Bloqueado</h1>')
+    messages.add_message(request, messages.INFO, 'El afiliado ha sido bloqueado')
+    return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': idafiliado})
 
 
 @login_required(login_url='/login')
@@ -316,7 +331,8 @@ def Bloquear_TipoAfiliados(request, id):
     u = TipoAfiliado.objects.get(id=id)
     u.bloqueado = True
     u.save()
-    return HttpResponse('<h1>Tipo Afiliado Bloqueado</h1>')
+    messages.add_message(request, messages.INFO, 'El tipo de afiliado ha sido bloqueado')
+    return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': idafiliado})
 
 
 @login_required(login_url='/login')
@@ -326,13 +342,15 @@ def editarAfiliados(request, id):
         form = AfiliadoForm(request.POST, instance=u)
         if form.is_valid():
             form.save()
-            return HttpResponse('<h1>El afiliado ha sido editado</h1>')
+            messages.add_message(request, messages.INFO, 'El afiliado ha sido editado')
+            return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': idafiliado})
     else:
         u = Afiliado()
         try:
             u = Afiliado.objects.get(id=id)
         except:
-            return HttpResponse('<h1>El afiliado no existe en la Base de Datos</h1>')
+            messages.add_message(request, messages.INFO, 'El afiliado no existe en la base de datos')
+            return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': idafiliado})
         form = AfiliadoForm(instance=u)
 
     idafiliado = u.id
@@ -346,7 +364,8 @@ def insertarTipoAfiliado(request):
 
         if form.is_valid():
             form.save()
-            return HttpResponse('<h1>Tipo afiliado insertado</h1>')
+            messages.add_message(request, messages.INFO, 'El tipo de afiliado se ha insertado')
+            return render(request, 'TipoAfiliado/Insertar.html', {'form': form})
     else:
         form = TipoAfiliadoForm()
 
@@ -361,7 +380,8 @@ def BuscarTipoAfiliado(request):
         try:
             t = TipoAfiliado.objects.get(id=form.cleaned_data['id'])
         except:
-            return HttpResponse('<h1>El Tipo de afiliado no existe en la Base de Datos</h1>')
+            messages.add_message(request, messages.INFO, 'El tipo de afiliado no existe en la base de datos')
+            return render(request, 'TipoAfiliado/Buscar.html', {'form': buscartipoafiliado, 'TipoAfiliado': t})
 
     buscartipoafiliado = BuscarCliente()
     return render(request, 'TipoAfiliado/Buscar.html', {'form': buscartipoafiliado, 'TipoAfiliado': t})
@@ -374,13 +394,15 @@ def editarTipoAfiliados(request, id):
         form = TipoAfiliadoForm(request.POST, instance=u)
         if form.is_valid():
             form.save()
-            return HttpResponse('<h1>El tipo afiliado ha sido editado</h1>')
+            messages.add_message(request, messages.INFO, 'El tipo afiliado ha sido editado')
+            return render(request, 'TipoAfiliado/Editar.html', {'form': form, 'idTipoafiliado': idTipoafiliado})
     else:
         u = TipoAfiliado()
         try:
             u = TipoAfiliado.objects.get(id=id)
         except:
-            return HttpResponse('<h1>El tipo afiliado no existe en la Base de Datos</h1>')
+            messages.add_message(request, messages.INFO, 'EL tipo afiliado no existe en la base de datos')
+            return render(request, 'TipoAfiliado/Editar.html', {'form': form, 'idTipoafiliado': idTipoafiliado})
         form = TipoAfiliadoForm(instance=u)
 
     idTipoafiliado = u.id
@@ -621,7 +643,8 @@ def crearEstadoTarjeta(request):
 
         if form.is_valid():
             form.save()
-            return HttpResponse('<h1>Tarjeta Asignada</h1>')
+            messages.add_message(request, messages.INFO, 'El estado de tarjeta ha sido creada')
+            return render(request, 'Tarjetas/AsignarTarjeta.html', {'form': form})
     else:
         form = CrearEstadoTarjetaForm()
 
@@ -634,7 +657,8 @@ def crearNota(request):
 
         if form.is_valid():
             form.save()
-            return HttpResponse('<h1>Nota Creado</h1>')
+            messages.add_message(request, messages.INFO, 'La nota ha sido creada')
+            return render(request, 'Notas/Crear.html', {'form': form})
     else:
         form = NotasForm()
 
@@ -647,7 +671,8 @@ def asignarLote(request):
 
         if form.is_valid():
             form.save()
-            return HttpResponse('<h1>Lote Asignado</h1>')
+            messages.add_message(request, messages.INFO, 'El lote ha sido asignado')
+            return render(request, 'Lote/AsignarLote.html', {'form': form})
     else:
         form = AsigLoteForm()
 
@@ -660,7 +685,8 @@ def crearLote(request):
 
         if form.is_valid():
             form.save()
-            return HttpResponse('<h1>Lote Creado</h1>')
+            messages.add_message(request, messages.INFO, 'El lote ha sido creado')
+            return render(request, 'Lote/Crear.html', {'form': form})
     else:
         form = LoteForm()
 
@@ -772,7 +798,8 @@ def declararCambios(request):
         form.data['idEstado'] = TipoEstado.objects.filter(tipoEstado=idform).values_list('id', flat=True)
         if form.is_valid():
             form.save()
-            return HttpResponse('<h1>Lote Creado</h1>')
+            messages.add_message(request, messages.INFO, 'La tarjeta ha sido declarada')
+            return render(request, 'Tarjetas/DeclaracionCambios.html', {'form': form})
     else:
         form = DeclaCambioForm()
 
