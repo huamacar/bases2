@@ -18,6 +18,11 @@ class ClienteForm(ModelForm):
         class Meta:
             model = Cliente
             fields = '__all__'
+
+class TransaccionForm(ModelForm):
+        class Meta:
+            model = Transaccion
+            fields = '__all__'
 '''
 class EditarUsuarioForm(ModelForm):
         nombreAnterior = forms.CharField(label='Nombre anterior', max_length=100)
