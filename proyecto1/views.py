@@ -543,33 +543,24 @@ def BuscarCuentaAjax2(request):
 
     return render(request,'Autorizacion/busqueda_ajax.html',{'cuentas':cuentas})
 
-def retiro(request,id):
-    if request.method =='POST':
-        c = Cuenta.objects.get(id=id)
-        form = CuentaForm(request.POST, instance=c)
-        if form.is_valid():
-            form.save()
-            return render(request,'Autorizacion/Retiro.html',{'form':form})
-    else:
-        c = Cuenta()
-        try:
-            c = Cuenta.objects.get(id=id)
-        except:
-            return HttpResponse('<h1>El usuario no existe en la Base de Datos</h1>')
-        form = CuentaForm(instance=c)
-
-    idusuario = c.id
-    return render(request,'Autorizacion/Retiro.html',{'form':form, 'idusuario': idusuario})
-
 def retirar(request,id):
     if request.method =='POST':
         c = Cuenta.objects.get(id=id)
-        cantidad = request.POST.get('cantidad')
-        inicial = c.saldo
-        nuevo = inicial - float(cantidad)
-        c.saldo = nuevo
-        c.save()
-        return HttpResponse('<h1>El efectivo a sido retiradoo</h1>')
+        form = RetirarEfectivo(request.POST)
+        if form.is_valid():
+            cantidad = float(form.data['cantidad'])
+            if cantidad >= c.saldo:
+                messages.add_message(request, messages.INFO, 'El monto no puede ser mayor al saldo')
+            else:
+                messages.add_message(request, messages.INFO, 'El retiro ha sido realizado')
+                c.saldo = c.saldo + cantidad
+                c.save()
+        return render(request, 'Autorizacion/Retiro.html',{'form':form, 'cuenta':c})
+    else:
+        c = Cuenta()
+        c = Cuenta.objects.get(id = id)
+        form = RetirarEfectivo()
+    return render(request, 'Autorizacion/Retiro.html',{'form':form, 'cuenta':c})
 
 @login_required(login_url='/login')
 def declararCambios(request):
