@@ -748,5 +748,5 @@ def declararCambios(request):
             return HttpResponse('<h1>Lote Creado</h1>')
     else:
         form = DeclaCambioForm()
-        form.fields["idEstado"].queryset = TipoEstado.objects.all().values_list('tipoEstado',flat=True)
+
     return render(request, 'Tarjetas/DeclaracionCambios.html', {'form': form})

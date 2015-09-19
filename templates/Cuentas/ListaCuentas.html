@@ -1,0 +1,13 @@
+{% extends "Cuentas/Base.html" %}
+
+{% block content %}
+    {% if saldo %}
+        <h2>Saldo</h2>
+        <h2>{{ saldo.saldo }}</h2>
+    {% else %}
+        No hubo resultados en la busqueda
+        <form action="/Cuentas/consultaSaldo/" method="get">
+            <input type="submit" value="Regresar">
+        </form>
+    {% endif %}
+{% endblock %}

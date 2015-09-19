@@ -32,6 +32,7 @@ urlpatterns = patterns('',
     url(r'^Cuentas/crear/$', 'proyecto1.views.crearCuenta', name='Crear_Cuenta'),
     url(r'^Cuentas/asignar/$', 'proyecto1.views.asignarCuenta', name='Asignar_Cuenta'),
     url(r'^Cuentas/crearTipo/$', 'proyecto1.views.crearTipoCuenta', name='Tipo_Cuenta'),
+                       url(r'^Cuentas/consultaSaldo/$', 'proyecto1.views.consultar_Saldo', name='Consultar_Saldo'),
 
     #Tarjetas
     url(r'^Tarjetas/index/$', 'proyecto1.views.indexTarjetas', name='Tarjetas'),
