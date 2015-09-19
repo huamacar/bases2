@@ -1,14 +1,13 @@
 {%  extends "Base.html" %}
     {% load staticfiles %}
     {% block title %}
-        Tarjetas
+        Cuentas
     {% endblock %}
     {% block sidebar %}
         <ul >
             <li><a href="/">Inicio</a></li>
-            <li><a href="{% url 'Crear_Tarjeta' %}">Crear</a></li>
-            <li><a href="{% url 'Asignar_Tarjeta' %}">Asignar</a></li>
-            <li><a href="{% url 'CrearEstado_Tarjeta' %}">Tipo Estado</a></li>
+            <li><a href="{% url 'Crear_Lote' %}">Crear</a></li>
+            <li><a href="{% url 'Asignar_Lote' %}">Asignar</a></li>
         </ul>
     {% endblock %}
 

@@ -33,6 +33,16 @@ urlpatterns = patterns('',
     url(r'^Tarjetas/index/$', 'proyecto1.views.indexTarjetas', name='Tarjetas'),
     url(r'^Tarjetas/crear/$', 'proyecto1.views.crearTarjeta', name='Crear_Tarjeta'),
     url(r'^Tarjetas/asignar/$', 'proyecto1.views.asignarTarjeta', name='Asignar_Tarjeta'),
+    url(r'^Tarjetas/tipoEstado/$', 'proyecto1.views.crearEstadoTarjeta', name='CrearEstado_Tarjeta'),
+
+    #Notas
+    url(r'^Notas/index/$', 'proyecto1.views.indexNotas', name='Notas'),
+    url(r'^Notas/crear/$', 'proyecto1.views.crearNota', name='Crear_Nota'),
+
+    #Lotes
+    url(r'^Lote/index/$', 'proyecto1.views.indexLotes', name='Lote'),
+    url(r'^Lote/crear/$', 'proyecto1.views.crearLote', name='Crear_Lote'),
+    url(r'^Lote/asignar/$', 'proyecto1.views.asignarLote', name='Asignar_Lote'),
 
     #TipoAfiliado
     url(r'^TipoAfiliado/index/$', 'proyecto1.views.indexTipoAfiliado', name='TipoAfiliado'),

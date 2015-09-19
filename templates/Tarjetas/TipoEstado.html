@@ -1,0 +1,9 @@
+{% extends "Tarjetas/Base.html" %}
+
+{% block content %}
+    <form action="/Tarjetas/estado/" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="crear" />
+    </form>
+{% endblock %}

@@ -240,9 +240,15 @@ class Recibo(models.Model):
 
     class Meta:
         db_table = 'Recibo'
+
+NOTASTIPO_CHOICES = (
+    ('debito', 'debito'),
+    ('credito', 'credito'),
+)
+
 class Nota(models.Model):
     idRecibo = models.ForeignKey(Recibo)
-    nota = models.CharField(max_length=100)
+    nota = models.CharField(max_length=100, choices=NOTASTIPO_CHOICES)
     fecha = models.DateField()
     descripcion = models.CharField(max_length=200)
 

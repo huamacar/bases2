@@ -1,0 +1,9 @@
+{% extends "Notas/Base.html" %}
+
+{% block content %}
+    <form action="/Notas/crear/" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Crear" />
+    </form>
+{% endblock %}

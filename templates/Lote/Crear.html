@@ -1,0 +1,9 @@
+{% extends "Lote/Base.html" %}
+
+{% block content %}
+    <form action="/Lotes/crear/" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Crear" />
+    </form>
+{% endblock %}
