@@ -8,6 +8,9 @@
 
     <script src="{% static "js/jquery-2.1.4.min.js" %}"></script>
     <script src="{% static "js/ajax.js" %}"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     {% block title %} {% endblock %}
 </head>
 <body>
@@ -43,7 +46,11 @@
 
 	</div>
 	<div id="page" class="container">
-		{% block content %}{% endblock %}
+    
+		{% block content %}
+
+
+		{% endblock %}
 	</div>
 </div>
 <div id="footer">
