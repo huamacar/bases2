@@ -79,3 +79,6 @@ class UsuarioForm(ModelForm):
         class Meta:
             model = Usuario
             fields = '__all__'
+
+class BuscarCuentaForm(forms.Form):
+        idCuenta = forms.IntegerField(label="Numero de cuenta", validators=[MinValueValidator(0)])

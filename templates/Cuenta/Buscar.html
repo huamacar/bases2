@@ -1,0 +1,14 @@
+{% extends "Cuenta/Base.html" %}
+
+{% block content %}
+
+
+<h3>Buscar Cuenta</h3>
+{% csrf_token %}
+<input type="text" id ="search" name="search">
+<br>
+<ul id="search-results">
+
+
+</ul>
+{% endblock %}

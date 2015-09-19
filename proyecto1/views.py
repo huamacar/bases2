@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 # Create your views here.
 
 from .forms import *
@@ -337,3 +337,44 @@ def RegistrarUsuario(request):
         form = UsuarioForm()
         form.fields["idRol"].queryset = Rol.objects.all().values_list('rol',flat=True)#se llena el form con los valores
     return render(request,'Usuarios/Registrar.html',{'form':form})
+
+@login_required(login_url='/login')
+def BuscarCuenta(request):
+    if request.method == 'POST':
+        form = BuscarCuentaForm(request.POST)
+        if form.is_valid():
+
+            return render(request,'Cuenta/Buscar.html',{'form':form})
+    else:
+        form = BuscarCuentaForm()
+
+    return render(request,'Cuenta/Buscar.html',{'form':form})
+
+
+def BuscarCuentaAjax(request):
+    if request.method == 'POST':
+        search_text = int(request.POST['search_text'])
+    else:
+        search_text = 0
+
+    cuentas = Cuenta.objects.filter(id__startswith=search_text)
+    #cuentas = Cuenta.objects.all().values()
+
+    return render(request,'Cuenta/busqueda_ajax.html',{'cuentas':cuentas})
+
+def PagarCuenta(request,id):
+    if request.method =='POST':
+        c = Cuenta.objects.get(id=id)
+        form = CuentaForm(request.POST, instance=c)
+        if form.is_valid():
+            form.save()
+            return render(request,'Cuenta/pago.html',{'form':form})
+    else:
+        c = Cuenta()
+        try:
+            c = Cuenta.objects.get(id=id)
+        except:
+            return HttpResponse('<h1>El usuario no existe en la Base de Datos</h1>')
+        form = CuentaForm(instance=c)
+    return render(request,'Cuenta/pago.html',{'form':form})
+

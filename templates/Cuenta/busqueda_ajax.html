@@ -1,0 +1,8 @@
+{% if cuentas.count > 0 %}
+    {% for cuenta in cuentas %}
+        <li><a href="/Cuenta/pago/{{ cuenta.id }}/">No cuenta: {{ cuenta.id }}</a></li>
+    {% endfor %}
+
+{% else %}
+    <li> None to show!</li>
+{% endif %}

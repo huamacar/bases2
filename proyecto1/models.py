@@ -26,6 +26,7 @@ class Cuenta(models.Model):
     limite = models.FloatField(validators=[MinValueValidator(0.0)])
     fechaCreacion = models.DateField()
     diasMorosos = models.IntegerField()
+    saldo = models.FloatField(validators=[MinValueValidator(0.0)])
 
     class Meta:
         db_table = 'Cuenta'
