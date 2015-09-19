@@ -93,6 +93,7 @@ def consumo(request):
 @login_required(login_url='/login')
 def autorizar(request, id):
     if request.method == 'POST':
+
         u = Transaccion.objects.get(id=id)
         form = TransaccionForm(request.POST, instance=u)
         if form.is_valid():
