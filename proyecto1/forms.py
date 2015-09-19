@@ -1,6 +1,6 @@
 __author__ = 'huamacar'
 
-from django import forms
+from functools import partial
 from django.forms import ModelForm
 from proyecto1.models import *
 from django.core.validators import *
@@ -14,10 +14,17 @@ class UsuarioForm(forms.Form):
         profesion = forms.CharField(label='Profesion', max_length=100)
         genero = forms.CharField(label='Genero', max_length=100)
 '''
+
+DateInput = partial(forms.DateInput, {'class': 'datepicker'})
 class ClienteForm(ModelForm):
+        def __init__(self, *args, **kwargs):
+            super(ClienteForm, self).__init__(*args, **kwargs)
+            self.fields['fechaNacimiento'].widget=DateInput()
         class Meta:
             model = Cliente
             fields = '__all__'
+
+
 
 class TransaccionForm(ModelForm):
         class Meta:
@@ -39,6 +46,9 @@ class RetirarEfectivo(forms.Form):
         cantidad = forms.FloatField(validators=[MinValueValidator(0.0)])
 
 class CuentaForm(ModelForm):
+        def __init__(self, *args, **kwargs):
+            super(CuentaForm, self).__init__(*args, **kwargs)
+            self.fields['fechaCreacion'].widget=DateInput()
         class Meta:
             model = Cuenta
             fields = '__all__'
@@ -54,6 +64,10 @@ class AsigCuentaForm(ModelForm):
             fields = '__all__'
 
 class TarjetaForm(ModelForm):
+        def __init__(self, *args, **kwargs):
+            super(CuentaForm, self).__init__(*args, **kwargs)
+            self.fields['fechaCorte'].widget=DateInput()
+            self.fields['fechaPago'].widget=DateInput()
         class Meta:
             model = Tarjeta
             fields = '__all__'
@@ -116,6 +130,9 @@ class CrearEstadoTarjetaForm(ModelForm):
             fields = '__all__'
 
 class DeclaCambioForm(ModelForm):
+        def __init__(self, *args, **kwargs):
+            super(DeclaCambioForm, self).__init__(*args, **kwargs)
+            self.fields['fecha'].widget=DateInput()
         class Meta:
             model = DeclaracionCambio
             fields = '__all__'
