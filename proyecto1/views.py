@@ -750,3 +750,22 @@ def declararCambios(request):
         form = DeclaCambioForm()
 
     return render(request, 'Tarjetas/DeclaracionCambios.html', {'form': form})
+
+
+@login_required(login_url='/login')
+def consultar_Saldo(request):
+    if request.method == 'POST':
+        form = BuscarCuentaForm(request.POST)
+        if form.is_valid():
+            numerocuenta = form.data['idCuenta']
+            try:
+                saldo = Cuenta.objects.get(id=1)
+
+                return render(request, 'Cuentas/ListaCuentas.html', {'saldo': saldo})
+            except:
+                return render(request, 'Cuentas/ListaCuentas.html')
+
+    else:
+        form = BuscarCuentaForm()
+
+    return render(request, 'Cuentas/ConsultaSaldo.html', {'form': form})

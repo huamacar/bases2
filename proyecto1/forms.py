@@ -116,7 +116,3 @@ class DeclaCambioForm(ModelForm):
         class Meta:
             model = DeclaracionCambio
             fields = '__all__'
-
-
-class Buscar_SaldoCuenta(forms.Form):
-    id = forms.IntegerField(label="Cuenta a Consultar")
