@@ -1,0 +1,9 @@
+{% extends "Autorizacion/Base.html" %}
+{% block content %}
+    <form action="/Autorizacion/autorizar/{{ idusuario }}/" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Autorizar" />
+
+    </form>
+{% endblock %}

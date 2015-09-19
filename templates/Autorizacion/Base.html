@@ -1,14 +1,12 @@
 {%  extends "Base.html" %}
     {% load staticfiles %}
     {% block title %}
-        Cuentas
+        Autorizaciones
     {% endblock %}
     {% block sidebar %}
         <ul >
             <li><a href="/">Inicio</a></li>
-            <li><a href="{% url 'Crear_Cuenta' %}">Crear</a></li>
-            <li><a href="{% url 'Asignar_Cuenta' %}">Asignar</a></li>
-            <li><a href="{% url 'Tipo_Cuenta' %}">Crear Tipo de Cuenta</a></li>
+            <li><a href="{% url 'Consumo' %}">Autorizacion de Consumo</a></li>
         </ul>
     {% endblock %}
 

@@ -1,0 +1,28 @@
+{% extends "Autorizacion/Base.html" %}
+
+{% block content %}
+    {% if transacciones.count %}
+        <table style="width:100%">
+        <tr>
+            <th>Id</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Monto</th>
+            <th>Autorizado</th>
+        </tr>
+            {% for transaccion in transacciones %}
+            <tr>
+                <td>{{ transaccion.id}}</td>
+                <td>{{ transaccion.fecha }}</td>
+                <td>{{ transaccion.hora}}</td>
+                <td>{{ transaccion.monto}}</td>
+                <td>{{ transaccion.autorizacion}}</td>
+                <td><form action="/Autorizacion/autorizar/{{transaccion.id}}/" method="get"> <input type="submit" value="Autorizar" /> </form></td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    {% else %}
+        No hay transacciones para autorizar
+    {% endif %}
+{% endblock %}

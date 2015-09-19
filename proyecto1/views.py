@@ -17,6 +17,11 @@ def indexClientes(request):
     return render(request, 'Clientes/Index.html')
 
 @login_required(login_url='/login')
+def indexAutorizacion(request):
+    messages.add_message(request, messages.INFO, 'Hello world.')
+    return render(request, 'Autorizacion/Index.html')
+
+@login_required(login_url='/login')
 def indexCuentas(request):
     return render(request, 'Cuentas/Index.html')
 
@@ -76,6 +81,33 @@ def Buscar_Clientes(request):
         form = BuscarCliente()
 
     return render(request, 'Clientes/Buscar.html', {'form': form})
+
+@login_required(login_url='/login')
+def consumo(request):
+
+                transacciones = Transaccion.objects.all()
+
+                return render(request, 'Autorizacion/Consumo.html', {'transacciones': transacciones})
+
+
+@login_required(login_url='/login')
+def autorizar(request, id):
+    if request.method == 'POST':
+        u = Transaccion.objects.get(id=id)
+        form = TransaccionForm(request.POST, instance=u)
+        if form.is_valid():
+            form.save()
+            return HttpResponse('<h1>El usuario ha sido editado</h1>')
+    else:
+        u = Transaccion()
+        try:
+            u = Transaccion.objects.get(id=id)
+        except:
+            return HttpResponse('<h1>El usuario no existe en la Base de Datos</h1>')
+        form = TransaccionForm(instance=u)
+
+    idusuario = u.id
+    return render(request, 'Autorizacion/Autorizar.html', {'form': form, 'idusuario': idusuario})
 
 @login_required(login_url='/login')
 def Eliminar_Clientes(request, id):

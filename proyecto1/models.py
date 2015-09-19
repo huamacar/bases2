@@ -222,6 +222,7 @@ class Transaccion(models.Model):
     fecha = models.DateField()
     hora = models.DateTimeField()
     monto = models.FloatField()
+    autorizacion = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'Transaccion'
