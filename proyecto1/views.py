@@ -149,7 +149,7 @@ def autorizar(request, id):
         form = TransaccionForm(request.POST, instance=u)
         if form.is_valid():
             form.save()
-            return HttpResponse('<h1>El usuario ha sido editado</h1>')
+
 
     else:
         u = Transaccion()
