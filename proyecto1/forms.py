@@ -111,3 +111,8 @@ class CrearEstadoTarjetaForm(ModelForm):
         class Meta:
             model = TipoEstado
             fields = '__all__'
+
+class DeclaCambioForm(ModelForm):
+        class Meta:
+            model = DeclaracionCambio
+            fields = '__all__'
