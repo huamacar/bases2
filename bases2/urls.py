@@ -18,6 +18,8 @@ urlpatterns = patterns('',
     url(r'^Clientes/eliminar/(?P<id>\d+)/$', 'proyecto1.views.Eliminar_Clientes', name='Eliminar_Cliente'),
     url(r'^Clientes/bloquear/(?P<id>\d+)/$', 'proyecto1.views.Bloquear_Clientes', name='Bloquear_Cliente'),
 
+    url(r'^Clientes/Lista/$','proyecto1.views.Lista_Clientes', name='Lista_Clientes'),
+
     #Cuentas
     url(r'^Cuentas/index/$', 'proyecto1.views.indexCuentas', name='Cuentas'),
     url(r'^Cuentas/crear/$', 'proyecto1.views.crearCuenta', name='Crear_Cuenta'),
@@ -47,8 +49,8 @@ urlpatterns = patterns('',
     url(r'^Afiliado/eliminar/(?P<id>\d+)/$', 'proyecto1.views.Eliminar_Afiliados', name='Eliminar_Afiliados'),
     url(r'^Afiliado/bloquear/(?P<id>\d+)/$', 'proyecto1.views.Bloquear_Afiliados', name='Bloquear_Afiliados'),
 
-    #usuarios
-    url(r'^Clientes/Lista/$','proyecto1.views.Lista_Clientes', name='Lista_Clientes'),
+    #Usuario
+    url(r'^Usuarios/registrar/$','proyecto1.views.registrarUsuario', name='Registrar_Usuario'),
 
     #auth
     url(r'^login/$', 'django.contrib.auth.views.login',{'template_name': 'login.html'}),

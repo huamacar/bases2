@@ -157,6 +157,7 @@ class Usuario(models.Model):
     idRol = models.ForeignKey(Rol)
     usuario = models.CharField(max_length=100)
     password = models.CharField(max_length=200)
+    correo = models.EmailField(max_length= 200)
 
     class Meta:
         db_table = 'Usuario'
@@ -202,14 +203,7 @@ class AsignacionLoteUsuario(models.Model):
     class Meta:
         db_table = 'AsignacionLoteUsuario'
 
-class Nota(models.Model):
-    idRecibo = models.ForeignKey(Recibo)
-    nota = models.CharField(max_length=100)
-    fecha = models.DateField()
-    descripcion = models.CharField(max_length=200)
 
-    class Meta:
-        db_table = 'Nota'
 
 class TipoTransaccion(models.Model):
     tipoTransaccion = models.CharField(max_length=50)
@@ -244,7 +238,14 @@ class Recibo(models.Model):
 
     class Meta:
         db_table = 'Recibo'
+class Nota(models.Model):
+    idRecibo = models.ForeignKey(Recibo)
+    nota = models.CharField(max_length=100)
+    fecha = models.DateField()
+    descripcion = models.CharField(max_length=200)
 
+    class Meta:
+        db_table = 'Nota'
 class Programa(models.Model):
     programa = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=200)
