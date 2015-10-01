@@ -84,6 +84,7 @@ def Bloquear_Clientes(request, id):
     u.bloqueado = True
     u.save()
     messages.add_message(request, messages.INFO, 'El usuario ha sido bloqueado')
+    form = BuscarCliente()
     return render(request, 'Clientes/Buscar.html', {'form': form})
 
 
@@ -160,6 +161,8 @@ def autorizar(request, id):
             u = Transaccion.objects.get(id=id)
         except:
             messages.add_message(request, messages.INFO, 'El usuario no existe en la base de datos')
+            form = TransaccionForm(instance=u)
+            idusuario = u.id
             return render(request, 'Autorizacion/Autorizar.html', {'form': form, 'idusuario': idusuario})
         form = TransaccionForm(instance=u)
 
@@ -171,6 +174,7 @@ def autorizar(request, id):
 def Eliminar_Clientes(request, id):
     Usuario.objects.get(id=id).delete()
     messages.add_message(request, messages.INFO, 'El usuario ha sido eliminado')
+    form = BuscarCliente()
     return render(request, 'Clientes/Buscar.html', {'form': form})
 
 
@@ -272,6 +276,8 @@ def editarClientes(request, id):
             u = Cliente.objects.get(id=id)
         except:
             messages.add_message(request, messages.INFO, 'El usuario no existe en la base de datos')
+            form = ClienteForm(instance=u)
+            idusuario = u.id
             return render(request, 'Clientes/Editar.html', {'form': form, 'idusuario': idusuario})
         form = ClienteForm(instance=u)
 
@@ -299,32 +305,18 @@ def insertarAfiliado(request):
 
 @login_required(login_url='/login')
 def Buscar_Afiliados(request):
-    form = BuscarCliente(request.POST)
+    form = BuscarAfiliado(request.POST)
     u = None
     if form.is_valid():
         try:
             u = Afiliado.objects.get(id=form.cleaned_data['id'])
         except:
             messages.add_message(request, messages.INFO, 'El afiliado no existe en la base de datos')
+            afiliado = BuscarAfiliado()
             return render(request, 'Afiliado/Buscar.html', {'form': afiliado, 'afiliado': u})
 
-    afiliado = BuscarCliente()
+    afiliado = BuscarAfiliado()
     return render(request, 'Afiliado/Buscar.html', {'form': afiliado, 'afiliado': u})
-
-
-@login_required(login_url='/login')
-def Eliminar_Afiliados(request, id):
-    Afiliado.objects.get(id=id).delete()
-    messages.add_message(request, messages.INFO, 'El afiliado ha sido eliminado')
-    return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': idafiliado})
-
-
-@login_required(login_url='/login')
-def Eliminar_TipoAfiliados(request, id):
-    TipoAfiliado.objects.get(id=id).delete()
-    messages.add_message(request, messages.INFO, 'El tipo de afiliado ha sido eliminado')
-    return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': idafiliado})
-
 
 @login_required(login_url='/login')
 def Bloquear_Afiliados(request, id):
@@ -332,16 +324,23 @@ def Bloquear_Afiliados(request, id):
     u.bloqueado = True
     u.save()
     messages.add_message(request, messages.INFO, 'El afiliado ha sido bloqueado')
-    return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': idafiliado})
+    form = BuscarAfiliado()
+    return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': u})
+
+@login_required(login_url='/login')
+def Eliminar_Afiliados(request, id):
+    Afiliado.objects.get(id=id).delete()
+    messages.add_message(request, messages.INFO, 'El afiliado ha sido eliminado')
+    form = BuscarAfiliado()
+    return render(request, 'Afiliado/Editar.html', {'form': form})
 
 
 @login_required(login_url='/login')
-def Bloquear_TipoAfiliados(request, id):
-    u = TipoAfiliado.objects.get(id=id)
-    u.bloqueado = True
-    u.save()
-    messages.add_message(request, messages.INFO, 'El tipo de afiliado ha sido bloqueado')
-    return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': idafiliado})
+def Eliminar_TipoAfiliados(request, id):
+    TipoAfiliado.objects.get(id=id).delete()
+    messages.add_message(request, messages.INFO, 'El tipo de afiliado ha sido eliminado')
+    form = BuscarTipoAfiliado()
+    return render(request, 'Afiliado/Editar.html', {'form': form})
 
 
 @login_required(login_url='/login')
@@ -352,14 +351,14 @@ def editarAfiliados(request, id):
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.INFO, 'El afiliado ha sido editado')
-            return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': idafiliado})
+            return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': u})
     else:
-        u = Afiliado()
+        form = Afiliado()
         try:
             u = Afiliado.objects.get(id=id)
         except:
             messages.add_message(request, messages.INFO, 'El afiliado no existe en la base de datos')
-            return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': idafiliado})
+            return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': u})
         form = AfiliadoForm(instance=u)
 
     idafiliado = u.id
@@ -384,16 +383,17 @@ def insertarTipoAfiliado(request):
 
 @login_required(login_url='/login')
 def BuscarTipoAfiliado(request):
-    form = BuscarCliente(request.POST)
+    form = BuscarTipoAfiliado(request.POST)
     t = None
     if form.is_valid():
         try:
             t = TipoAfiliado.objects.get(id=form.cleaned_data['id'])
         except:
+            form = BuscarTipoAfiliado()
             messages.add_message(request, messages.INFO, 'El tipo de afiliado no existe en la base de datos')
-            return render(request, 'TipoAfiliado/Buscar.html', {'form': buscartipoafiliado, 'TipoAfiliado': t})
+            return render(request, 'TipoAfiliado/Buscar.html', {'form': form, 'TipoAfiliado': t})
 
-    buscartipoafiliado = BuscarCliente()
+    buscartipoafiliado = BuscarTipoAfiliado()
     return render(request, 'TipoAfiliado/Buscar.html', {'form': buscartipoafiliado, 'TipoAfiliado': t})
 
 
@@ -405,14 +405,14 @@ def editarTipoAfiliados(request, id):
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.INFO, 'El tipo afiliado ha sido editado')
-            return render(request, 'TipoAfiliado/Editar.html', {'form': form, 'idTipoafiliado': idTipoafiliado})
+            return render(request, 'TipoAfiliado/Editar.html', {'form': form, 'idTipoafiliado': u})
     else:
-        u = TipoAfiliado()
+        form = TipoAfiliado()
         try:
             u = TipoAfiliado.objects.get(id=id)
         except:
             messages.add_message(request, messages.INFO, 'EL tipo afiliado no existe en la base de datos')
-            return render(request, 'TipoAfiliado/Editar.html', {'form': form, 'idTipoafiliado': idTipoafiliado})
+            return render(request, 'TipoAfiliado/Editar.html', {'form': form, 'idTipoafiliado': u})
         form = TipoAfiliadoForm(instance=u)
 
     idTipoafiliado = u.id
