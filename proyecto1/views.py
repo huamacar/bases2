@@ -339,7 +339,7 @@ def Eliminar_Afiliados(request, id):
 def Eliminar_TipoAfiliados(request, id):
     TipoAfiliado.objects.get(id=id).delete()
     messages.add_message(request, messages.INFO, 'El tipo de afiliado ha sido eliminado')
-    form = BuscarTipoAfiliado()
+    form = Buscar_TipoAfiliado()
     return render(request, 'Afiliado/Editar.html', {'form': form})
 
 
@@ -383,17 +383,17 @@ def insertarTipoAfiliado(request):
 
 @login_required(login_url='/login')
 def BuscarTipoAfiliado(request):
-    form = BuscarTipoAfiliado(request.POST)
+    form = Buscar_TipoAfiliado(request.POST)
     u = None
     if form.is_valid():
         try:
             u = TipoAfiliado.objects.get(id=form.cleaned_data['id'])
         except:
             messages.add_message(request, messages.INFO, 'El tipo de afiliado no existe en la base de datos')
-            form = BuscarTipoAfiliado()
+            form = Buscar_TipoAfiliado()
             return render(request, 'TipoAfiliado/Buscar.html', {'form': form, 'TipoAfiliado': u})
 
-    form = BuscarTipoAfiliado()
+    form = Buscar_TipoAfiliado()
     return render(request, 'TipoAfiliado/Buscar.html', {'form': form, 'TipoAfiliado': u})
 
 @login_required(login_url='/login')
