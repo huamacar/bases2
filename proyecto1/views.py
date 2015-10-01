@@ -63,6 +63,14 @@ def indexNotas(request):
     return render(request, 'Notas/Index.html')
 
 @login_required(login_url='/login')
+def indexEmisor(request):
+    return render(request, 'Emisor/Index.html')
+
+@login_required(login_url='/login')
+def indexRol(request):
+    return render(request, 'Rol/Index.html')
+
+@login_required(login_url='/login')
 def insertarClientes(request):
     if request.method == 'POST':
         form = ClienteForm(request.POST)
@@ -217,14 +225,21 @@ def asignarCuenta(request):
     if request.method == 'POST':
         form = AsigCuentaForm(request.POST)
 
+        idform = form.data['idCliente']
+        form.data = form.data.copy()
+        form.data['idCliente'] = Cliente.objects.filter(nombre=idform).values_list('id', flat=True)
+
         if form.is_valid():
             form.save()
             form = AsigCuentaForm()
             messages.add_message(request, messages.INFO, 'La cuenta ha sido asignada')
+            form.fields["idCliente"].queryset = Cliente.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
+            form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
             return render(request, 'Cuentas/AsignarCuenta.html', {'form': form})
     else:
         form = AsigCuentaForm()
-
+    form.fields["idCliente"].queryset = Cliente.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
+    form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
     return render(request, 'Cuentas/AsignarCuenta.html', {'form': form})
 
 
@@ -678,19 +693,35 @@ def crearNota(request):
     return render(request, 'Notas/Crear.html', {'form': form})
 
 @login_required(login_url='/login')
-def asignarLote(request):
+def asignarUsuarioLote(request):
     if request.method == 'POST':
-        form = AsigLoteForm(request.POST)
+        form = AsigUsuarioLoteForm(request.POST)
 
         if form.is_valid():
             form.save()
-            form = AsigLoteForm()
-            messages.add_message(request, messages.INFO, 'El lote ha sido asignado')
-            return render(request, 'Lote/AsignarLote.html', {'form': form})
+            form = AsigUsuarioLoteForm()
+            messages.add_message(request, messages.INFO, 'El lote ha sido asignado al usuario')
+            return render(request, 'Lote/AsignarUsuarioLote.html', {'form': form})
     else:
-        form = AsigLoteForm()
+        form = AsigUsuarioLoteForm()
 
-    return render(request, 'Lote/AsignarLote.html', {'form': form})
+    return render(request, 'Lote/AsignarUsuarioLote.html', {'form': form})
+
+@login_required(login_url='/login')
+def asignarAfiliadoLote(request):
+    if request.method == 'POST':
+        form = AsigAfiliadoLoteForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            form = AsigAfiliadoLoteForm()
+            messages.add_message(request, messages.INFO, 'El lote ha sido asignado al afiliado')
+            return render(request, 'Lote/AsignarAfiliadoLote.html', {'form': form})
+    else:
+        form = AsigAfiliadoLoteForm()
+
+    return render(request, 'Lote/AsignarAfiliadoLote.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def crearLote(request):
@@ -841,3 +872,110 @@ def consultar_Saldo(request):
         form = BuscarCuentaForm()
 
     return render(request, 'Cuentas/ConsultaSaldo.html', {'form': form})
+
+@login_required(login_url='/login')
+def asignarInteresEmisor(request):
+    if request.method == 'POST':
+        form = AsigInteresEmisorForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            form = AsigInteresEmisorForm()
+            messages.add_message(request, messages.INFO, 'El Interes ha sido asignado al emisor')
+            return render(request, 'Emisor/AsignarInteres.html', {'form': form})
+    else:
+        form = AsigInteresEmisorForm()
+
+    return render(request, 'Emisor/AsignarInteres.html', {'form': form})
+
+@login_required(login_url='/login')
+def crearEmisor(request):
+    if request.method == 'POST':
+        form = EmisorForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            form = EmisorForm()
+            messages.add_message(request, messages.INFO, 'El Emisor ha sido creado')
+            return render(request, 'Emisor/Crear.html', {'form': form})
+    else:
+        form = EmisorForm()
+
+    return render(request, 'Emisor/Crear.html', {'form': form})
+
+@login_required(login_url='/login')
+def asignarInteresCuenta(request):
+    if request.method == 'POST':
+        form = AsigInteresCuentaForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            form = AsigInteresCuentaForm()
+            messages.add_message(request, messages.INFO, 'El Interes ha sido asignado a la cuenta')
+            form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+            return render(request, 'Cuentas/AsignarInteres.html', {'form': form})
+    else:
+        form = AsigInteresCuentaForm()
+    form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+    return render(request, 'Cuentas/AsignarInteres.html', {'form': form})
+
+@login_required(login_url='/login')
+def crearRol(request):
+    if request.method == 'POST':
+        form = RolForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            form = RolForm()
+            messages.add_message(request, messages.INFO, 'El Rol ha sido creado')
+            return render(request, 'Rol/Crear.html', {'form': form})
+    else:
+        form = RolForm()
+
+    return render(request, 'Rol/Crear.html', {'form': form})
+
+@login_required(login_url='/login')
+def autorizarRol(request):
+    if request.method == 'POST':
+        form = AutorizarRolForm(request.POST)
+
+         # se coloca el valor valido en el form, es decir el id en vez del nombre
+        idform = form.data['idRol']
+        form.data = form.data.copy()
+        form.data['idRol'] = Rol.objects.filter(rol=idform).values_list('id', flat=True)
+
+        if form.is_valid():
+            form.save()
+            form = AutorizarRolForm()
+            messages.add_message(request, messages.INFO, 'La autorizacion ha sido asignada')
+            form.fields["idRol"].queryset = Rol.objects.all().values_list('rol',flat=True)  # se llena el form con los valoress
+            return render(request, 'Rol/Autorizacion.html', {'form': form})
+
+    else:
+        form = AutorizarRolForm()
+        form.fields["idRol"].queryset = Rol.objects.all().values_list('rol',flat=True)  # se llena el form con los valores
+    return render(request, 'Rol/Autorizacion.html', {'form': form})
+
+@login_required(login_url='/login')
+def privilegioRol(request):
+
+    if request.method == 'POST':
+        form = PrivilegioRolForm(request.POST)
+
+         # se coloca el valor valido en el form, es decir el id en vez del nombre
+        idform = form.data['idRol']
+        form.data = form.data.copy()
+        form.data['idRol'] = Rol.objects.filter(rol=idform).values_list('id', flat=True)
+
+        if form.is_valid():
+            form.save()
+            form = PrivilegioRolForm()
+            messages.add_message(request, messages.INFO, 'El privilegio ha sido asignado')
+            form.fields["idRol"].queryset = Rol.objects.all().values_list('rol',flat=True)  # se llena el form con los valores
+            return render(request, 'Rol/Privilegio.html', {'form': form})
+
+    else:
+        form = PrivilegioRolForm()
+        form.fields["idRol"].queryset = Rol.objects.all().values_list('rol',flat=True)  # se llena el form con los valores
+    return render(request, 'Rol/Privilegio.html', {'form': form})
+

@@ -35,8 +35,9 @@ urlpatterns = patterns('',
     url(r'^Cuentas/index/$', 'proyecto1.views.indexCuentas', name='Cuentas'),
     url(r'^Cuentas/crear/$', 'proyecto1.views.crearCuenta', name='Crear_Cuenta'),
     url(r'^Cuentas/asignar/$', 'proyecto1.views.asignarCuenta', name='Asignar_Cuenta'),
+    url(r'^Cuentas/asignarInteres/$', 'proyecto1.views.asignarInteresCuenta', name='AsignarInteres_Cuenta'),
     url(r'^Cuentas/crearTipo/$', 'proyecto1.views.crearTipoCuenta', name='Tipo_Cuenta'),
-                       url(r'^Cuentas/consultaSaldo/$', 'proyecto1.views.consultar_Saldo', name='Consultar_Saldo'),
+    url(r'^Cuentas/consultaSaldo/$', 'proyecto1.views.consultar_Saldo', name='Consultar_Saldo'),
 
     #Tarjetas
     url(r'^Tarjetas/index/$', 'proyecto1.views.indexTarjetas', name='Tarjetas'),
@@ -49,10 +50,22 @@ urlpatterns = patterns('',
     url(r'^Notas/index/$', 'proyecto1.views.indexNotas', name='Notas'),
     url(r'^Notas/crear/$', 'proyecto1.views.crearNota', name='Crear_Nota'),
 
+    #Rol
+    url(r'^Rol/index/$', 'proyecto1.views.indexRol', name='Rol'),
+    url(r'^Rol/crear/$', 'proyecto1.views.crearRol', name='Crear_Rol'),
+    url(r'^Rol/autorizar/$', 'proyecto1.views.autorizarRol', name='Autorizar_Rol'),
+    url(r'^Rol/privilegio/$', 'proyecto1.views.privilegioRol', name='Privilegio_Rol'),
+
+    #Emisor
+    url(r'^Emisor/index/$', 'proyecto1.views.indexEmisor', name='Emisor'),
+    url(r'^Emisor/crear/$', 'proyecto1.views.crearEmisor', name='Crear_Emisor'),
+    url(r'^Emisor/asignar/$', 'proyecto1.views.asignarInteresEmisor', name='AsignarInteres_Emisor'),
+
     #Lotes
     url(r'^Lote/index/$', 'proyecto1.views.indexLotes', name='Lote'),
     url(r'^Lote/crear/$', 'proyecto1.views.crearLote', name='Crear_Lote'),
-    url(r'^Lote/asignar/$', 'proyecto1.views.asignarLote', name='Asignar_Lote'),
+    url(r'^Lote/asignarUsuario/$', 'proyecto1.views.asignarUsuarioLote', name='AsignarUsuario_Lote'),
+    url(r'^Lote/asignarAfiliado/$', 'proyecto1.views.asignarAfiliadoLote', name='AsignarAfiliado_Lote'),
 
     #TipoAfiliado
     url(r'^TipoAfiliado/index/$', 'proyecto1.views.indexTipoAfiliado', name='TipoAfiliado'),

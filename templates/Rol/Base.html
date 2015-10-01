@@ -1,0 +1,17 @@
+{%  extends "Base.html" %}
+    {% load staticfiles %}
+    {% block title %}
+        <title> Notas </title>
+    {% endblock %}
+    {% block sidebar %}
+        <ul >
+            <li><a href="/">Inicio</a></li>
+            <li><a href="{% url 'Crear_Rol' %}">Crear</a></li>
+            <li><a href="{% url 'Autorizar_Rol' %}">Autorizacion</a></li>
+            <li><a href="{% url 'Privilegio_Rol' %}">Privilegio</a></li>
+        </ul>
+    {% endblock %}
+
+    {% block content %}
+
+    {% endblock %}

@@ -118,9 +118,14 @@ class LoteForm(ModelForm):
             model = Lote
             fields = '__all__'
 
-class AsigLoteForm(ModelForm):
+class AsigUsuarioLoteForm(ModelForm):
         class Meta:
             model = AsignacionLoteUsuario
+            fields = '__all__'
+
+class AsigAfiliadoLoteForm(ModelForm):
+        class Meta:
+            model = AsignacionLoteAfiliado
             fields = '__all__'
 
 class NotasForm(ModelForm):
@@ -143,3 +148,37 @@ class DeclaCambioForm(ModelForm):
         class Meta:
             model = DeclaracionCambio
             fields = '__all__'
+
+class AsigInteresEmisorForm(ModelForm):
+        class Meta:
+            model = AsignacionTasaEmisor
+            fields = '__all__'
+
+class EmisorForm(ModelForm):
+        class Meta:
+            model = Emisor
+            fields = '__all__'
+
+class AsigInteresCuentaForm(ModelForm):
+        class Meta:
+            model = AsigancionTasaCliente
+            fields = '__all__'
+
+class RolForm(ModelForm):
+        class Meta:
+            model = Rol
+            fields = '__all__'
+
+class AutorizarRolForm(ModelForm):
+        def __init__(self, *args, **kwargs):
+                super(AutorizarRolForm, self).__init__(*args, **kwargs)
+                self.fields['fecha'].widget=DateInput()
+        class Meta:
+            model = Autorizacion
+            fields = '__all__'
+
+class PrivilegioRolForm(ModelForm):
+        class Meta:
+            model = Privilegio
+            fields = '__all__'
+

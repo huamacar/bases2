@@ -9,6 +9,31 @@ GENERO_CHOICES = (
     ('femenino', 'femenino'),
 )
 
+
+INTERES_CHOICES = (
+    (0.5,'5%'),
+    (0.1,'10%'),
+    (0.15,'15%'),
+    (0.2,'20%'),
+    (0.25,'25%'),
+    (0.3,'30%'),
+    (0.35,'35%'),
+    (0.4,'40%'),
+    (0.45,'45%'),
+    (0.5,'50%'),
+    (0.55,'55%'),
+    (0.6,'60%'),
+    (0.65,'65%'),
+    (0.7,'70%'),
+    (0.75,'75%'),
+)
+
+PROGRAMA_CHOICES = (
+    ('deposito','deposito'),
+    ('pago cheque', 'pago cheque'),
+    ('retiro','retiro'),
+)
+
 class Cliente(models.Model):
     nombre = models.CharField(max_length=200, validators=[RegexValidator(r'^[a-zA-Z\' \']*$', 'El nombre solo permite letras de A-Z')])
     direccion = models.CharField(max_length=200, validators=[RegexValidator(r'^[0-9a-zA-Z\'\-\'\' \']*$', 'La dirreccion no permite simbolos extranios')])
@@ -38,16 +63,10 @@ class Cuenta(models.Model):
     class Meta:
         db_table = 'Cuenta'
 
-class InteresCliente(models.Model):
-    porcentaje = models.FloatField()
-    descripcion = models.CharField(max_length=200)
-
-    class Meta:
-        db_table = 'InteresCliente'
 
 class AsigancionTasaCliente(models.Model):
     idCuenta = models.ForeignKey(Cuenta)
-    idTasaInteres = models.ForeignKey(InteresCliente)
+    idTasaInteres = models.FloatField(choices=INTERES_CHOICES)
 
     class Meta:
         db_table = 'AsigancionTasaCliente'
@@ -79,16 +98,9 @@ class Emisor(models.Model):
     class Meta:
         db_table = 'Emisor'
 
-class InteresEmisor(models.Model):
-    porcentaje = models.FloatField()
-    descripcion = models.CharField(max_length=200)
-
-    class Meta:
-        db_table = 'InteresEmisor'
-
 class AsignacionTasaEmisor(models.Model):
     idEmisor = models.ForeignKey(Emisor)
-    idInteresEmisor = models.ForeignKey(InteresEmisor)
+    idInteresEmisor = models.FloatField(choices=INTERES_CHOICES)
 
     class Meta:
         db_table = 'AsignacionTasaEmisor'
@@ -156,7 +168,7 @@ class Privilegio(models.Model):
 class TipoAfiliado(models.Model):
     nombre = models.CharField(max_length=200, validators=[RegexValidator(r'^[0-9a-zA-Z\'\-\'\' \']*$', 'El tipo de afiliado no permite simbolos extranios')])
     descripcion = models.CharField(max_length=200)
-    porcentaje = models.FloatField(validators=[MinValueValidator(0.0)])
+    porcentaje = models.FloatField(choices=INTERES_CHOICES)
 
     class Meta:
         db_table = 'TipoAfiliado'
@@ -252,6 +264,7 @@ class Nota(models.Model):
 
     class Meta:
         db_table = 'Nota'
+
 class Programa(models.Model):
     programa = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=200)

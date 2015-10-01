@@ -1,4 +1,4 @@
-{% extends "Lote/Base.html" %}
+{% extends "Rol/Base.html" %}
 
 {% block content %}
     {% if messages %}
@@ -11,9 +11,9 @@
             {% endfor %}
         </ul>
         {% endif %}
-    <form action="/Lote/asignar/" method="post">
+    <form action="/Rol/privilegio/" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Asignar" />
+        <input type="submit" value="Asignar privilegio" />
     </form>
 {% endblock %}
