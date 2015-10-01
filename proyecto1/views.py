@@ -17,13 +17,13 @@ def index(request):
 
 @login_required(login_url='/login')
 def indexClientes(request):
-    messages.add_message(request, messages.INFO, 'Hello world.')
+    messages.add_message(request, messages.INFO, 'Area de operacion de clientes.')
     return render(request, 'Clientes/Index.html')
 
 
 @login_required(login_url='/login')
 def indexAutorizacion(request):
-    messages.add_message(request, messages.INFO, 'Hello world.')
+    messages.add_message(request, messages.INFO, 'Area de operacion de Autorizaciones.')
     return render(request, 'Autorizacion/Index.html')
 
 @login_required(login_url='/login')
@@ -69,6 +69,7 @@ def insertarClientes(request):
 
         if form.is_valid():
             form.save()  # con esto no hay necesidad de igualar los datos ya se salva a la base de datos
+            form = ClienteForm()
             messages.add_message(request, messages.INFO, 'El Cliente se ha insertado')
             return render(request, 'Clientes/Insertar.html', {'form': form})
     else:
@@ -151,6 +152,7 @@ def autorizar(request, id):
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.INFO, 'La transaccion ha sido autorizada')
+            idusuario = u.id
             return render(request, 'Autorizacion/Autorizar.html', {'form': form, 'idusuario': idusuario})
     else:
         u = Transaccion()
@@ -181,6 +183,7 @@ def crearCuenta(request):
         form.data['idTipoCuenta'] = TipoCuenta.objects.filter(tipoCuenta=idform).values_list('id', flat=True)
         if form.is_valid():
             form.save()
+            form = CuentaForm()
             messages.add_message(request, messages.INFO, 'La cuenta se ha creado')
             return render(request, 'Cuentas/Crear.html', {'form': form})
     else:
@@ -196,6 +199,7 @@ def crearTipoCuenta(request):
 
         if form.is_valid():
             form.save()
+            form = TipoCuentaForm()
             messages.add_message(request, messages.INFO, 'El tipo de cuenta ha sido creada')
             return render(request, 'Cuentas/CrearTipo.html', {'form': form})
     else:
@@ -211,6 +215,7 @@ def asignarCuenta(request):
 
         if form.is_valid():
             form.save()
+            form = AsigCuentaForm()
             messages.add_message(request, messages.INFO, 'La cuenta ha sido asignada')
             return render(request, 'Cuentas/AsignarCuenta.html', {'form': form})
     else:
@@ -226,6 +231,7 @@ def crearTarjeta(request):
 
         if form.is_valid():
             form.save()
+            form = TarjetaForm()
             messages.add_message(request, messages.INFO, 'La tarjeta ha sido creada')
             return render(request, 'Tarjetas/CrearTarjeta.html', {'form': form})
     else:
@@ -241,6 +247,7 @@ def asignarTarjeta(request):
 
         if form.is_valid():
             form.save()
+            form = AsigTarjetaForm()
             messages.add_message(request, messages.INFO, 'La tarjeta ha sido asignada')
             return render(request, 'Tarjetas/AsignarTarjeta.html', {'form': form})
     else:
@@ -257,6 +264,7 @@ def editarClientes(request, id):
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.INFO, 'El usuario ha sido editado')
+            idusuario = u.id
             return render(request, 'Clientes/Editar.html', {'form': form, 'idusuario': idusuario})
     else:
         u = Cliente()
@@ -280,6 +288,7 @@ def insertarAfiliado(request):
         form.data['tipoAfiliado'] = TipoAfiliado.objects.filter(nombre=idafiliado).values_list('id',flat=True)
         if form.is_valid():
             form.save()
+            form = AfiliadoForm()
             messages.add_message(request, messages.INFO, 'El afiliado ha sido insertado')
             return render(request, 'Afiliado/Insertar.html', {'form': form})
     else:
@@ -364,6 +373,7 @@ def insertarTipoAfiliado(request):
 
         if form.is_valid():
             form.save()
+            form = TipoAfiliadoForm()
             messages.add_message(request, messages.INFO, 'El tipo de afiliado se ha insertado')
             return render(request, 'TipoAfiliado/Insertar.html', {'form': form})
     else:
@@ -424,6 +434,7 @@ def RegistrarUsuario(request):
             User.objects.create_user(form.data['usuario'], form.data['correo'],
                                      form.data['password'])  # se guarda en la tabla de django
             form.save()
+            form = UsuarioForm()
             messages.add_message(request, messages.INFO, 'The user has been created')
             return render(request, 'Usuarios/Registrar.html', {'form': form})
         form.fields["idRol"].queryset = Rol.objects.all().values_list('rol',
@@ -528,6 +539,7 @@ def PagarCuenta(request, id):
                 l.save()
 
                 messages.add_message(request, messages.INFO, 'El pago ha sido realizado')
+                form = PagarCuentaForm()
 
             return render(request, 'Caja/pago.html', {'form': form, 'cuenta': c})
     else:
@@ -629,7 +641,7 @@ def TransferenciaCuentas(request):
 
                     messages.add_message(request, messages.INFO, 'La cuenta no tiene suficientes fondos')
 
-
+                    form = TransferenciaCuentasForm()
         return render(request, 'Caja/transferencia.html', {'form': form,'transferencia':t})
     else:
         form = TransferenciaCuentasForm()
@@ -643,6 +655,7 @@ def crearEstadoTarjeta(request):
 
         if form.is_valid():
             form.save()
+            form = CrearEstadoTarjetaForm()
             messages.add_message(request, messages.INFO, 'El estado de tarjeta ha sido creada')
             return render(request, 'Tarjetas/AsignarTarjeta.html', {'form': form})
     else:
@@ -657,6 +670,7 @@ def crearNota(request):
 
         if form.is_valid():
             form.save()
+            form = NotasForm()
             messages.add_message(request, messages.INFO, 'La nota ha sido creada')
             return render(request, 'Notas/Crear.html', {'form': form})
     else:
@@ -671,6 +685,7 @@ def asignarLote(request):
 
         if form.is_valid():
             form.save()
+            form = AsigLoteForm()
             messages.add_message(request, messages.INFO, 'El lote ha sido asignado')
             return render(request, 'Lote/AsignarLote.html', {'form': form})
     else:
@@ -685,6 +700,7 @@ def crearLote(request):
 
         if form.is_valid():
             form.save()
+            form = LoteForm()
             messages.add_message(request, messages.INFO, 'El lote ha sido creado')
             return render(request, 'Lote/Crear.html', {'form': form})
     else:
@@ -782,6 +798,8 @@ def retirar(request,id):
                 l.rechazo = 0
                 l.razonRechazo = ''
                 l.save()
+
+                form = RetirarEfectivo()
         return render(request, 'Autorizacion/Retiro.html',{'form':form, 'cuenta':c})
     else:
         c = Cuenta()
@@ -798,6 +816,7 @@ def declararCambios(request):
         form.data['idEstado'] = TipoEstado.objects.filter(tipoEstado=idform).values_list('id', flat=True)
         if form.is_valid():
             form.save()
+            form = DeclaCambioForm()
             messages.add_message(request, messages.INFO, 'La tarjeta ha sido declarada')
             return render(request, 'Tarjetas/DeclaracionCambios.html', {'form': form})
     else:
