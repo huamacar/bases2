@@ -384,18 +384,17 @@ def insertarTipoAfiliado(request):
 @login_required(login_url='/login')
 def BuscarTipoAfiliado(request):
     form = BuscarTipoAfiliado(request.POST)
-    t = None
+    u = None
     if form.is_valid():
         try:
-            t = TipoAfiliado.objects.get(id=form.cleaned_data['id'])
+            u = TipoAfiliado.objects.get(id=form.cleaned_data['id'])
         except:
-            form = BuscarTipoAfiliado()
             messages.add_message(request, messages.INFO, 'El tipo de afiliado no existe en la base de datos')
-            return render(request, 'TipoAfiliado/Buscar.html', {'form': form, 'TipoAfiliado': t})
+            form = BuscarTipoAfiliado()
+            return render(request, 'TipoAfiliado/Buscar.html', {'form': form, 'TipoAfiliado': u})
 
-    buscartipoafiliado = BuscarTipoAfiliado()
-    return render(request, 'TipoAfiliado/Buscar.html', {'form': buscartipoafiliado, 'TipoAfiliado': t})
-
+    form = BuscarTipoAfiliado()
+    return render(request, 'TipoAfiliado/Buscar.html', {'form': form, 'TipoAfiliado': u})
 
 @login_required(login_url='/login')
 def editarTipoAfiliados(request, id):
