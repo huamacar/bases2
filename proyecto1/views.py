@@ -304,17 +304,19 @@ def editarClientes(request, id):
 def insertarAfiliado(request):
     if request.method == 'POST':
         form = AfiliadoForm(request.POST)
-        idafiliado = form.data['tipoAfiliado']
-        form.data.copy()
-        form.data['tipoAfiliado'] = TipoAfiliado.objects.filter(nombre=idafiliado).values_list('id',flat=True)
+
+        idform = form.data['tipoAfiliado']
+        form.data = form.data.copy()
+        form.data['tipoAfiliado'] = TipoAfiliado.objects.filter(nombre=idform).values_list('id', flat=True)
         if form.is_valid():
             form.save()
             form = AfiliadoForm()
+            form.fields["tipoAfiliado"].queryset = TipoAfiliado.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
             messages.add_message(request, messages.INFO, 'El afiliado ha sido insertado')
             return render(request, 'Afiliado/Insertar.html', {'form': form})
     else:
         form = AfiliadoForm()
-        form.fields['tipoAfiliado'].queryset = TipoAfiliado.objects.all().values_list('nombre',flat=True)
+        form.fields["tipoAfiliado"].queryset = TipoAfiliado.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
     return render(request, 'Afiliado/Insertar.html', {'form': form})
 
 
