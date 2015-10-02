@@ -119,8 +119,7 @@ class Tarjeta(models.Model):
 
 class PagoMinimo(models.Model):
     idTarjeta = models.ForeignKey(Tarjeta)
-    mes = models.IntegerField(max_length=2)
-    anio = models.IntegerField(max_length=4)
+    fecha = models.DateField()
     monto = models.FloatField()
 
     class Meta:
