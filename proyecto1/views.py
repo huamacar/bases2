@@ -71,6 +71,10 @@ def indexRol(request):
     return render(request, 'Rol/Index.html')
 
 @login_required(login_url='/login')
+def indexTipoTarjeta(request):
+    return render(request, 'TipoTarjeta/Index.html')
+
+@login_required(login_url='/login')
 def insertarClientes(request):
     if request.method == 'POST':
         form = ClienteForm(request.POST)
@@ -357,7 +361,7 @@ def Eliminar_TipoAfiliados(request, id):
     TipoAfiliado.objects.get(id=id).delete()
     messages.add_message(request, messages.INFO, 'El tipo de afiliado ha sido eliminado')
     form = Buscar_TipoAfiliado()
-    return render(request, 'Afiliado/Editar.html', {'form': form})
+    return render(request, 'TipoAfiliado/Buscar.html', {'form': form})
 
 
 @login_required(login_url='/login')
@@ -400,18 +404,20 @@ def insertarTipoAfiliado(request):
 
 @login_required(login_url='/login')
 def BuscarTipoAfiliado(request):
-    form = Buscar_TipoAfiliado(request.POST)
-    u = None
-    if form.is_valid():
-        try:
-            u = TipoAfiliado.objects.get(id=form.cleaned_data['id'])
-        except:
-            messages.add_message(request, messages.INFO, 'El tipo de afiliado no existe en la base de datos')
+     u = None
+     if request.method == 'POST':
+        form = Buscar_TipoAfiliado(request.POST)
+        idform = form.data['idAfi']
+        form.data = form.data.copy()
+        form.data['idAfi'] = TipoAfiliado.objects.filter(nombre=idform).values_list('id', flat=True)
+        if form.is_valid():
+            idr = form.data['idAfi']
+            u = TipoAfiliado.objects.get(id=idr)
             form = Buscar_TipoAfiliado()
             return render(request, 'TipoAfiliado/Buscar.html', {'form': form, 'TipoAfiliado': u})
-
-    form = Buscar_TipoAfiliado()
-    return render(request, 'TipoAfiliado/Buscar.html', {'form': form, 'TipoAfiliado': u})
+     else:
+        form = Buscar_TipoAfiliado()
+     return render(request, 'TipoAfiliado/Buscar.html', {'form': form, 'TipoAfiliado': u})
 
 @login_required(login_url='/login')
 def editarTipoAfiliados(request, id):
@@ -421,9 +427,10 @@ def editarTipoAfiliados(request, id):
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.INFO, 'El tipo afiliado ha sido editado')
-            return render(request, 'TipoAfiliado/Editar.html', {'form': form, 'idTipoafiliado': u})
+            form = Buscar_TipoAfiliado()
+            return render(request, 'TipoAfiliado/Buscar.html', {'form': form, 'idTipoafiliado': u})
     else:
-        form = TipoAfiliado()
+        form = TipoAfiliadoForm()
         try:
             u = TipoAfiliado.objects.get(id=id)
         except:
@@ -673,11 +680,11 @@ def crearEstadoTarjeta(request):
             form.save()
             form = CrearEstadoTarjetaForm()
             messages.add_message(request, messages.INFO, 'El estado de tarjeta ha sido creada')
-            return render(request, 'Tarjetas/AsignarTarjeta.html', {'form': form})
+            return render(request, 'Tarjetas/TipoEstado.html', {'form': form})
     else:
         form = CrearEstadoTarjetaForm()
 
-    return render(request, 'Tarjetas/AsignarTarjeta.html', {'form': form})
+    return render(request, 'Tarjetas/TipoEstado.html', {'form': form})
 
 @login_required(login_url='/login')
 def crearNota(request):
@@ -981,3 +988,339 @@ def privilegioRol(request):
         form.fields["idRol"].queryset = Rol.objects.all().values_list('rol',flat=True)  # se llena el form con los valores
     return render(request, 'Rol/Privilegio.html', {'form': form})
 
+@login_required(login_url='/login')
+def buscarRol(request):
+    u = None
+    if request.method == 'POST':
+        form = Buscar_RolForm(request.POST)
+        idform = form.data['idRol']
+        form.data = form.data.copy()
+        form.data['idRol'] = Rol.objects.filter(rol=idform).values_list('id', flat=True)
+        if form.is_valid():
+            idr = form.data['idRol']
+            u = Rol.objects.get(id=idr)
+            form = Buscar_RolForm()
+            return render(request, 'Rol/Buscar.html', {'form': form, 'Rol': u})
+    else:
+        form = Buscar_RolForm()
+    return render(request, 'Rol/Buscar.html', {'form': form, 'Rol': u})
+
+@login_required(login_url='/login')
+def editarRol(request, id):
+    if request.method == 'POST':
+        u = Rol.objects.get(id=id)
+        form = RolForm(request.POST, instance=u)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.INFO, 'El rol ha sido editado')
+            form = Buscar_RolForm()
+            return render(request, 'Rol/Buscar.html', {'form': form})
+    else:
+        form = RolForm()
+        try:
+            u = Rol.objects.get(id=id)
+        except:
+            messages.add_message(request, messages.INFO, 'EL tipo afiliado no existe en la base de datos')
+            return render(request, 'Rol/Editar.html', {'form': form, 'Rol': u})
+        form = RolForm(instance=u)
+
+    idRol = u.id
+    return render(request, 'Rol/Editar.html', {'form': form, 'idRol': idRol})
+
+@login_required(login_url='/login')
+def eliminarRol(request, id):
+    Rol.objects.get(id=id).delete()
+    messages.add_message(request, messages.INFO, 'El rol ha sido eliminado')
+    form = Buscar_RolForm()
+    return render(request, 'Rol/Buscar.html', {'form': form})
+
+@login_required(login_url='/login')
+def crearTipoTarjeta(request):
+    if request.method == 'POST':
+        form = TipoTarjetaForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            form = TipoTarjetaForm()
+            messages.add_message(request, messages.INFO, 'El tipo de tarjeta ha sido creado')
+            return render(request, 'TipoTarjeta/CrearTT.html', {'form': form})
+    else:
+        form = TipoTarjetaForm()
+
+    return render(request, 'TipoTarjeta/CrearTT.html', {'form': form})
+
+@login_required(login_url='/login')
+def buscarTipoTarjeta(request):
+    u = None
+    if request.method == 'POST':
+        form = Buscar_TTarjetaForm(request.POST)
+        idform = form.data['idTT']
+        form.data = form.data.copy()
+        form.data['idTT'] = TipoTarjeta.objects.filter(tipoTarjeta=idform).values_list('id', flat=True)
+        if form.is_valid():
+            idr = form.data['idTT']
+            u = TipoTarjeta.objects.get(id=idr)
+            form = Buscar_TTarjetaForm()
+            return render(request, 'TipoTarjeta/BuscarTT.html', {'form': form, 'TT': u})
+    else:
+        form = Buscar_TTarjetaForm()
+    return render(request, 'TipoTarjeta/BuscarTT.html', {'form': form, 'TT': u})
+
+@login_required(login_url='/login')
+def editarTipoTarjeta(request, id):
+    if request.method == 'POST':
+        u = TipoTarjeta.objects.get(id=id)
+        form = TipoTarjetaForm(request.POST, instance=u)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.INFO, 'El tipo de tarjeta ha sido editado')
+            form = Buscar_TTarjetaForm()
+            return render(request, 'TipoTarjeta/BuscarTT.html', {'form': form})
+    else:
+        form = ()
+        try:
+            u = TipoTarjeta.objects.get(id=id)
+        except:
+            messages.add_message(request, messages.INFO, 'EL tipo de tarjeta no existe en la base de datos')
+            return render(request, 'TipoTarjeta/EditarTT.html', {'form': form, 'TT': u})
+        form = TipoTarjetaForm(instance=u)
+
+    idTT = u.id
+    return render(request, 'TipoTarjeta/EditarTT.html', {'form': form, 'idTT': idTT})
+
+@login_required(login_url='/login')
+def eliminarTipoTarjeta(request, id):
+    TipoTarjeta.objects.get(id=id).delete()
+    messages.add_message(request, messages.INFO, 'El tipo de tarjeta ha sido eliminado')
+    form = Buscar_TTarjetaForm()
+    return render(request, 'TipoTarjeta/BuscarTT.html', {'form': form})
+
+@login_required(login_url='/login')
+def buscarEmisor(request):
+    u = None
+    if request.method == 'POST':
+        form = Buscar_EmisorForm(request.POST)
+        idform = form.data['idEmisor']
+        form.data = form.data.copy()
+        form.data['idEmisor'] = Emisor.objects.filter(nombre=idform).values_list('id', flat=True)
+        if form.is_valid():
+            idr = form.data['idEmisor']
+            u = Emisor.objects.get(id=idr)
+            form = Buscar_EmisorForm()
+            return render(request, 'Emisor/Buscar.html', {'form': form, 'Emisor': u})
+    else:
+        form = Buscar_EmisorForm()
+    return render(request, 'Emisor/Buscar.html', {'form': form, 'Emisor': u})
+
+@login_required(login_url='/login')
+def editarEmisor(request, id):
+    if request.method == 'POST':
+        u = Emisor.objects.get(id=id)
+        form = EmisorForm(request.POST, instance=u)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.INFO, 'El Emisor ha sido editado')
+            form = Buscar_EmisorForm()
+            return render(request, 'Emisor/Buscar.html', {'form': form})
+    else:
+        form = EmisorForm()
+        try:
+            u = Emisor.objects.get(id=id)
+        except:
+            messages.add_message(request, messages.INFO, 'EL tipo afiliado no existe en la base de datos')
+            return render(request, 'Emisor/Editar.html', {'form': form, 'Emisor': u})
+        form = EmisorForm(instance=u)
+
+    idEmisor = u.id
+    return render(request, 'Emisor/Editar.html', {'form': form, 'idEmisor': idEmisor})
+
+@login_required(login_url='/login')
+def eliminarEmisor(request, id):
+    Emisor.objects.get(id=id).delete()
+    messages.add_message(request, messages.INFO, 'El Emisor ha sido eliminado')
+    form = Buscar_EmisorForm()
+    return render(request, 'Emisor/Buscar.html', {'form': form})
+
+@login_required(login_url='/login')
+def buscarPrivilegio(request):
+    u = None
+    if request.method == 'POST':
+        form = Buscar_PrivilegioForm(request.POST)
+        idform = form.data['idPrivilegio']
+        form.data = form.data.copy()
+        form.data['idPrivilegio'] = Privilegio.objects.filter(privilegio=idform).values_list('id', flat=True)
+        if form.is_valid():
+            idr = form.data['idPrivilegio']
+            u = Privilegio.objects.get(id=idr)
+            form = Buscar_PrivilegioForm()
+            return render(request, 'Rol/BuscarPrivilegio.html', {'form': form, 'Privilegio': u})
+    else:
+        form = Buscar_PrivilegioForm()
+    return render(request, 'Rol/BuscarPrivilegio.html', {'form': form, 'Privilegio': u})
+
+@login_required(login_url='/login')
+def editarPrivilegio(request, id):
+    if request.method == 'POST':
+        u = Privilegio.objects.get(id=id)
+        form = PrivilegioRolForm(request.POST, instance=u)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.INFO, 'El Privilegio ha sido editado')
+            form = Buscar_PrivilegioForm()
+            return render(request, 'Rol/BuscarPrivilegio.html', {'form': form})
+    else:
+        form = PrivilegioRolForm()
+        try:
+            u = Privilegio.objects.get(id=id)
+        except:
+            messages.add_message(request, messages.INFO, 'EL tipo afiliado no existe en la base de datos')
+            return render(request, 'Rol/EditarPrivilegio.html', {'form': form, 'Privilegio': u})
+        form = PrivilegioRolForm(instance=u)
+
+    idPrivilegio = u.id
+    return render(request, 'Rol/EditarPrivilegio.html', {'form': form, 'idPrivilegio': idPrivilegio})
+
+@login_required(login_url='/login')
+def eliminarPrivilegio(request, id):
+    Privilegio.objects.get(id=id).delete()
+    messages.add_message(request, messages.INFO, 'El Privilegio ha sido eliminado')
+    form = Buscar_PrivilegioForm()
+    return render(request, 'Rol/BuscarPrivilegio.html', {'form': form})
+
+@login_required(login_url='/login')
+def buscarAutorizacion(request):
+    u = None
+    if request.method == 'POST':
+        form = Buscar_AutorizacionForm(request.POST)
+        idform = form.data['idAutorizacion']
+        form.data = form.data.copy()
+        form.data['idAutorizacion'] = Autorizacion.objects.filter(autorizacion=idform).values_list('id', flat=True)
+        if form.is_valid():
+            idr = form.data['idAutorizacion']
+            u = Autorizacion.objects.get(id=idr)
+            form = Buscar_AutorizacionForm()
+            return render(request, 'Rol/BuscarAutorizacion.html', {'form': form, 'Autorizacion': u})
+    else:
+        form = Buscar_AutorizacionForm()
+    return render(request, 'Rol/BuscarAutorizacion.html', {'form': form, 'Autorizacion': u})
+
+@login_required(login_url='/login')
+def editarAutorizacion(request, id):
+    if request.method == 'POST':
+        u = Autorizacion.objects.get(id=id)
+        form = AutorizarRolForm(request.POST, instance=u)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.INFO, 'El Autorizacion ha sido editado')
+            form = Buscar_AutorizacionForm()
+            return render(request, 'Rol/BuscarAutorizacion.html', {'form': form})
+    else:
+        form = AutorizarRolForm()
+        try:
+            u = Autorizacion.objects.get(id=id)
+        except:
+            messages.add_message(request, messages.INFO, 'EL tipo afiliado no existe en la base de datos')
+            return render(request, 'Rol/EditarAutorizacion.html', {'form': form, 'Autorizacion': u})
+        form = AutorizarRolForm(instance=u)
+
+    idAutorizacion = u.id
+    return render(request, 'Rol/EditarAutorizacion.html', {'form': form, 'idAutorizacion': idAutorizacion})
+
+@login_required(login_url='/login')
+def eliminarAutorizacion(request, id):
+    Autorizacion.objects.get(id=id).delete()
+    messages.add_message(request, messages.INFO, 'El Autorizacion ha sido eliminado')
+    form = Buscar_AutorizacionForm()
+    return render(request, 'Rol/BuscarAutorizacion.html', {'form': form})
+
+@login_required(login_url='/login')
+def buscarTipoEstado(request):
+    u = None
+    if request.method == 'POST':
+        form = Buscar_TipoEstadoForm(request.POST)
+        idform = form.data['idTipoEstado']
+        form.data = form.data.copy()
+        form.data['idTipoEstado'] = TipoEstado.objects.filter(tipoEstado=idform).values_list('id', flat=True)
+        if form.is_valid():
+            idr = form.data['idTipoEstado']
+            u = TipoEstado.objects.get(id=idr)
+            form = Buscar_TipoEstadoForm()
+            return render(request, 'Tarjetas/BuscarTE.html', {'form': form, 'TipoEstado': u})
+    else:
+        form = Buscar_TipoEstadoForm()
+    return render(request, 'Tarjetas/BuscarTE.html', {'form': form, 'TipoEstado': u})
+
+@login_required(login_url='/login')
+def editarTipoEstado(request, id):
+    if request.method == 'POST':
+        u = TipoEstado.objects.get(id=id)
+        form = CrearEstadoTarjetaForm(request.POST, instance=u)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.INFO, 'El TipoEstado ha sido editado')
+            form = Buscar_TipoEstadoForm()
+            return render(request, 'Tarjetas/BuscarTE.html', {'form': form})
+    else:
+        form = CrearEstadoTarjetaForm()
+        try:
+            u = TipoEstado.objects.get(id=id)
+        except:
+            messages.add_message(request, messages.INFO, 'EL tipo afiliado no existe en la base de datos')
+            return render(request, 'Tarjetas/EditarTE.html', {'form': form, 'TipoEstado': u})
+        form = CrearEstadoTarjetaForm(instance=u)
+
+    idTipoEstado = u.id
+    return render(request, 'Tarjetas/EditarTE.html', {'form': form, 'idTipoEstado': idTipoEstado})
+
+@login_required(login_url='/login')
+def eliminarTipoEstado(request, id):
+    TipoEstado.objects.get(id=id).delete()
+    messages.add_message(request, messages.INFO, 'El TipoEstado ha sido eliminado')
+    form = Buscar_TipoEstadoForm()
+    return render(request, 'Tarjetas/BuscarTE.html', {'form': form})
+
+@login_required(login_url='/login')
+def buscarTipoCuenta(request):
+    u = None
+    if request.method == 'POST':
+        form = Buscar_TipoCuentaForm(request.POST)
+        idform = form.data['idTipoCuenta']
+        form.data = form.data.copy()
+        form.data['idTipoCuenta'] = TipoCuenta.objects.filter(tipoCuenta=idform).values_list('id', flat=True)
+        if form.is_valid():
+            idr = form.data['idTipoCuenta']
+            u = TipoCuenta.objects.get(id=idr)
+            form = Buscar_TipoCuentaForm()
+            return render(request, 'Cuentas/BuscarTC.html', {'form': form, 'TipoCuenta': u})
+    else:
+        form = Buscar_TipoCuentaForm()
+    return render(request, 'Cuentas/BuscarTC.html', {'form': form, 'TipoCuenta': u})
+
+@login_required(login_url='/login')
+def editarTipoCuenta(request, id):
+    if request.method == 'POST':
+        u = TipoCuenta.objects.get(id=id)
+        form = TipoCuentaForm(request.POST, instance=u)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.INFO, 'El TipoCuenta ha sido editado')
+            form = Buscar_TipoCuentaForm()
+            return render(request, 'Cuentas/BuscarTC.html', {'form': form})
+    else:
+        form = TipoCuentaForm()
+        try:
+            u = TipoCuenta.objects.get(id=id)
+        except:
+            messages.add_message(request, messages.INFO, 'EL tipo afiliado no existe en la base de datos')
+            return render(request, 'Cuentas/EditarTC.html', {'form': form, 'TipoCuenta': u})
+        form = TipoCuentaForm(instance=u)
+
+    idTipoCuenta = u.id
+    return render(request, 'Cuentas/EditarTC.html', {'form': form, 'idTipoCuenta': idTipoCuenta})
+
+@login_required(login_url='/login')
+def eliminarTipoCuenta(request, id):
+    TipoCuenta.objects.get(id=id).delete()
+    messages.add_message(request, messages.INFO, 'El TipoCuenta ha sido eliminado')
+    form = Buscar_TipoCuentaForm()
+    return render(request, 'Cuentas/BuscarTC.html', {'form': form})

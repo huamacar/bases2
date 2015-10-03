@@ -38,6 +38,9 @@ urlpatterns = patterns('',
     url(r'^Cuentas/asignarInteres/$', 'proyecto1.views.asignarInteresCuenta', name='AsignarInteres_Cuenta'),
     url(r'^Cuentas/crearTipo/$', 'proyecto1.views.crearTipoCuenta', name='Tipo_Cuenta'),
     url(r'^Cuentas/consultaSaldo/$', 'proyecto1.views.consultar_Saldo', name='Consultar_Saldo'),
+    url(r'^Cuentas/buscarTipoCuenta/$', 'proyecto1.views.buscarTipoCuenta', name='Buscar_TipoCuenta'),
+    url(r'^Cuentas/editarTipoCuenta/(?P<id>\d+)/$', 'proyecto1.views.editarTipoCuenta', name='Editar_TipoCuenta'),
+    url(r'^Cuentas/eliminarTipoCuenta/(?P<id>\d+)/$', 'proyecto1.views.eliminarTipoCuenta', name='Eliminar_TipoCuenta'),
 
     #Tarjetas
     url(r'^Tarjetas/index/$', 'proyecto1.views.indexTarjetas', name='Tarjetas'),
@@ -45,6 +48,16 @@ urlpatterns = patterns('',
     url(r'^Tarjetas/asignar/$', 'proyecto1.views.asignarTarjeta', name='Asignar_Tarjeta'),
     url(r'^Tarjetas/tipoEstado/$', 'proyecto1.views.crearEstadoTarjeta', name='CrearEstado_Tarjeta'),
     url(r'^Tarjetas/declaCambio/$', 'proyecto1.views.declararCambios', name='DeclaCambio_Tarjeta'),
+    url(r'^Tarjetas/buscarTipoEstado/$', 'proyecto1.views.buscarTipoEstado', name='Buscar_TipoEstado'),
+    url(r'^Tarjetas/editarTipoEstado/(?P<id>\d+)/$', 'proyecto1.views.editarTipoEstado', name='Editar_TipoEstado'),
+    url(r'^Tarjetas/eliminarTipoEstado/(?P<id>\d+)/$', 'proyecto1.views.eliminarTipoEstado', name='Eliminar_TipoEstado'),
+
+    #TipoTarjeta
+    url(r'^TipoTarjeta/index/$', 'proyecto1.views.indexTipoTarjeta', name='TipoTarjeta'),
+    url(r'^TipoTarjeta/crear/$', 'proyecto1.views.crearTipoTarjeta', name='Crear_TipoTarjeta'),
+    url(r'^TipoTarjeta/buscar/$', 'proyecto1.views.buscarTipoTarjeta', name='Buscar_TipoTarjeta'),
+    url(r'^TipoTarjeta/editar/(?P<id>\d+)/$', 'proyecto1.views.editarTipoTarjeta', name='Editar_TipoTarjeta'),
+    url(r'^TipoTarjeta/eliminar/(?P<id>\d+)/$', 'proyecto1.views.eliminarTipoTarjeta', name='Eliminar_TipoTarjeta'),
 
     #Notas
     url(r'^Notas/index/$', 'proyecto1.views.indexNotas', name='Notas'),
@@ -55,11 +68,23 @@ urlpatterns = patterns('',
     url(r'^Rol/crear/$', 'proyecto1.views.crearRol', name='Crear_Rol'),
     url(r'^Rol/autorizar/$', 'proyecto1.views.autorizarRol', name='Autorizar_Rol'),
     url(r'^Rol/privilegio/$', 'proyecto1.views.privilegioRol', name='Privilegio_Rol'),
+    url(r'^Rol/buscar/$', 'proyecto1.views.buscarRol', name='Buscar_Rol'),
+    url(r'^Rol/editar/(?P<id>\d+)/$', 'proyecto1.views.editarRol', name='Editar_Rol'),
+    url(r'^Rol/eliminar/(?P<id>\d+)/$', 'proyecto1.views.eliminarRol', name='Eliminar_Rol'),
+    url(r'^Rol/buscarPrivilegio/$', 'proyecto1.views.buscarPrivilegio', name='BuscarPrivilegio_Rol'),
+    url(r'^Rol/editarPrivilegio/(?P<id>\d+)/$', 'proyecto1.views.editarPrivilegio', name='EditarPrivilegio_Rol'),
+    url(r'^Rol/eliminarPrivilegio/(?P<id>\d+)/$', 'proyecto1.views.eliminarPrivilegio', name='EliminarPrivilegio_Rol'),
+    url(r'^Rol/buscarAutorizacion/$', 'proyecto1.views.buscarAutorizacion', name='BuscarAutorizacion_Rol'),
+    url(r'^Rol/editarAutorizacion/(?P<id>\d+)/$', 'proyecto1.views.editarAutorizacion', name='EditarAutorizacion_Rol'),
+    url(r'^Rol/eliminarAutorizacion/(?P<id>\d+)/$', 'proyecto1.views.eliminarAutorizacion', name='EliminarAutorizacion_Rol'),
 
     #Emisor
     url(r'^Emisor/index/$', 'proyecto1.views.indexEmisor', name='Emisor'),
     url(r'^Emisor/crear/$', 'proyecto1.views.crearEmisor', name='Crear_Emisor'),
     url(r'^Emisor/asignar/$', 'proyecto1.views.asignarInteresEmisor', name='AsignarInteres_Emisor'),
+    url(r'^Emisor/buscar/$', 'proyecto1.views.buscarEmisor', name='Buscar_Emisor'),
+    url(r'^Emisor/editar/(?P<id>\d+)/$', 'proyecto1.views.editarEmisor', name='Editar_Emisor'),
+    url(r'^Emisor/eliminar/(?P<id>\d+)/$', 'proyecto1.views.eliminarEmisor', name='Eliminar_Emisor'),
 
     #Lotes
     url(r'^Lote/index/$', 'proyecto1.views.indexLotes', name='Lote'),

@@ -1,4 +1,4 @@
-{% extends "TipoAfiliado/Base.html" %}
+{% extends "Rol/Base.html" %}
 
 {% block content %}
     {% if messages %}
@@ -11,7 +11,7 @@
             {% endfor %}
         </ul>
         {% endif %}
-    <form action="/TipoAfiliado/buscar/" method="post">
+    <form action="/Rol/buscarPrivilegio/" method="post">
     {% if form%}
         {% csrf_token %}
         {{ form.as_p }}
@@ -19,15 +19,14 @@
     <input type="submit" value="Seleccionar" />
     </form>
     <br>
-    {% if TipoAfiliado %}
+    {% if Privilegio %}
 
-        Nombre : {{TipoAfiliado.nombre }} <br>
-        Descripción: {{ TipoAfiliado.descripcion}}<br>
-        Porcentaje:{{ TipoAfiliado.porcentaje }}<br>
+        Nombre : {{Privilegio.privilegio}} <br>
+        Descripción: {{ Privilegio.descripcion}}<br>
 
         <br>
-        <form action="/TipoAfiliado/eliminar/{{ TipoAfiliado.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form><br>
-        <form action="/TipoAfiliado/editar/{{ TipoAfiliado.id}}/" method="get"> <input type="submit" value="Editar" /> </form><br>
+        <form action="/Rol/eliminarPrivilegio/{{ Privilegio.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form><br>
+        <form action="/Rol/editarPrivilegio/{{ Privilegio.id}}/" method="get"> <input type="submit" value="Editar" /> </form><br>
     {% endif %}
 
 {% endblock %}

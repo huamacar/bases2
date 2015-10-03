@@ -1,7 +1,7 @@
-{% extends "Tarjetas/Base.html" %}
-
+{% extends "TipoTarjeta/Base.html" %}
 {% block content %}
-    {% if messages %}
+
+        {% if messages %}
         <ul class="messages">
             {% for message in messages %}
             <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
@@ -11,9 +11,4 @@
             {% endfor %}
         </ul>
         {% endif %}
-    <form action="/Tarjetas/tipoEstado/" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="crear" />
-    </form>
 {% endblock %}

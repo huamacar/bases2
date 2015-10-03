@@ -95,7 +95,7 @@ class TipoAfiliadoForm(ModelForm):
             fields = '__all__'
 
 class Buscar_TipoAfiliado(forms.Form):
-        id = forms.IntegerField(label="Tipo de Afiliado")
+        idAfi = forms.ModelChoiceField(label='Tipo de afiliado',queryset=TipoAfiliado.objects.all().values_list('nombre',flat=True))
 
 class UsuarioForm(ModelForm):
         class Meta:
@@ -182,3 +182,28 @@ class PrivilegioRolForm(ModelForm):
             model = Privilegio
             fields = '__all__'
 
+class Buscar_RolForm(forms.Form):
+        idRol = forms.ModelChoiceField(label='Rol',queryset=Rol.objects.all().values_list('rol',flat=True))
+
+class TipoTarjetaForm(ModelForm):
+        class Meta:
+            model = TipoTarjeta
+            fields = '__all__'
+
+class Buscar_TTarjetaForm(forms.Form):
+        idTT = forms.ModelChoiceField(label='Tipo Tarjeta',queryset=TipoTarjeta.objects.all().values_list('tipoTarjeta',flat=True))
+
+class Buscar_EmisorForm(forms.Form):
+        idEmisor = forms.ModelChoiceField(label='Emisor',queryset=Emisor.objects.all().values_list('nombre',flat=True))
+
+class Buscar_PrivilegioForm(forms.Form):
+        idPrivilegio = forms.ModelChoiceField(label='Privilegio',queryset=Privilegio.objects.all().values_list('privilegio',flat=True))
+
+class Buscar_AutorizacionForm(forms.Form):
+        idAutorizacion = forms.ModelChoiceField(label='Autorizacion',queryset=Autorizacion.objects.all().values_list('autorizacion',flat=True))
+
+class Buscar_TipoEstadoForm(forms.Form):
+        idTipoEstado = forms.ModelChoiceField(label='TipoEstado',queryset=TipoEstado.objects.all().values_list('tipoEstado',flat=True))
+
+class Buscar_TipoCuentaForm(forms.Form):
+        idTipoCuenta = forms.ModelChoiceField(label='TipoCuenta',queryset=TipoCuenta.objects.all().values_list('tipoCuenta',flat=True))

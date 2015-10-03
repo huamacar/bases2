@@ -1,7 +1,7 @@
 {%  extends "Base.html" %}
     {% load staticfiles %}
     {% block title %}
-        <title> Notas </title>
+        <title> Rol </title>
     {% endblock %}
     {% block sidebar %}
         <ul >
@@ -9,6 +9,9 @@
             <li><a href="{% url 'Crear_Rol' %}">Crear</a></li>
             <li><a href="{% url 'Autorizar_Rol' %}">Autorizacion</a></li>
             <li><a href="{% url 'Privilegio_Rol' %}">Privilegio</a></li>
+            <li><a href="{% url 'Buscar_Rol' %}">Editar</a></li>
+            <li><a href="{% url 'BuscarPrivilegio_Rol' %}">Editar Privilegio</a></li>
+            <li><a href="{% url 'BuscarAutorizacion_Rol' %}">Editar Autorizacion</a></li>
         </ul>
     {% endblock %}
 

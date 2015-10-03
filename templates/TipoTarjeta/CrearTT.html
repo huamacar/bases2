@@ -1,4 +1,4 @@
-{% extends "Tarjetas/Base.html" %}
+{% extends "TipoTarjeta/Base.html" %}
 
 {% block content %}
     {% if messages %}
@@ -11,9 +11,9 @@
             {% endfor %}
         </ul>
         {% endif %}
-    <form action="/Tarjetas/tipoEstado/" method="post">
+    <form action="/TipoTarjeta/crear/" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="crear" />
+        <input type="submit" value="Crear" />
     </form>
 {% endblock %}

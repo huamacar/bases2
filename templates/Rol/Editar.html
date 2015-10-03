@@ -1,5 +1,4 @@
-{% extends "Tarjetas/Base.html" %}
-
+{% extends "Rol/Base.html" %}
 {% block content %}
     {% if messages %}
         <ul class="messages">
@@ -11,9 +10,10 @@
             {% endfor %}
         </ul>
         {% endif %}
-    <form action="/Tarjetas/tipoEstado/" method="post">
+    <form action="/Rol/editar/{{ idRol }}/" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="crear" />
+        <input type="submit" value="Salvar" />
+
     </form>
 {% endblock %}

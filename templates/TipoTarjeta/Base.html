@@ -1,14 +1,13 @@
 {%  extends "Base.html" %}
     {% load staticfiles %}
     {% block title %}
-        <title> Emisor </title>
+       <title>Tipo Tarjetas</title>
     {% endblock %}
     {% block sidebar %}
         <ul >
             <li><a href="/">Inicio</a></li>
-            <li><a href="{% url 'Crear_Emisor' %}">Crear</a></li>
-            <li><a href="{% url 'Buscar_Emisor' %}">Editar</a></li>
-            <li><a href="{% url 'AsignarInteres_Emisor' %}">Asignar Interes</a></li>
+            <li><a href="{% url 'Crear_TipoTarjeta' %}">Crear</a></li>
+            <li><a href="{% url 'Buscar_TipoTarjeta' %}">Editar</a></li>
         </ul>
     {% endblock %}
 

@@ -1,4 +1,4 @@
-{% extends "TipoAfiliado/Base.html" %}
+{% extends "Tarjetas/Base.html" %}
 
 {% block content %}
     {% if messages %}
@@ -11,7 +11,7 @@
             {% endfor %}
         </ul>
         {% endif %}
-    <form action="/TipoAfiliado/buscar/" method="post">
+    <form action="/Tarjetas/buscarTipoEstado/" method="post">
     {% if form%}
         {% csrf_token %}
         {{ form.as_p }}
@@ -19,15 +19,14 @@
     <input type="submit" value="Seleccionar" />
     </form>
     <br>
-    {% if TipoAfiliado %}
+    {% if TipoEstado %}
 
-        Nombre : {{TipoAfiliado.nombre }} <br>
-        Descripción: {{ TipoAfiliado.descripcion}}<br>
-        Porcentaje:{{ TipoAfiliado.porcentaje }}<br>
+        Nombre : {{TipoEstado.tipoEstado}} <br>
+        Descripción: {{ TipoEstado.descripcion}}<br>
 
         <br>
-        <form action="/TipoAfiliado/eliminar/{{ TipoAfiliado.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form><br>
-        <form action="/TipoAfiliado/editar/{{ TipoAfiliado.id}}/" method="get"> <input type="submit" value="Editar" /> </form><br>
+        <form action="/Tarjetas/eliminarTipoEstado/{{ TipoEstado.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form><br>
+        <form action="/Tarjetas/editarTipoEstado/{{ TipoEstado.id}}/" method="get"> <input type="submit" value="Editar" /> </form><br>
     {% endif %}
 
 {% endblock %}
