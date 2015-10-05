@@ -263,14 +263,28 @@ def crearTarjeta(request):
     if request.method == 'POST':
         form = TarjetaForm(request.POST)
 
+        idform = form.data['idEmisor']
+        form.data = form.data.copy()
+        form.data['idEmisor'] = Cliente.objects.filter(nombre=idform).values_list('id', flat=True)
+
+        idform = form.data['idTipoTarjeta']
+        form.data = form.data.copy()
+        form.data['tipoTarjeta'] = Cliente.objects.filter(nombre=idform).values_list('id', flat=True)
+
+
         if form.is_valid():
             form.save()
             form = TarjetaForm()
             messages.add_message(request, messages.INFO, 'La tarjeta ha sido creada')
+            form.fields["idEmisor"].queryset = Emisor.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
+            form.fields["tipoTarjeta"].queryset = TipoTarjeta.objects.all().values_list('tipoTarjeta',flat=True)  # se llena el form con los valores
+            form.fields["idAsignacion"].queryset = AsignacionCuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
             return render(request, 'Tarjetas/CrearTarjeta.html', {'form': form})
     else:
         form = TarjetaForm()
-
+    form.fields["idEmisor"].queryset = Emisor.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
+    form.fields["tipoTarjeta"].queryset = TipoTarjeta.objects.all().values_list('tipoTarjeta',flat=True)  # se llena el form con los valores
+    form.fields["idAsignacion"].queryset = AsignacionCuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
     return render(request, 'Tarjetas/CrearTarjeta.html', {'form': form})
 
 
@@ -907,15 +921,19 @@ def consultar_Saldo(request):
 def asignarInteresEmisor(request):
     if request.method == 'POST':
         form = AsigInteresEmisorForm(request.POST)
+        idform = form.data['idEmisor']
+        form.data = form.data.copy()
+        form.data['idEmisor'] = Emisor.objects.filter(nombre=idform).values_list('id', flat=True)
 
         if form.is_valid():
             form.save()
             form = AsigInteresEmisorForm()
+            form.fields["idEmisor"].queryset = Emisor.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
             messages.add_message(request, messages.INFO, 'El Interes ha sido asignado al emisor')
             return render(request, 'Emisor/AsignarInteres.html', {'form': form})
     else:
         form = AsigInteresEmisorForm()
-
+    form.fields["idEmisor"].queryset = Emisor.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
     return render(request, 'Emisor/AsignarInteres.html', {'form': form})
 
 @login_required(login_url='/login')

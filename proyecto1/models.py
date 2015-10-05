@@ -191,7 +191,8 @@ class ListaAcceso(models.Model):
         db_table = 'ListaAcceso'
 
 class Lote(models.Model):
-    lote = models.CharField(max_length=50)
+    min = models.IntegerField(validators=[MaxValueValidator(99999999),MinValueValidator(00000000)])
+    maximo = models.IntegerField(validators=[MaxValueValidator(99999999),MinValueValidator(00000000)])
     descripcion = models.CharField(max_length=200)
 
     class Meta:
@@ -264,18 +265,18 @@ class Nota(models.Model):
     class Meta:
         db_table = 'Nota'
 
-class Programa(models.Model):
-    programa = models.CharField(max_length=50)
+class ListaNegra(models.Model):
+    idTarjeta = models.ForeignKey(Tarjeta)
     descripcion = models.CharField(max_length=200)
 
     class Meta:
-        db_table = 'Programa'
+        db_table = 'ListaNegra'
 
 class Log(models.Model):
     idUsuario = models.ForeignKey(Usuario)
     idTrasaccion = models.ForeignKey(Transaccion)
     idCuenta = models.ForeignKey(Cuenta)
-    idPrograma = models.ForeignKey(Programa)
+    idPrograma = models.CharField(max_length=200)
     fecha = models.DateField()
     hora = models.DateTimeField()
     saldo_inicial = models.FloatField()
