@@ -932,7 +932,6 @@ def agregarTarjeta(request,id):
         c = Tarjeta.objects.get(id=id)
         form = TarjetaListaNegra(request.POST)
         if form.is_valid():
-            print('in')
             ln = ListaNegra()
             ln.idTarjeta = c
             ln.descripcion = form.data['razon']
