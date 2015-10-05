@@ -2,12 +2,12 @@
  * Created by alejandro on 18/09/15.
  */
 $(function(){
-    $('#search').keyup(function(){
+    $('#busquedaCaja').keyup(function(){
         $.ajax({
             type: "POST",
             url: "/Caja/busqueda/",
             data:{
-                'search_text'   :   $('#search').val(),
+                'search_text'   :   $('#busquedaCaja').val(),
                 'csrfmiddlewaretoken'   :   $("input[name=csrfmiddlewaretoken]").val()
             },
             success: searchSuccess,
@@ -17,12 +17,12 @@ $(function(){
 
     });
 
-    $('#search2').keyup(function(){
+    $('#busquedaAutorizacion').keyup(function(){
     $.ajax({
         type: "POST",
         url: "/Autorizacion/busqueda/",
         data:{
-            'search_text'   :   $('#search2').val(),
+            'search_text'   :   $('#busquedaAutorizacion').val(),
             'csrfmiddlewaretoken'   :   $("input[name=csrfmiddlewaretoken]").val()
         },
         success: searchSuccess,
@@ -32,12 +32,12 @@ $(function(){
 
     });
 
-     $('#search3').keyup(function(){
+     $('#busquedaAfiliado').keyup(function(){
     $.ajax({
         type: "POST",
         url: "/Afiliado/busqueda/",
         data:{
-            'search_text'   :   $('#search3').val(),
+            'search_text'   :   $('#busquedaAfiliado').val(),
             'csrfmiddlewaretoken'   :   $("input[name=csrfmiddlewaretoken]").val()
         },
         success: searchSuccess,
