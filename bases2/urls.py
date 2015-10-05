@@ -14,6 +14,9 @@ urlpatterns = patterns('',
     url(r'^Clientes/index/$', 'proyecto1.views.indexClientes', name='Clientes'),
     url(r'^Clientes/insertar/$', 'proyecto1.views.insertarClientes', name='Insertar_Clientes'),
     url(r'^Clientes/buscar/$', 'proyecto1.views.Buscar_Clientes', name='Buscar_Clientes'),
+    url(r'^Clientes/busqueda/$', 'proyecto1.views.BuscarClienteAjax', name='Busqueda_Clientes'),
+
+
     url(r'^Clientes/editar/(?P<id>\d+)/$', 'proyecto1.views.editarClientes', name='Editar_Clientes'),
     url(r'^Clientes/eliminar/(?P<id>\d+)/$', 'proyecto1.views.Eliminar_Clientes', name='Eliminar_Cliente'),
     url(r'^Clientes/bloquear/(?P<id>\d+)/$', 'proyecto1.views.Bloquear_Clientes', name='Bloquear_Cliente'),

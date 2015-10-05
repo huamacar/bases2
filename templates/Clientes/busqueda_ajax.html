@@ -1,0 +1,8 @@
+{% if clientes.count > 0 %}
+    {% for cliente in clientes %}
+        <li><a href="/Clientes/editar/{{ cliente.id }}/">Nombre: {{ cliente.nombre }}</a></li>
+    {% endfor %}
+
+{% else %}
+    <li> No hay resultados en su busqueda</li>
+{% endif %}

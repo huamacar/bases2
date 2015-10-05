@@ -125,6 +125,17 @@ def Buscar_Clientes(request):
 
     return render(request, 'Clientes/Buscar.html', {'form': form})
 
+def BuscarClienteAjax(request):
+    if request.method == 'POST':
+        search_text = request.POST['search_text']
+    else:
+        search_text = 0
+
+    clientes = Cliente.objects.filter(nombre__istartswith=search_text)
+
+    return render(request, 'Clientes/busqueda_ajax.html', {'clientes': clientes})
+
+
 
 @login_required(login_url='/login')
 def consumo(request):

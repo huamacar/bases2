@@ -46,6 +46,21 @@ $(function(){
     });
 
     });
+
+     $('#busquedaCliente').keyup(function(){
+    $.ajax({
+        type: "POST",
+        url: "/Clientes/busqueda/",
+        data:{
+            'search_text'   :   $('#busquedaCliente').val(),
+            'csrfmiddlewaretoken'   :   $("input[name=csrfmiddlewaretoken]").val()
+        },
+        success: searchSuccess,
+        dataType:'html'
+
+    });
+
+    });
 });
 
 function searchSuccess(data, textStatus, jqXHR)
