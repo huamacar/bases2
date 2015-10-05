@@ -268,7 +268,7 @@ def crearTarjeta(request):
         form.data = form.data.copy()
         form.data['idEmisor'] = Cliente.objects.filter(nombre=idform).values_list('id', flat=True)
 
-        idform = form.data['idTipoTarjeta']
+        idform = form.data['tipoTarjeta']
         form.data = form.data.copy()
         form.data['tipoTarjeta'] = Cliente.objects.filter(nombre=idform).values_list('id', flat=True)
 
@@ -297,11 +297,12 @@ def asignarTarjeta(request):
         if form.is_valid():
             form.save()
             form = AsigTarjetaForm()
+            form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
             messages.add_message(request, messages.INFO, 'La tarjeta ha sido asignada')
             return render(request, 'Tarjetas/AsignarTarjeta.html', {'form': form})
     else:
         form = AsigTarjetaForm()
-
+    form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
     return render(request, 'Tarjetas/AsignarTarjeta.html', {'form': form})
 
 
@@ -354,6 +355,7 @@ def insertarAfiliado(request):
 def Buscar_Afiliados(request):
     form = BuscarAfiliado(request.POST)
     u = None
+
     if form.is_valid():
         try:
             u = Afiliado.objects.get(id=form.cleaned_data['id'])
@@ -406,20 +408,26 @@ def editarAfiliados(request, id):
     if request.method == 'POST':
         u = Afiliado.objects.get(id=id)
         form = AfiliadoForm(request.POST, instance=u)
+        idform = form.data['tipoAfiliado']
+        form.data = form.data.copy()
+        form.data['tipoAfiliado'] = TipoAfiliado.objects.filter(nombre=idform).values_list('id', flat=True)
         if form.is_valid():
             form.save()
+            form = BuscarAfiliado()
             messages.add_message(request, messages.INFO, 'El afiliado ha sido editado')
-            return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': u})
+            return render(request, 'Afiliado/Buscar.html', {'form': form})
     else:
         form = Afiliado()
         try:
             u = Afiliado.objects.get(id=id)
         except:
             messages.add_message(request, messages.INFO, 'El afiliado no existe en la base de datos')
+            form.fields["tipoAfiliado"].queryset = TipoAfiliado.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
             return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': u})
         form = AfiliadoForm(instance=u)
 
     idafiliado = u.id
+    form.fields["tipoAfiliado"].queryset = TipoAfiliado.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
     return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': idafiliado})
 
 

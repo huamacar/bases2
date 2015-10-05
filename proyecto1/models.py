@@ -109,7 +109,6 @@ class Tarjeta(models.Model):
     noTarjeta = models.IntegerField(validators=[MaxValueValidator(1000000000000000),MinValueValidator(9999999999999999)])
     tipoTarjeta = models.ForeignKey(TipoTarjeta)
     idEmisor = models.ForeignKey(Emisor)
-    idAsignacion = models.ForeignKey(AsignacionTasaEmisor)
     limite = models.FloatField(validators=[MinValueValidator(0.0)])
     fechaCorte = models.DateField()
     fechaPago = models.DateField()
