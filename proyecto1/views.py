@@ -754,30 +754,40 @@ def crearNota(request):
 def asignarUsuarioLote(request):
     if request.method == 'POST':
         form = AsigUsuarioLoteForm(request.POST)
-
+        idform = form.data['idUsuario']
+        form.data = form.data.copy()
+        form.data['idUsuario'] = Usuario.objects.filter(usuario=idform).values_list('id', flat=True)
         if form.is_valid():
             form.save()
             form = AsigUsuarioLoteForm()
+            form.fields["idLote"].queryset = Lote.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+            form.fields["idUsuario"].queryset = Usuario.objects.all().values_list('usuario',flat=True)  # se llena el form con los valores
             messages.add_message(request, messages.INFO, 'El lote ha sido asignado al usuario')
             return render(request, 'Lote/AsignarUsuarioLote.html', {'form': form})
     else:
         form = AsigUsuarioLoteForm()
-
+    form.fields["idLote"].queryset = Lote.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+    form.fields["idUsuario"].queryset = Usuario.objects.all().values_list('usuario',flat=True)  # se llena el form con los valores
     return render(request, 'Lote/AsignarUsuarioLote.html', {'form': form})
 
 @login_required(login_url='/login')
 def asignarAfiliadoLote(request):
     if request.method == 'POST':
         form = AsigAfiliadoLoteForm(request.POST)
-
+        idform = form.data['idAfiliado']
+        form.data = form.data.copy()
+        form.data['idAfiliado'] = Afiliado.objects.filter(nombre=idform).values_list('id', flat=True)
         if form.is_valid():
             form.save()
             form = AsigAfiliadoLoteForm()
+            form.fields["idLote"].queryset = Lote.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+            form.fields["idAfiliado"].queryset = Afiliado.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
             messages.add_message(request, messages.INFO, 'El lote ha sido asignado al afiliado')
             return render(request, 'Lote/AsignarAfiliadoLote.html', {'form': form})
     else:
         form = AsigAfiliadoLoteForm()
-
+    form.fields["idLote"].queryset = Lote.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+    form.fields["idAfiliado"].queryset = Afiliado.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
     return render(request, 'Lote/AsignarAfiliadoLote.html', {'form': form})
 
 
@@ -903,11 +913,14 @@ def declararCambios(request):
         if form.is_valid():
             form.save()
             form = DeclaCambioForm()
+            form.fields["idEstado"].queryset = TipoEstado.objects.all().values_list('tipoEstado',flat=True)  # se llena el form con los valores
+            form.fields["idTarjeta"].queryset = Tarjeta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
             messages.add_message(request, messages.INFO, 'La tarjeta ha sido declarada')
             return render(request, 'Tarjetas/DeclaracionCambios.html', {'form': form})
     else:
         form = DeclaCambioForm()
-
+    form.fields["idEstado"].queryset = TipoEstado.objects.all().values_list('tipoEstado',flat=True)  # se llena el form con los valores
+    form.fields["idTarjeta"].queryset = Tarjeta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
     return render(request, 'Tarjetas/DeclaracionCambios.html', {'form': form})
 
 
