@@ -551,11 +551,10 @@ def PagarCuenta(request, id):
                 l = Log()
 
                 u = Usuario.objects.get(usuario=request.user.get_username())
-                p = Programa.objects.get(id=1)
 
                 l.idTrasaccion = t
                 l.idCuenta = c
-                l.idPrograma = p
+                l.idPrograma = ""
                 l.idUsuario = u
                 l.fecha = datetime.datetime.now()
                 l.hora = datetime.datetime.now()
@@ -581,11 +580,10 @@ def PagarCuenta(request, id):
                 l = Log()
 
                 u = Usuario.objects.get(usuario=request.user.get_username())
-                p = Programa.objects.get(id=1)
 
                 l.idTrasaccion = t
                 l.idCuenta = c
-                l.idPrograma = p
+                l.idPrograma = ""
                 l.idUsuario = u
                 l.fecha = datetime.datetime.now()
                 l.hora = datetime.datetime.now()
@@ -652,11 +650,10 @@ def TransferenciaCuentas(request):
                     l = Log()
 
                     u = Usuario.objects.get(usuario=request.user.get_username())
-                    p = Programa.objects.get(id=1)
 
                     l.idTrasaccion = t
                     l.idCuenta = cDestino
-                    l.idPrograma = p
+                    l.idPrograma = ""
                     l.idUsuario = u
                     l.fecha = datetime.datetime.now()
                     l.hora = datetime.datetime.now()
@@ -682,11 +679,10 @@ def TransferenciaCuentas(request):
                     l = Log()
 
                     u = Usuario.objects.get(usuario=request.user.get_username())
-                    p = Programa.objects.get(id=1)
 
                     l.idTrasaccion = t
                     l.idCuenta = cDestino
-                    l.idPrograma = p
+                    l.idPrograma = ""
                     l.idUsuario = u
                     l.fecha = datetime.datetime.now()
                     l.hora = datetime.datetime.now()
@@ -827,11 +823,10 @@ def retirar(request,id):
                 l = Log()
 
                 u = Usuario.objects.get(usuario=request.user.get_username())
-                p = Programa.objects.get(id=1)
 
                 l.idTrasaccion = t
                 l.idCuenta = c
-                l.idPrograma = p
+                l.idPrograma = ""
                 l.idUsuario = u
                 l.fecha = datetime.datetime.now()
                 l.hora = datetime.datetime.now()
@@ -858,11 +853,10 @@ def retirar(request,id):
                 l = Log()
 
                 u = Usuario.objects.get(usuario=request.user.get_username())
-                p = Programa.objects.get(id=1)
 
                 l.idTrasaccion = t
                 l.idCuenta = c
-                l.idPrograma = p
+                l.idPrograma = ""
                 l.idUsuario = u
                 l.fecha = datetime.datetime.now()
                 l.hora = datetime.datetime.now()
