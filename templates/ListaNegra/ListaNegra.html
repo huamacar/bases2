@@ -1,0 +1,21 @@
+{% extends "ListaNegra/Base.html" %}
+
+{% block content %}
+    {% if listanegra.count %}
+        <table style="width:100%">
+        <tr>
+            <th>No. Tarjeta</th>
+            <th>Descripción</th>
+        </tr>
+            {% for log in listanegra %}
+            <tr>
+                <td>{{ log.idTarjeta.noTarjeta}}</td>
+                <td>{{ log.descripcion }}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    {% else %}
+        No hay tarjetas en la lista negra
+    {% endif %}
+{% endblock %}

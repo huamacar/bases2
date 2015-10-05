@@ -32,6 +32,11 @@ def indexSenda(request):
     return render(request, 'Senda/Index.html')
 
 @login_required(login_url='/login')
+def indexListaNegra(request):
+    messages.add_message(request, messages.INFO, 'Ver Lista Negra.')
+    return render(request, 'ListaNegra/Index.html')
+
+@login_required(login_url='/login')
 def indexCuentas(request):
     return render(request, 'Cuentas/Index.html')
 
@@ -143,6 +148,12 @@ def consumo(request):
     transacciones = Transaccion.objects.all()
 
     return render(request, 'Autorizacion/Consumo.html', {'transacciones': transacciones})
+
+@login_required(login_url='/login')
+def listanegra(request):
+    listanegra = ListaNegra.objects.all()
+
+    return render(request, 'ListaNegra/ListaNegra.html', {'listanegra': listanegra})
 
 @login_required(login_url='/login')
 def senda(request):

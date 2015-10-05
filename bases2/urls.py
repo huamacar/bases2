@@ -34,6 +34,10 @@ urlpatterns = patterns('',
     url(r'^Senda/senda/$', 'proyecto1.views.senda', name='VerSenda'),
     url(r'^Senda/buscar/$', 'proyecto1.views.buscarSenda', name='BuscarSenda'),
 
+    #listaNegra
+    url(r'^ListaNegra/index/$', 'proyecto1.views.indexListaNegra', name='ListaNegra'),
+    url(r'^ListaNegra/listanegra/$', 'proyecto1.views.listanegra', name='VerListaNegra'),
+
     #Cuentas
     url(r'^Cuentas/index/$', 'proyecto1.views.indexCuentas', name='Cuentas'),
     url(r'^Cuentas/crear/$', 'proyecto1.views.crearCuenta', name='Crear_Cuenta'),
