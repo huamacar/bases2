@@ -80,7 +80,7 @@ class AsignacionCuenta(models.Model):
 
 class AsignacionTarjeta(models.Model):
     idCuenta = models.ForeignKey(Cuenta)
-    noTarjeta = models.IntegerField()
+    noTarjeta = models.BigIntegerField(validators=[MinValueValidator(1000000000000000),MaxValueValidator(9999999999999999)])
     fechaAsignacion = models.DateField()
 
     class Meta:

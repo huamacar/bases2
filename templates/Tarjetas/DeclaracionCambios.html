@@ -10,7 +10,7 @@
         </ul>
         {% endif %}
 {% block content %}
-    <form action="/Tarjetas/cambios/" method="post">
+    <form action="/Tarjetas/declaCambio/" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Guardar cambios" />
