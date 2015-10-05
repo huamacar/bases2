@@ -106,7 +106,7 @@ class AsignacionTasaEmisor(models.Model):
         db_table = 'AsignacionTasaEmisor'
 
 class Tarjeta(models.Model):
-    noTarjeta = models.IntegerField(validators=[MinValueValidator(1000000000000000),MaxValueValidator(9999999999999999)])
+    noTarjeta = models.BigIntegerField(validators=[MinValueValidator(1000000000000000),MaxValueValidator(9999999999999999)])
     tipoTarjeta = models.ForeignKey(TipoTarjeta)
     idEmisor = models.ForeignKey(Emisor)
     limite = models.FloatField(validators=[MinValueValidator(0.0)])

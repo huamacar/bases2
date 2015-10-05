@@ -283,7 +283,6 @@ def crearTarjeta(request):
         form.data = form.data.copy()
         form.data['tipoTarjeta'] = TipoTarjeta.objects.filter(tipoTarjeta=idtform).values_list('id', flat=True)
 
-
         if form.is_valid():
             form.save()
             form = TarjetaForm()
