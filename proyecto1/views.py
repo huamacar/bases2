@@ -125,6 +125,7 @@ def Buscar_Clientes(request):
 
     return render(request, 'Clientes/Buscar.html', {'form': form})
 
+@login_required(login_url='/login')
 def BuscarClienteAjax(request):
     if request.method == 'POST':
         search_text = request.POST['search_text']
@@ -364,6 +365,7 @@ def Buscar_Afiliados(request):
     afiliado = BuscarAfiliado()
     return render(request, 'Afiliado/Buscar.html', {'form': afiliado, 'afiliado': u})
 
+@login_required(login_url='/login')
 def BuscarAfiliadoAjax(request):
     if request.method == 'POST':
         search_text = request.POST['search_text']
@@ -515,7 +517,7 @@ def BuscarCuenta(request):
 
     return render(request, 'Caja/Buscar.html', {'form': form})
 
-
+@login_required(login_url='/login')
 def BuscarCuentaAjax(request):
     if request.method == 'POST':
         search_text = int(request.POST['search_text'])
@@ -794,7 +796,7 @@ def BuscarCuenta2(request):
 
     return render(request,'Autorizacion/Buscar.html',{'form':form})
 
-
+@login_required(login_url='/login')
 def BuscarCuentaAjax2(request):
     if request.method == 'POST':
         search_text = int(request.POST['search_text'])
@@ -804,7 +806,7 @@ def BuscarCuentaAjax2(request):
     cuentas = Cuenta.objects.filter(id__startswith=search_text)
 
     return render(request,'Autorizacion/busqueda_ajax.html',{'cuentas':cuentas})
-
+@login_required(login_url='/login')
 def retirar(request,id):
     if request.method =='POST':
         c = Cuenta.objects.get(id=id)
@@ -1151,6 +1153,7 @@ def buscarEmisor(request):
         form = Buscar_EmisorForm()
     return render(request, 'Emisor/Buscar.html', {'form': form, 'Emisor': u})
 
+@login_required(login_url='/login')
 def BuscarEmisorAjax(request):
     if request.method == 'POST':
         search_text = request.POST['search_text']
