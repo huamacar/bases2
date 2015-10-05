@@ -279,13 +279,11 @@ def crearTarjeta(request):
             messages.add_message(request, messages.INFO, 'La tarjeta ha sido creada')
             form.fields["idEmisor"].queryset = Emisor.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
             form.fields["tipoTarjeta"].queryset = TipoTarjeta.objects.all().values_list('tipoTarjeta',flat=True)  # se llena el form con los valores
-            form.fields["idAsignacion"].queryset = AsignacionCuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
             return render(request, 'Tarjetas/CrearTarjeta.html', {'form': form})
     else:
         form = TarjetaForm()
     form.fields["idEmisor"].queryset = Emisor.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
     form.fields["tipoTarjeta"].queryset = TipoTarjeta.objects.all().values_list('tipoTarjeta',flat=True)  # se llena el form con los valores
-    form.fields["idAsignacion"].queryset = AsignacionCuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
     return render(request, 'Tarjetas/CrearTarjeta.html', {'form': form})
 
 
