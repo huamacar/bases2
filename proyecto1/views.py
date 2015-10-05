@@ -1151,6 +1151,17 @@ def buscarEmisor(request):
         form = Buscar_EmisorForm()
     return render(request, 'Emisor/Buscar.html', {'form': form, 'Emisor': u})
 
+def BuscarEmisorAjax(request):
+    if request.method == 'POST':
+        search_text = request.POST['search_text']
+    else:
+        search_text = 0
+
+    emisores = Emisor.objects.filter(nombre__istartswith=search_text)
+
+    return render(request, 'Emisor/busqueda_ajax.html', {'emisores': emisores})
+
+
 @login_required(login_url='/login')
 def editarEmisor(request, id):
     if request.method == 'POST':

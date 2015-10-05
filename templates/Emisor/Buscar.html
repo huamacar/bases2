@@ -1,31 +1,13 @@
 {% extends "Emisor/Base.html" %}
 
 {% block content %}
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
-                {{ message }}
-            </li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    <form action="/Emisor/buscar/" method="post">
-    {% if form%}
-        {% csrf_token %}
-        {{ form.as_p }}
-    {% endif %}
-    <input type="submit" value="Seleccionar" />
-    </form>
+
+    <h3>Buscar Emisor</h3>
+    {% csrf_token %}
+    <input type="text" id ="busquedaEmisor" name="busquedaEmisor">
     <br>
-    {% if Emisor %}
+    <ul id="search-results">
 
-        Nombre : {{Emisor.nombre}} <br>
-
-        <br>
-        <form action="/Emisor/eliminar/{{ Emisor.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form><br>
-        <form action="/Emisor/editar/{{ Emisor.id}}/" method="get"> <input type="submit" value="Editar" /> </form><br>
-    {% endif %}
+    </ul>
 
 {% endblock %}

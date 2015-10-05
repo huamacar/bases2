@@ -1,0 +1,8 @@
+{% if emisores.count > 0 %}
+    {% for emisor in emisores %}
+        <li><a href="/Emisor/editar/{{ emisor.id }}/">Nombre: {{ emisor.nombre }}</a></li>
+    {% endfor %}
+
+{% else %}
+    <li> No hay resultados en su busqueda</li>
+{% endif %}

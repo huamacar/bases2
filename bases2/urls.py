@@ -86,6 +86,8 @@ urlpatterns = patterns('',
     url(r'^Emisor/crear/$', 'proyecto1.views.crearEmisor', name='Crear_Emisor'),
     url(r'^Emisor/asignar/$', 'proyecto1.views.asignarInteresEmisor', name='AsignarInteres_Emisor'),
     url(r'^Emisor/buscar/$', 'proyecto1.views.buscarEmisor', name='Buscar_Emisor'),
+    url(r'^Emisor/busqueda/$','proyecto1.views.BuscarEmisorAjax',name='Busqueda_Emisor'),
+
     url(r'^Emisor/editar/(?P<id>\d+)/$', 'proyecto1.views.editarEmisor', name='Editar_Emisor'),
     url(r'^Emisor/eliminar/(?P<id>\d+)/$', 'proyecto1.views.eliminarEmisor', name='Eliminar_Emisor'),
 
