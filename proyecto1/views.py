@@ -277,11 +277,11 @@ def crearTarjeta(request):
 
         idform = form.data['idEmisor']
         form.data = form.data.copy()
-        form.data['idEmisor'] = Cliente.objects.filter(nombre=idform).values_list('id', flat=True)
+        form.data['idEmisor'] = Emisor.objects.filter(nombre=idform).values_list('id', flat=True)
 
-        idform = form.data['tipoTarjeta']
+        idtform = form.data['tipoTarjeta']
         form.data = form.data.copy()
-        form.data['tipoTarjeta'] = Cliente.objects.filter(nombre=idform).values_list('id', flat=True)
+        form.data['tipoTarjeta'] = TipoTarjeta.objects.filter(tipoTarjeta=idtform).values_list('id', flat=True)
 
 
         if form.is_valid():
