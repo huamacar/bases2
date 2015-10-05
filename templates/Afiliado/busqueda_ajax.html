@@ -1,0 +1,8 @@
+{% if afiliados.count > 0 %}
+    {% for afiliado in afiliados%}
+        <li><a href="/Afiliado/editar/{{ afiliado.id }}/"> {{ afiliado.nombre}}</a></li>
+    {% endfor %}
+
+{% else %}
+    <li> No hay resultados en su busqueda</li>
+{% endif %}

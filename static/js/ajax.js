@@ -31,6 +31,21 @@ $(function(){
     });
 
     });
+
+     $('#search3').keyup(function(){
+    $.ajax({
+        type: "POST",
+        url: "/Afiliado/busqueda/",
+        data:{
+            'search_text'   :   $('#search3').val(),
+            'csrfmiddlewaretoken'   :   $("input[name=csrfmiddlewaretoken]").val()
+        },
+        success: searchSuccess,
+        dataType:'html'
+
+    });
+
+    });
 });
 
 function searchSuccess(data, textStatus, jqXHR)

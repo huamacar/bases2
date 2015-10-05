@@ -339,6 +339,16 @@ def Buscar_Afiliados(request):
     afiliado = BuscarAfiliado()
     return render(request, 'Afiliado/Buscar.html', {'form': afiliado, 'afiliado': u})
 
+def BuscarAfiliadoAjax(request):
+    if request.method == 'POST':
+        search_text = request.POST['search_text']
+    else:
+        search_text = 0
+
+    afiliados = Afiliado.objects.filter(nombre__istartswith=search_text)
+
+    return render(request, 'Afiliado/busqueda_ajax.html', {'afiliados': afiliados})
+
 @login_required(login_url='/login')
 def Bloquear_Afiliados(request, id):
     u = Afiliado.objects.get(id=id)

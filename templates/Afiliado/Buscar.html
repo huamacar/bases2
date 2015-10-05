@@ -1,34 +1,14 @@
 {% extends "Afiliado/Base.html" %}
 
 {% block content %}
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
-                {{ message }}
-            </li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    <form action="/Afiliado/buscar/" method="post">
-    {% if form%}
-        {% csrf_token %}
-        {{ form.as_p }}
-    {% endif %}
-    <input type="submit" value="Buscar" />
-    </form>
-    <br>
-    {% if afiliado %}
 
-        Nombre Afiliado: {{ afiliado.nombre }} <br>
-        Dirección: {{ afiliado.direccion }}<br>
-        Teléfono:{{ afiliado.telefono }}<br>
-        Correo:{{ afiliado.correo }}<br>
 
-        <br>
-        <form action="/Afiliado/eliminar/{{ afiliado.id}}/" method="get"> <input type="submit" value="Eliminar" /> </form><br>
-        <form action="/Afiliado/bloquear/{{ afiliado.id}}/" method="get"> <input type="submit" value="Bloquear" /> </form><br>
-        <form action="/Afiliado/editar/{{ afiliado.id}}/" method="get"> <input type="submit" value="Editar" /> </form><br>
-    {% endif %}
+<h3>Buscar Afiliado</h3>
+{% csrf_token %}
+<input type="text" id ="search3" name="search3">
+<br>
+<ul id="search-results">
+
+</ul>
+
 {% endblock %}
