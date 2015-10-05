@@ -45,6 +45,9 @@ class BuscarSenda(forms.Form):
 class RetirarEfectivo(forms.Form):
         cantidad = forms.FloatField(validators=[MinValueValidator(0.0)])
 
+class TarjetaListaNegra(forms.Form):
+        razon = forms.CharField(max_length=200)
+
 class CuentaForm(ModelForm):
         def __init__(self, *args, **kwargs):
             super(CuentaForm, self).__init__(*args, **kwargs)
@@ -104,6 +107,9 @@ class UsuarioForm(ModelForm):
 
 class BuscarCuentaForm(forms.Form):
         idCuenta = forms.IntegerField(label="Numero de cuenta", validators=[MinValueValidator(0)])
+
+class BuscarTarjetaForm(forms.Form):
+        noTarjeta = forms.IntegerField(label="Numero de Tarjeta", validators=[MinValueValidator(1000000000000000),MaxValueValidator(9999999999999999)])
 
 class PagarCuentaForm(forms.Form):
         monto = forms.FloatField(label="Monto a pagar", validators=[MinValueValidator(0)])

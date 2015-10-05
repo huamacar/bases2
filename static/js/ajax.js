@@ -32,6 +32,21 @@ $(function(){
 
     });
 
+    $('#busquedaTarjeta').keyup(function(){
+    $.ajax({
+        type: "POST",
+        url: "/ListaNegra/busqueda/",
+        data:{
+            'search_text'   :   $('#busquedaTarjeta').val(),
+            'csrfmiddlewaretoken'   :   $("input[name=csrfmiddlewaretoken]").val()
+        },
+        success: searchSuccess,
+        dataType:'html'
+
+    });
+
+    });
+
      $('#busquedaAfiliado').keyup(function(){
     $.ajax({
         type: "POST",

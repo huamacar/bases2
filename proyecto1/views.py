@@ -904,6 +904,51 @@ def retirar(request,id):
     return render(request, 'Autorizacion/Retiro.html',{'form':form, 'cuenta':c})
 
 @login_required(login_url='/login')
+def BuscarTarjeta(request):
+    if request.method == 'POST':
+        form = BuscarTarjetaForm(request.POST)
+        if form.is_valid():
+
+            return render(request,'ListaNegra/Buscar.html',{'form':form})
+    else:
+        form = BuscarTarjetaForm()
+
+    return render(request,'ListaNegra/Buscar.html',{'form':form})
+
+@login_required(login_url='/login')
+def BuscarTarjetaAjax(request):
+    if request.method == 'POST':
+        search_text = int(request.POST['search_text'])
+    else:
+        search_text = 0
+
+    tarjetas = Tarjeta.objects.filter(id__startswith=search_text)
+
+    return render(request,'ListaNegra/busqueda_ajax.html',{'tarjetas':tarjetas})
+
+@login_required(login_url='/login')
+def agregarTarjeta(request,id):
+    if request.method =='POST':
+        c = Tarjeta.objects.get(id=id)
+        form = TarjetaListaNegra(request.POST)
+        if form.is_valid():
+            print('in')
+            ln = ListaNegra()
+            ln.idTarjeta = c
+            ln.descripcion = form.data['razon']
+            ln.save()
+
+            messages.add_message(request, messages.INFO, 'La tarjeta se ha agregado a la lista negra')
+
+        form = TarjetaListaNegra()
+        return render(request, 'ListaNegra/AgregarTarjeta.html',{'form':form, 'tarjeta':c})
+    else:
+        c = Tarjeta()
+        c = Tarjeta.objects.get(id = id)
+        form = TarjetaListaNegra()
+    return render(request, 'ListaNegra/AgregarTarjeta.html',{'form':form, 'tarjeta':c})
+
+@login_required(login_url='/login')
 def declararCambios(request):
     if request.method == 'POST':
         form = DeclaCambioForm(request.POST)

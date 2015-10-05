@@ -6,6 +6,7 @@
     {% block sidebar %}
         <ul >
             <li><a href="/">Inicio</a></li>
+            <li><a href="{% url 'Buscar_Tarjeta' %}">Agregar Tarjeta a Lista Negra</a></li>
             <li><a href="{% url 'VerListaNegra' %}">Ver Lista Negra</a></li>
         </ul>
     {% endblock %}

@@ -1,0 +1,32 @@
+{% extends "ListaNegra/Base.html" %}
+{% block content %}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <br>Numero de Tarjeta: {{ tarjeta.noTarjeta }}
+    <br>Tipo Tarjeta: {{ tarjeta.tipoTarjeta.tipoTarjeta }}
+    <br>Emisor: {{ tarjeta.idEmisor.nombre }}
+    <br>Limite: {{ tarjeta.limite }}
+    <br>Fecha Corte: {{ tarjeta.fechaCorte }}
+    <br>Fecha Pago: {{ tarjeta.fechaPago }}
+    <p>
+
+    <form action="/ListaNegra/agregar/{{ tarjeta.id }}/" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Agregar a Lista Negra" />
+
+    </form>
+
+    <form action="/ListaNegra/buscar/" method="get">
+        <input type="submit" value="Regresar a inicio">
+    </form>
+{% endblock %}

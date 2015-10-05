@@ -37,6 +37,9 @@ urlpatterns = patterns('',
     #listaNegra
     url(r'^ListaNegra/index/$', 'proyecto1.views.indexListaNegra', name='ListaNegra'),
     url(r'^ListaNegra/listanegra/$', 'proyecto1.views.listanegra', name='VerListaNegra'),
+    url(r'^ListaNegra/buscar/$','proyecto1.views.BuscarTarjeta',name='Buscar_Tarjeta'),
+    url(r'^ListaNegra/busqueda/$','proyecto1.views.BuscarTarjetaAjax',name='Buscar_TarjetaA'),
+    url(r'^ListaNegra/agregar/(?P<id>\d+)/$', 'proyecto1.views.agregarTarjeta', name='AgregarTarjeta'),
 
     #Cuentas
     url(r'^Cuentas/index/$', 'proyecto1.views.indexCuentas', name='Cuentas'),
