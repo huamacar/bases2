@@ -1,5 +1,41 @@
 {% extends "Lote/Base.html" %}
 {% block content %}
+        <h1>Lotes</h1>
+        <table style="width:80%" border="1">
+            <tr>
+                <th>Minimo</th>
+                <th>Maximo</th>
+                <th>Descripción</th>
+            </tr>
+            {% for lote in lotes %}
+                <tr>
+
+                    <td>{{ lote.min }}</td>
+                    <td>{{ lote.maximo }}</td>
+                    <td>{{ lote.descripcion}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+
+        <h1>Vouchers</h1>
+        <table style="width:80%" border="1">
+            <tr>
+                <th>Descripción </th>
+                <th>Monto </th>
+                <th>Fecha</th>
+                <th>Hora</th>
+            </tr>
+            {% for voucher in vouchers%}
+                <tr>
+
+                    <td>{{ voucher.descripcion}}</td>
+                    <td>{{ voucher.monto }}</td>
+                    <td>{{ voucher.idTransaccion.fecha}}</td>
+                    <td>{{ voucher.idTransaccion.hora}}</td>
+                </tr>
+            {% endfor %}
+        </table>
 
         {% if messages %}
         <ul class="messages">

@@ -221,7 +221,8 @@ hr {
 #page {
 	overflow: hidden;
 	padding: 5em 0em;
-	height: 700px;
+	height: 900px;
+    width: auto;
 }
 
 	#page img

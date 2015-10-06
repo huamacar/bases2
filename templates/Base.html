@@ -19,7 +19,7 @@
     </script>
     {% block title %} {% endblock %}
 </head>
-<body>
+<body id="body">
 <div id="wrapper">
 	<div id="header-wrapper">
         <div align="right">
@@ -44,18 +44,20 @@
 		</div>
 
 	</div>
-    <div id="sidebar3" class="container">
-            {% block sidebar %}
+    <div>
+        <div id="sidebar3" class="container">
+                {% block sidebar %}
+
+                {% endblock %}
+        </div>
+        <div id="page" class="container">
+            {% block content %}
+
 
             {% endblock %}
+        </div>
+
     </div>
-	<div id="page" class="container">
-    
-		{% block content %}
-
-
-		{% endblock %}
-	</div>
 </div>
 <div id="footer">
 	<p>Sistemas de Base de Datos 2 :: Grupo 1</p>

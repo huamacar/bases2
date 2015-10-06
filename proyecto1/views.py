@@ -42,7 +42,8 @@ def indexCuentas(request):
 
 @login_required(login_url='/login')
 def indexCaja(request):
-    return render(request, 'Caja/Index.html')
+    recibos = Recibo.objects.all()
+    return render(request, 'Caja/Index.html', {'recibos':recibos})
 
 
 @login_required(login_url='/login')
@@ -61,7 +62,11 @@ def indexTipoAfiliado(request):
 
 @login_required(login_url='/login')
 def indexLotes(request):
-    return render(request, 'Lote/Index.html')
+
+    lotes = Lote.objects.all()
+    vouchers = Voucher.objects.all()
+
+    return render(request, 'Lote/Index.html',{'lotes':lotes,'vouchers':vouchers} )
 
 @login_required(login_url='/login')
 def indexNotas(request):
