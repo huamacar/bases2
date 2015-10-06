@@ -3,20 +3,19 @@
         <h1>Recibos</h1>
         <table style="width:80%" border="1">
             <tr>
-                <th>Minimo</th>
-                <th>Maximo</th>
-                <th>Descripción</th>
+                <th>Usuario</th>
+                <th>Fecha</th>
+                <th>Monto</th>
             </tr>
             {% for recibo in recibos%}
                 <tr>
 
                     <td>{{ recibo.idUsuario.nombre }}</td>
                     <td>{{ recibo.fecha }}</td>
-                    <td>{{ recibo.fecha}}</td>
+                    <td>{{ recibo.idTransaccion.monto}}</td>
                 </tr>
             {% endfor %}
         </table>
-
 
         {% if messages %}
         <ul class="messages">
@@ -28,6 +27,4 @@
             {% endfor %}
         </ul>
         {% endif %}
-
-
 {% endblock %}
