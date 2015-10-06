@@ -1,0 +1,15 @@
+{%  extends "Base.html" %}
+    {% load staticfiles %}
+    {% block title %}
+        <title>Estado de Cuenta</title>
+    {% endblock %}
+    {% block sidebar %}
+        <ul >
+            <li><a href="/">Inicio</a></li>
+            <li><a href="{% url 'BuscarEstado' %}">Generar Estado Cuenta</a></li>
+        </ul>
+    {% endblock %}
+
+    {% block content %}
+
+    {% endblock %}

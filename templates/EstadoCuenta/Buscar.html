@@ -1,0 +1,11 @@
+{% extends "EstadoCuenta/Base.html" %}
+
+{% block content %}
+    <form action="/EstadoCuenta/buscar/" method="post">
+    {% if form%}
+        {% csrf_token %}
+        {{ form.as_p }}
+    {% endif %}
+    <input type="submit" value="Buscar" />
+    </form>
+{% endblock %}

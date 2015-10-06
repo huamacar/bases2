@@ -29,6 +29,10 @@ urlpatterns = patterns('',
     url(r'^Autorizacion/busqueda/$','proyecto1.views.BuscarCuentaAjax2',name='Buscar_CuentaA'),
     url(r'^Autorizacion/retirar/(?P<id>\d+)/$', 'proyecto1.views.retirar', name='Retirar'),
 
+    #estadocuenta
+    url(r'^EstadoCuenta/index/$', 'proyecto1.views.indexEstado', name='EstadoCuenta'),
+    url(r'^EstadoCuenta/buscar/$', 'proyecto1.views.buscarEstado', name='BuscarEstado'),
+
     #senda
     url(r'^Senda/index/$', 'proyecto1.views.indexSenda', name='Senda'),
     url(r'^Senda/senda/$', 'proyecto1.views.senda', name='VerSenda'),

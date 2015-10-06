@@ -1,0 +1,42 @@
+{% extends "EstadoCuenta/Base.html" %}
+
+{% block content %}
+    {% if logs.count %}
+        <h1>Estado de Cuenta</h1>
+        <h4>No. Cuenta: {{ cuenta.id}}</h4>
+        <h4>Tipo Cuenta: {{ cuenta.idTipoCuenta.tipoCuenta}}</h4>
+        <h4>Nombre Cliente: {{ cliente.nombre}}</h4>
+        <h4>Dirección Cliente: {{ cliente.direccion}}</h4>
+        <h4>Telefono Cliente: {{ cliente.telefono}}</h4>
+        <h4>Correo Cliente: {{ cliente.correo}}</h4>
+        <br>
+        <br>
+        <table style="width:100%">
+        <tr>
+            <th>ID</th>
+            <th>CONCEPTO</th>
+            <th>NO TRANSACCION</th>
+            <th>FECHA Y HORA</th>
+            <th>DEBITO</th>
+            <th>CREDITO</th>
+            <th>SALDO INICIAL</th>
+            <th>SALDO FINAL</th>
+        </tr>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.id}}</td>
+                <td>{{ log.idPrograma}}</td>
+                <td>{{ log.idTrasaccion.id}}</td>
+                <td>{{ log.hora}}</td>
+                <td>{{ log.debito}}</td>
+                <td>{{ log.credito}}</td>
+                <td>{{ log.saldo_inicial}}</td>
+                <td>{{ log.saldo}}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    {% else %}
+        No hay transacciones para mostrar en este estado de cuenta
+    {% endif %}
+{% endblock %}

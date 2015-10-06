@@ -32,6 +32,11 @@ def indexSenda(request):
     return render(request, 'Senda/Index.html')
 
 @login_required(login_url='/login')
+def indexEstado(request):
+    messages.add_message(request, messages.INFO, 'Ver Estados de Cuenta.')
+    return render(request, 'EstadoCuenta/Index.html')
+
+@login_required(login_url='/login')
 def indexListaNegra(request):
     messages.add_message(request, messages.INFO, 'Ver Lista Negra.')
     return render(request, 'ListaNegra/Index.html')
@@ -159,6 +164,28 @@ def listanegra(request):
     listanegra = ListaNegra.objects.all()
 
     return render(request, 'ListaNegra/ListaNegra.html', {'listanegra': listanegra})
+
+@login_required(login_url='/login')
+def buscarEstado(request):
+    if request.method == 'POST':
+        form = BuscarSenda(request.POST)
+        if form.is_valid():
+            noCuenta = form.data['cuenta']
+            try:
+                logs = Log.objects.filter(Q(
+                    idCuenta__gte=noCuenta)).all()
+
+                c = Cuenta.objects.get(id=noCuenta)
+
+                cliente = Cliente.objects.get(id=AsignacionCuenta.objects.get(idCuenta=noCuenta).idCliente_id)
+
+                return render(request, 'EstadoCuenta/EstadoCuenta.html', {'logs': logs, 'cuenta':c, 'cliente': cliente})
+            except:
+                return render(request, 'EstadoCuenta/EstadoCuenta.html')
+
+    else:
+        form = BuscarSenda()
+        return render(request, 'EstadoCuenta/Buscar.html', {'form': form})
 
 @login_required(login_url='/login')
 def senda(request):
@@ -575,7 +602,7 @@ def PagarCuenta(request, id):
 
                 l.idTrasaccion = t
                 l.idCuenta = c
-                l.idPrograma = ""
+                l.idPrograma = "Rechazo del Pago de la Cuenta"
                 l.idUsuario = u
                 l.fecha = datetime.datetime.now()
                 l.hora = datetime.datetime.now()
@@ -604,7 +631,7 @@ def PagarCuenta(request, id):
 
                 l.idTrasaccion = t
                 l.idCuenta = c
-                l.idPrograma = ""
+                l.idPrograma = "Pago de la Cuenta"
                 l.idUsuario = u
                 l.fecha = datetime.datetime.now()
                 l.hora = datetime.datetime.now()
@@ -674,7 +701,7 @@ def TransferenciaCuentas(request):
 
                     l.idTrasaccion = t
                     l.idCuenta = cDestino
-                    l.idPrograma = ""
+                    l.idPrograma = "Pago por Transferencia"
                     l.idUsuario = u
                     l.fecha = datetime.datetime.now()
                     l.hora = datetime.datetime.now()
@@ -688,7 +715,7 @@ def TransferenciaCuentas(request):
                     l.save()
 
                     messages.add_message(request, messages.INFO, 'Transaccion realizada con exito')
-                    t = True;
+                    t = True
                 else:
                     t = Transaccion()
                     t.tipoTrasaccion = 'debito'
@@ -703,7 +730,7 @@ def TransferenciaCuentas(request):
 
                     l.idTrasaccion = t
                     l.idCuenta = cDestino
-                    l.idPrograma = ""
+                    l.idPrograma = "Rechazo de Transferencia"
                     l.idUsuario = u
                     l.fecha = datetime.datetime.now()
                     l.hora = datetime.datetime.now()
@@ -857,7 +884,7 @@ def retirar(request,id):
 
                 l.idTrasaccion = t
                 l.idCuenta = c
-                l.idPrograma = ""
+                l.idPrograma = "Rechazo de Retiro"
                 l.idUsuario = u
                 l.fecha = datetime.datetime.now()
                 l.hora = datetime.datetime.now()
@@ -887,7 +914,7 @@ def retirar(request,id):
 
                 l.idTrasaccion = t
                 l.idCuenta = c
-                l.idPrograma = ""
+                l.idPrograma = "Retiro de Cuenta"
                 l.idUsuario = u
                 l.fecha = datetime.datetime.now()
                 l.hora = datetime.datetime.now()
