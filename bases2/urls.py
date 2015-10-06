@@ -108,6 +108,8 @@ urlpatterns = patterns('',
     url(r'^Lote/asignarUsuario/$', 'proyecto1.views.asignarUsuarioLote', name='AsignarUsuario_Lote'),
     url(r'^Lote/asignarAfiliado/$', 'proyecto1.views.asignarAfiliadoLote', name='AsignarAfiliado_Lote'),
 
+    url(r'^Lote/voucher/$', 'proyecto1.views.crearVoucher', name='Crear_Voucher'),
+
     #TipoAfiliado
     url(r'^TipoAfiliado/index/$', 'proyecto1.views.indexTipoAfiliado', name='TipoAfiliado'),
     url(r'^TipoAfiliado/insertar/$', 'proyecto1.views.insertarTipoAfiliado', name='Insertar_TipoAfiliado'),
@@ -136,6 +138,7 @@ urlpatterns = patterns('',
     url(r'^Caja/busqueda/$','proyecto1.views.BuscarCuentaAjax',name='Busqueda_Cuenta'),
     url(r'^Caja/pago/(?P<id>\d+)/$', 'proyecto1.views.PagarCuenta', name='Pagar_Cuenta'),
     url(r'^Caja/transferencia/$','proyecto1.views.TransferenciaCuentas',name='Transferencia_Cuenta'),
+    url(r'^Caja/recibo/$','proyecto1.views.CrearRecibo',name='Crear_Recibo'),
 
 
     #auth

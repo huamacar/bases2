@@ -23,16 +23,14 @@
             <tr>
                 <th>Descripción </th>
                 <th>Monto </th>
-                <th>Fecha</th>
-                <th>Hora</th>
+                <th>Fecha y hora</th>
             </tr>
             {% for voucher in vouchers%}
                 <tr>
 
                     <td>{{ voucher.descripcion}}</td>
                     <td>{{ voucher.monto }}</td>
-                    <td>{{ voucher.idTransaccion.fecha}}</td>
-                    <td>{{ voucher.idTransaccion.hora}}</td>
+                    <td>{{ voucher.idTrasaccion.hora}}</td>
                 </tr>
             {% endfor %}
         </table>

@@ -6,6 +6,8 @@
     {% block sidebar %}
         <ul >
             <li><a href="/">Inicio</a></li>
+            <li><a href="{% url 'Crear_Recibo' %}">Crear Recibo</a></li>
+            <li><a href="{% url 'Caja' %}">Ver Recibos</a></li>
             <li><a href="{% url 'Buscar_Cuenta' %}">Pagar Cuenta</a></li>
             <li><a href="{% url 'Transferencia_Cuenta' %}">Transferencia</a></li>
         </ul>

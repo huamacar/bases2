@@ -655,6 +655,38 @@ def PagarCuenta(request, id):
         form = PagarCuentaForm()
     return render(request, 'Caja/pago.html', {'form': form, 'cuenta': c})
 
+@login_required(login_url='/login')
+def CrearRecibo(request):
+    if request.method =='POST':
+        form = ReciboForm(request.POST)
+
+
+        idTransaccion = form.data['idTrasaccion']
+        idLote = form.data['idLote']
+        idUsuario = form.data['idUsuario']
+
+        form.data = form.data.copy()
+        form.data["idLote"] = Lote.objects.filter(id=idLote).values_list('id', flat=True)
+        form.data["idTrasaccion"] = Transaccion.objects.filter(id=idTransaccion).values_list('id', flat=True)
+        form.data["idUsuario"] = Usuario.objects.filter(id=idUsuario).values_list('id', flat=True)
+
+        if form.is_valid():
+            form.save()
+            form = ReciboForm()
+            messages.add_message(request, messages.INFO, 'El Recibo ha sido creado')
+
+        form.fields["idLote"].queryset = Lote.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+        form.fields["idTrasaccion"].queryset = Transaccion.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+        form.fields["idUsuario"].queryset = Usuario.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+        return render(request, 'Caja/CrearRecibo.html', {'form': form})
+    else:
+        form = ReciboForm()
+        form.fields["idLote"].queryset = Lote.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+        form.fields["idTrasaccion"].queryset = Transaccion.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+        form.fields["idUsuario"].queryset = Usuario.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+    return render(request, 'Caja/CrearRecibo.html', {'form': form})
+
+
 
 @login_required(login_url='/login')
 def TransferenciaCuentas(request):
@@ -828,6 +860,7 @@ def crearLote(request):
     if request.method == 'POST':
         form = LoteForm(request.POST)
 
+
         if form.is_valid():
             form.save()
             form = LoteForm()
@@ -837,6 +870,33 @@ def crearLote(request):
         form = LoteForm()
 
     return render(request, 'Lote/Crear.html', {'form': form})
+
+@login_required(login_url='/login')
+def crearVoucher(request):
+    if request.method =='POST':
+        form = VoucherForm(request.POST)
+
+
+        idTransaccion = form.data['idTrasaccion']
+        idLote = form.data['idLote']
+        form.data = form.data.copy()
+        form.data["idLote"] = Lote.objects.filter(id=idLote).values_list('id', flat=True)
+        form.data["idTrasaccion"] = Transaccion.objects.filter(id=idTransaccion).values_list('id', flat=True)
+
+        if form.is_valid():
+            form.save()
+            form = VoucherForm()
+            messages.add_message(request, messages.INFO, 'El voucher ha sido creado')
+
+        form.fields["idLote"].queryset = Lote.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+        form.fields["idTrasaccion"].queryset = Transaccion.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+        return render(request, 'Lote/CrearVoucher.html', {'form': form})
+    else:
+        form = VoucherForm()
+        form.fields["idLote"].queryset = Lote.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+        form.fields["idTrasaccion"].queryset = Transaccion.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+    return render(request, 'Lote/CrearVoucher.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def BuscarCuenta2(request):

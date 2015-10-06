@@ -10,9 +10,9 @@
             {% for recibo in recibos%}
                 <tr>
 
-                    <td>{{ recibo.idUsuario.nombre }}</td>
+                    <td>{{ recibo.idUsuario.usuario }}</td>
                     <td>{{ recibo.fecha }}</td>
-                    <td>{{ recibo.idTransaccion.monto}}</td>
+                    <td>{{ recibo.idTrasaccion.monto}}</td>
                 </tr>
             {% endfor %}
         </table>

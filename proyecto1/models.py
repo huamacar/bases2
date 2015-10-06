@@ -240,7 +240,7 @@ class Transaccion(models.Model):
 class Voucher(models.Model):
     idLote = models.ForeignKey(Lote)
     idTrasaccion = models.ForeignKey(Transaccion)
-    monto = models.FloatField()
+    monto = models.FloatField(validators=[MaxValueValidator(99999999),MinValueValidator(0)])
     descripcion = models.CharField(max_length=200)
 
     class Meta:

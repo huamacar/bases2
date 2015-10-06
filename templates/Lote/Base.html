@@ -6,9 +6,12 @@
     {% block sidebar %}
         <ul >
             <li><a href="/">Inicio</a></li>
+            <li><a href="{% url 'Lote' %}">Ver Lotes y vouchers</a></li>
             <li><a href="{% url 'Crear_Lote' %}">Crear</a></li>
+            <li><a href="{% url 'Crear_Voucher' %}">Crear Voucher</a></li>
             <li><a href="{% url 'AsignarUsuario_Lote' %}">Asignar Usuario</a></li>
             <li><a href="{% url 'AsignarAfiliado_Lote' %}">Asignar Afiliado</a></li>
+
         </ul>
     {% endblock %}
 
