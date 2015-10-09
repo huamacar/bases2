@@ -6,16 +6,34 @@ from django.shortcuts import render, render_to_response
 from .forms import *
 from django.http import HttpResponse
 from django.db.models import Q
+from django.db.models import Sum
 from django.contrib import messages  # para emitir aletrs
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from chartit import DataPool, Chart
+from django.db import models
+from django.db import connection
+from django.contrib.contenttypes.management import update_contenttypes
+from django.core.management import call_command
 import sys
 import os.path
 import os
 import datetime
 import logging
 
+class TempTablaEmisor(models.Model):
+    emisor = models.CharField(max_length=200)
+    saldo = models.FloatField()
+
+    class Meta:
+        app_label = 'proyecto1'
+
+class TempTablaPromedio(models.Model):
+    fecha = models.CharField(max_length=200)
+    saldo = models.FloatField()
+
+    class Meta:
+        app_label = 'proyecto1'
 
 def index(request):
     return render(request, 'Index.html')
@@ -182,76 +200,97 @@ def BuscarClienteAjax(request):
 
 @login_required(login_url='/login')
 def SaldosEmisor(request):
-    # Step 1: Create a DataPool with the data we want to retrieve.
+    models.register_models('proyecto1', TempTablaEmisor)
+    models.signals.post_syncdb.disconnect(update_contenttypes)
+    call_command('syncdb')
+
+    for emisor in Emisor.objects.all():
+        datoTablaEmisor = TempTablaEmisor()
+        datoTablaEmisor.emisor = emisor.nombre
+        print(emisor.nombre)
+        tarjetas_ids = Tarjeta.objects.filter(idEmisor=emisor.id)
+        asignaciontarjeta_ids = AsignacionTarjeta.objects.filter(id__in=tarjetas_ids)
+        sumaSaldo = Cuenta.objects.filter(id__in=asignaciontarjeta_ids).aggregate(Sum('saldo')).get('saldo__sum', 0.00)
+        print(sumaSaldo)
+        datoTablaEmisor.saldo = sumaSaldo
+        if not sumaSaldo is None:
+            datoTablaEmisor.save()
+
     weatherdata = \
         DataPool(
-            series=
+           series=
             [{'options': {
-                'source': Cuenta.objects.all()},
-                'terms': [
-                    'id',
-                    'idTipoCuenta',
-                    'limite',
-                    'fechaCreacion',
-                    'diasMorosos',
-                    'saldo']}
-            ])
+               'source': TempTablaEmisor.objects.all()},
+              'terms': [
+                'emisor',
+                'saldo']}
+             ])
 
-    # Step 2: Create the Chart object
     cht = Chart(
-        datasource=weatherdata,
-        series_options=
-        [{'options': {
-            'type': 'pie',
-            'stacking': False},
-            'terms': {
-                'limite': [
+            datasource = weatherdata,
+            series_options =
+              [{'options':{
+                  'type': 'pie',
+                  'stacking': False},
+                'terms':{
+                  'emisor': [
                     'saldo']
-            }}],
-        chart_options=
-        {'title': {
-            'text': 'Saldos por Emisor'},
-            'xAxis': {
+                  }}],
+            chart_options =
+              {'title': {
+                   'text': 'Saldos por Emisor'},
+           'xAxis': {
                 'title': {
-                    'text': 'No. Cuenta'}}})
+                   'text': 'Emisor'}}})
+
+    cursor = connection.cursor()
+    cursor.execute('DROP TABLE `proyecto1_temptablaemisor`')
+    cursor.execute('DROP TABLE `proyecto1_temptablapromedio`')
 
     return render_to_response('Gerente/SaldosEmisor.html', {'weatherchart': cht})
 
-
 @login_required(login_url='/login')
 def EvolucionSaldos(request):
-    # Step 1: Create a DataPool with the data we want to retrieve.
+    models.register_models('proyecto1', TempTablaPromedio)
+    models.signals.post_syncdb.disconnect(update_contenttypes)
+    call_command('syncdb')
+
+    for log in Log.objects.all():
+        datoTablaPromedio = TempTablaPromedio()
+        datoTablaPromedio.fecha = str(log.hora)
+        datoTablaPromedio.saldo = log.saldo
+        datoTablaPromedio.save()
+
     weatherdata = \
         DataPool(
-            series=
+           series=
             [{'options': {
-                'source': Cuenta.objects.all()},
-                'terms': [
-                    'id',
-                    'idTipoCuenta',
-                    'limite',
-                    'fechaCreacion',
-                    'diasMorosos',
-                    'saldo']}
-            ])
+               'source': TempTablaPromedio.objects.all()},
+              'terms': [
+                'fecha',
+                'saldo']}
+             ])
 
-    # Step 2: Create the Chart object
     cht = Chart(
-        datasource=weatherdata,
-        series_options=
-        [{'options': {
-            'type': 'line',
-            'stacking': False},
-            'terms': {
-                'limite': [
+            datasource = weatherdata,
+            series_options =
+              [{'options':{
+                  'type': 'line',
+                  'stacking': False},
+                'terms':{
+                  'fecha': [
                     'saldo']
-            }}],
-        chart_options=
-        {'title': {
-            'text': 'Saldos por Emisor'},
-            'xAxis': {
+                  }}],
+            chart_options =
+              {'title': {
+                   'text': 'Evolucion de Saldos Promedio'},
+           'xAxis': {
                 'title': {
-                    'text': 'No. Cuenta'}}})
+                   'text': 'Fecha'}}})
+
+    cursor = connection.cursor()
+    cursor.execute('DROP TABLE `proyecto1_temptablapromedio`')
+    cursor.execute('DROP TABLE `proyecto1_temptablaemisor`')
 
     return render_to_response('Gerente/EvolucionSaldos.html', {'weatherchart': cht})
 
@@ -1076,66 +1115,38 @@ def retirar(request, id):
         form = RetirarEfectivo(request.POST)
         if form.is_valid():
             cantidad = float(form.data['cantidad'])
-            if cantidad >= c.saldo:
-                messages.add_message(request, messages.INFO, 'El monto no puede ser mayor al saldo')
 
-                t = Transaccion()
-                t.tipoTrasaccion = 'credito'
-                t.fecha = datetime.datetime.now()
-                t.hora = datetime.datetime.now()
-                t.monto = cantidad
-                t.save()
+            messages.add_message(request, messages.INFO, 'El retiro ha sido realizado')
+            c.saldo = c.saldo + cantidad
+            c.save()
 
-                l = Log()
+            t = Transaccion()
+            t.tipoTrasaccion = 'credito'
+            t.fecha = datetime.datetime.now()
+            t.hora = datetime.datetime.now()
+            t.monto = cantidad
+            t.save()
 
-                u = Usuario.objects.get(usuario=request.user.get_username())
+            l = Log()
 
-                l.idTrasaccion = t
-                l.idCuenta = c
-                l.idPrograma = "Rechazo de Retiro"
-                l.idUsuario = u
-                l.fecha = datetime.datetime.now()
-                l.hora = datetime.datetime.now()
-                l.saldo_inicial = c.saldo
-                l.saldo = c.saldo
-                l.debito = 0
-                l.credito = cantidad
-                l.autorizacion = 0
-                l.rechazo = 1
-                l.razonRechazo = 'El monto no puede ser mayor al saldo'
-                l.save()
-            else:
-                messages.add_message(request, messages.INFO, 'El retiro ha sido realizado')
-                c.saldo = c.saldo + cantidad
-                c.save()
+            u = Usuario.objects.get(usuario=request.user.get_username())
 
-                t = Transaccion()
-                t.tipoTrasaccion = 'credito'
-                t.fecha = datetime.datetime.now()
-                t.hora = datetime.datetime.now()
-                t.monto = cantidad
-                t.save()
+            l.idTrasaccion = t
+            l.idCuenta = c
+            l.idPrograma = "Retiro de Cuenta"
+            l.idUsuario = u
+            l.fecha = datetime.datetime.now()
+            l.hora = datetime.datetime.now()
+            l.saldo_inicial = saldoInicial
+            l.saldo = c.saldo
+            l.debito = 0
+            l.credito = cantidad
+            l.autorizacion = 1
+            l.rechazo = 0
+            l.razonRechazo = ''
+            l.save()
 
-                l = Log()
-
-                u = Usuario.objects.get(usuario=request.user.get_username())
-
-                l.idTrasaccion = t
-                l.idCuenta = c
-                l.idPrograma = "Retiro de Cuenta"
-                l.idUsuario = u
-                l.fecha = datetime.datetime.now()
-                l.hora = datetime.datetime.now()
-                l.saldo_inicial = saldoInicial
-                l.saldo = c.saldo
-                l.debito = 0
-                l.credito = cantidad
-                l.autorizacion = 1
-                l.rechazo = 0
-                l.razonRechazo = ''
-                l.save()
-
-                form = RetirarEfectivo()
+            form = RetirarEfectivo()
         return render(request, 'Autorizacion/Retiro.html', {'form': form, 'cuenta': c})
     else:
         c = Cuenta()
