@@ -950,8 +950,8 @@ def retirar(request,id):
                 l.hora = datetime.datetime.now()
                 l.saldo_inicial = c.saldo
                 l.saldo = c.saldo
-                l.debito = cantidad
-                l.credito = 0
+                l.debito = 0
+                l.credito = cantidad
                 l.autorizacion = 0
                 l.rechazo = 1
                 l.razonRechazo = 'El monto no puede ser mayor al saldo'
@@ -980,8 +980,8 @@ def retirar(request,id):
                 l.hora = datetime.datetime.now()
                 l.saldo_inicial = saldoInicial
                 l.saldo = c.saldo
-                l.debito = cantidad
-                l.credito = 0
+                l.debito = 0
+                l.credito = cantidad
                 l.autorizacion = 1
                 l.rechazo = 0
                 l.razonRechazo = ''

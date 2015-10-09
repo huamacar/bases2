@@ -62,8 +62,10 @@ DATABASES = {
         'NAME': 'Creditos',
         'USER': 'root',
         'PASSWORD': 'bases2',
+        #'HOST': '192.168.1.10',
+        #'PORT': '3306'
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': ''
     }
 }
 
