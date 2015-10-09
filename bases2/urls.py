@@ -150,4 +150,8 @@ urlpatterns = patterns('',
     url(r'^login/$', 'django.contrib.auth.views.login',{'template_name': 'login.html'}),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'logout.html'}),
 
+    #DBA
+    url(r'^DBA/index/$','proyecto1.views.indexDBA',name='DBA'),
+    url(r'^DBA/backup/$','proyecto1.views.backUp',name='Back_Up'),
+    url(r'^DBA/restaurar/$','proyecto1.views.restaurarDB',name='Restaurar_DB'),
 )

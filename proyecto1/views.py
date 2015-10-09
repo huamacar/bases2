@@ -10,10 +10,20 @@ from django.contrib import messages  # para emitir aletrs
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from chartit import DataPool, Chart
+import sys
+import os.path
+import os
+import datetime
+import logging
 
 
 def index(request):
     return render(request, 'Index.html')
+
+
+@login_required(login_url='/DBA')
+def indexDBA(request):
+    return render(request, 'DBA/Index.html')
 
 
 @login_required(login_url='/login')
@@ -27,70 +37,84 @@ def indexAutorizacion(request):
     messages.add_message(request, messages.INFO, 'Area de operacion de Autorizaciones.')
     return render(request, 'Autorizacion/Index.html')
 
+
 @login_required(login_url='/login')
 def indexSenda(request):
     messages.add_message(request, messages.INFO, 'Ver Senda.')
     return render(request, 'Senda/Index.html')
+
 
 @login_required(login_url='/login')
 def indexGerente(request):
     messages.add_message(request, messages.INFO, 'Ver Graficas')
     return render(request, 'Gerente/Index.html')
 
+
 @login_required(login_url='/login')
 def indexEstado(request):
     messages.add_message(request, messages.INFO, 'Ver Estados de Cuenta.')
     return render(request, 'EstadoCuenta/Index.html')
+
 
 @login_required(login_url='/login')
 def indexListaNegra(request):
     messages.add_message(request, messages.INFO, 'Ver Lista Negra.')
     return render(request, 'ListaNegra/Index.html')
 
+
 @login_required(login_url='/login')
 def indexCuentas(request):
     return render(request, 'Cuentas/Index.html')
 
+
 @login_required(login_url='/login')
 def indexCaja(request):
     recibos = Recibo.objects.all()
-    return render(request, 'Caja/Index.html', {'recibos':recibos})
+    return render(request, 'Caja/Index.html', {'recibos': recibos})
+
 
 @login_required(login_url='/login')
 def indexTarjetas(request):
     return render(request, 'Tarjetas/Index.html')
 
+
 @login_required(login_url='/login')
 def indexAfiliado(request):
     return render(request, 'Afiliado/Index.html')
+
 
 @login_required(login_url='/login')
 def indexTipoAfiliado(request):
     return render(request, 'TipoAfiliado/Index.html')
 
+
 @login_required(login_url='/login')
 def indexLotes(request):
-
     lotes = Lote.objects.all()
     vouchers = Voucher.objects.all()
 
-    return render(request, 'Lote/Index.html',{'lotes':lotes,'vouchers':vouchers} )
+    return render(request, 'Lote/Index.html', {'lotes': lotes, 'vouchers': vouchers})
+
 
 @login_required(login_url='/login')
 def indexNotas(request):
     return render(request, 'Notas/Index.html')
 
+
 @login_required(login_url='/login')
 def indexEmisor(request):
     return render(request, 'Emisor/Index.html')
+
 
 @login_required(login_url='/login')
 def indexRol(request):
     return render(request, 'Rol/Index.html')
 
+
 @login_required(login_url='/login')
 def indexTipoTarjeta(request):
     return render(request, 'TipoTarjeta/Index.html')
+
 
 @login_required(login_url='/login')
 def insertarClientes(request):
@@ -143,6 +167,7 @@ def Buscar_Clientes(request):
 
     return render(request, 'Clientes/Buscar.html', {'form': form})
 
+
 @login_required(login_url='/login')
 def BuscarClienteAjax(request):
     if request.method == 'POST':
@@ -154,83 +179,82 @@ def BuscarClienteAjax(request):
 
     return render(request, 'Clientes/busqueda_ajax.html', {'clientes': clientes})
 
+
 @login_required(login_url='/login')
 def SaldosEmisor(request):
-
-
-    #Step 1: Create a DataPool with the data we want to retrieve.
+    # Step 1: Create a DataPool with the data we want to retrieve.
     weatherdata = \
         DataPool(
-           series=
+            series=
             [{'options': {
-               'source': Cuenta.objects.all()},
-              'terms': [
-                'id',
-                'idTipoCuenta',
-                'limite',
-                'fechaCreacion',
-                'diasMorosos',
-                'saldo']}
-             ])
+                'source': Cuenta.objects.all()},
+                'terms': [
+                    'id',
+                    'idTipoCuenta',
+                    'limite',
+                    'fechaCreacion',
+                    'diasMorosos',
+                    'saldo']}
+            ])
 
-    #Step 2: Create the Chart object
+    # Step 2: Create the Chart object
     cht = Chart(
-            datasource = weatherdata,
-            series_options =
-              [{'options':{
-                  'type': 'pie',
-                  'stacking': False},
-                'terms':{
-                  'limite': [
+        datasource=weatherdata,
+        series_options=
+        [{'options': {
+            'type': 'pie',
+            'stacking': False},
+            'terms': {
+                'limite': [
                     'saldo']
-                  }}],
-            chart_options =
-              {'title': {
-                   'text': 'Saldos por Emisor'},
-           'xAxis': {
+            }}],
+        chart_options=
+        {'title': {
+            'text': 'Saldos por Emisor'},
+            'xAxis': {
                 'title': {
-                   'text': 'No. Cuenta'}}})
+                    'text': 'No. Cuenta'}}})
 
     return render_to_response('Gerente/SaldosEmisor.html', {'weatherchart': cht})
 
+
 @login_required(login_url='/login')
 def EvolucionSaldos(request):
-
-
-    #Step 1: Create a DataPool with the data we want to retrieve.
+    # Step 1: Create a DataPool with the data we want to retrieve.
     weatherdata = \
         DataPool(
-           series=
+            series=
             [{'options': {
-               'source': Cuenta.objects.all()},
-              'terms': [
-                'id',
-                'idTipoCuenta',
-                'limite',
-                'fechaCreacion',
-                'diasMorosos',
-                'saldo']}
-             ])
+                'source': Cuenta.objects.all()},
+                'terms': [
+                    'id',
+                    'idTipoCuenta',
+                    'limite',
+                    'fechaCreacion',
+                    'diasMorosos',
+                    'saldo']}
+            ])
 
-    #Step 2: Create the Chart object
+    # Step 2: Create the Chart object
     cht = Chart(
-            datasource = weatherdata,
-            series_options =
-              [{'options':{
-                  'type': 'line',
-                  'stacking': False},
-                'terms':{
-                  'limite': [
+        datasource=weatherdata,
+        series_options=
+        [{'options': {
+            'type': 'line',
+            'stacking': False},
+            'terms': {
+                'limite': [
                     'saldo']
-                  }}],
-            chart_options =
-              {'title': {
-                   'text': 'Saldos por Emisor'},
-           'xAxis': {
+            }}],
+        chart_options=
+        {'title': {
+            'text': 'Saldos por Emisor'},
+            'xAxis': {
                 'title': {
-                   'text': 'No. Cuenta'}}})
+                    'text': 'No. Cuenta'}}})
 
     return render_to_response('Gerente/EvolucionSaldos.html', {'weatherchart': cht})
+
 
 @login_required(login_url='/login')
 def consumo(request):
@@ -238,11 +262,13 @@ def consumo(request):
 
     return render(request, 'Autorizacion/Consumo.html', {'transacciones': transacciones})
 
+
 @login_required(login_url='/login')
 def listanegra(request):
     listanegra = ListaNegra.objects.all()
 
     return render(request, 'ListaNegra/ListaNegra.html', {'listanegra': listanegra})
+
 
 @login_required(login_url='/login')
 def buscarEstado(request):
@@ -258,7 +284,8 @@ def buscarEstado(request):
 
                 cliente = Cliente.objects.get(id=AsignacionCuenta.objects.get(idCuenta=noCuenta).idCliente_id)
 
-                return render(request, 'EstadoCuenta/EstadoCuenta.html', {'logs': logs, 'cuenta':c, 'cliente': cliente})
+                return render(request, 'EstadoCuenta/EstadoCuenta.html',
+                              {'logs': logs, 'cuenta': c, 'cliente': cliente})
             except:
                 return render(request, 'EstadoCuenta/EstadoCuenta.html')
 
@@ -266,11 +293,13 @@ def buscarEstado(request):
         form = BuscarSenda()
         return render(request, 'EstadoCuenta/Buscar.html', {'form': form})
 
+
 @login_required(login_url='/login')
 def senda(request):
     logs = Log.objects.all()
 
     return render(request, 'Senda/Senda.html', {'logs': logs})
+
 
 @login_required(login_url='/login')
 def buscarSenda(request):
@@ -289,6 +318,7 @@ def buscarSenda(request):
     else:
         form = BuscarSenda()
         return render(request, 'Senda/Buscar.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def autorizar(request, id):
@@ -338,7 +368,7 @@ def crearCuenta(request):
             return render(request, 'Cuentas/Crear.html', {'form': form})
     else:
         form = CuentaForm()
-        form.fields["idTipoCuenta"].queryset = TipoCuenta.objects.all().values_list('tipoCuenta',flat=True)
+        form.fields["idTipoCuenta"].queryset = TipoCuenta.objects.all().values_list('tipoCuenta', flat=True)
     return render(request, 'Cuentas/Crear.html', {'form': form})
 
 
@@ -371,13 +401,17 @@ def asignarCuenta(request):
             form.save()
             form = AsigCuentaForm()
             messages.add_message(request, messages.INFO, 'La cuenta ha sido asignada')
-            form.fields["idCliente"].queryset = Cliente.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
-            form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+            form.fields["idCliente"].queryset = Cliente.objects.all().values_list('nombre',
+                                                                                  flat=True)  # se llena el form con los valores
+            form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',
+                                                                                flat=True)  # se llena el form con los valores
             return render(request, 'Cuentas/AsignarCuenta.html', {'form': form})
     else:
         form = AsigCuentaForm()
-    form.fields["idCliente"].queryset = Cliente.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
-    form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+    form.fields["idCliente"].queryset = Cliente.objects.all().values_list('nombre',
+                                                                          flat=True)  # se llena el form con los valores
+    form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',
+                                                                        flat=True)  # se llena el form con los valores
     return render(request, 'Cuentas/AsignarCuenta.html', {'form': form})
 
 
@@ -398,13 +432,17 @@ def crearTarjeta(request):
             form.save()
             form = TarjetaForm()
             messages.add_message(request, messages.INFO, 'La tarjeta ha sido creada')
-            form.fields["idEmisor"].queryset = Emisor.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
-            form.fields["tipoTarjeta"].queryset = TipoTarjeta.objects.all().values_list('tipoTarjeta',flat=True)  # se llena el form con los valores
+            form.fields["idEmisor"].queryset = Emisor.objects.all().values_list('nombre',
+                                                                                flat=True)  # se llena el form con los valores
+            form.fields["tipoTarjeta"].queryset = TipoTarjeta.objects.all().values_list('tipoTarjeta',
+                                                                                        flat=True)  # se llena el form con los valores
             return render(request, 'Tarjetas/CrearTarjeta.html', {'form': form})
     else:
         form = TarjetaForm()
-    form.fields["idEmisor"].queryset = Emisor.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
-    form.fields["tipoTarjeta"].queryset = TipoTarjeta.objects.all().values_list('tipoTarjeta',flat=True)  # se llena el form con los valores
+    form.fields["idEmisor"].queryset = Emisor.objects.all().values_list('nombre',
+                                                                        flat=True)  # se llena el form con los valores
+    form.fields["tipoTarjeta"].queryset = TipoTarjeta.objects.all().values_list('tipoTarjeta',
+                                                                                flat=True)  # se llena el form con los valores
     return render(request, 'Tarjetas/CrearTarjeta.html', {'form': form})
 
 
@@ -416,12 +454,14 @@ def asignarTarjeta(request):
         if form.is_valid():
             form.save()
             form = AsigTarjetaForm()
-            form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+            form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',
+                                                                                flat=True)  # se llena el form con los valores
             messages.add_message(request, messages.INFO, 'La tarjeta ha sido asignada')
             return render(request, 'Tarjetas/AsignarTarjeta.html', {'form': form})
     else:
         form = AsigTarjetaForm()
-    form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+    form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',
+                                                                        flat=True)  # se llena el form con los valores
     return render(request, 'Tarjetas/AsignarTarjeta.html', {'form': form})
 
 
@@ -461,12 +501,14 @@ def insertarAfiliado(request):
         if form.is_valid():
             form.save()
             form = AfiliadoForm()
-            form.fields["tipoAfiliado"].queryset = TipoAfiliado.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
+            form.fields["tipoAfiliado"].queryset = TipoAfiliado.objects.all().values_list('nombre',
+                                                                                          flat=True)  # se llena el form con los valores
             messages.add_message(request, messages.INFO, 'El afiliado ha sido insertado')
             return render(request, 'Afiliado/Insertar.html', {'form': form})
     else:
         form = AfiliadoForm()
-        form.fields["tipoAfiliado"].queryset = TipoAfiliado.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
+        form.fields["tipoAfiliado"].queryset = TipoAfiliado.objects.all().values_list('nombre',
+                                                                                      flat=True)  # se llena el form con los valores
     return render(request, 'Afiliado/Insertar.html', {'form': form})
 
 
@@ -486,6 +528,7 @@ def Buscar_Afiliados(request):
     afiliado = BuscarAfiliado()
     return render(request, 'Afiliado/Buscar.html', {'form': afiliado, 'afiliado': u})
 
+
 @login_required(login_url='/login')
 def BuscarAfiliadoAjax(request):
     if request.method == 'POST':
@@ -497,6 +540,7 @@ def BuscarAfiliadoAjax(request):
 
     return render(request, 'Afiliado/busqueda_ajax.html', {'afiliados': afiliados})
 
+
 @login_required(login_url='/login')
 def Bloquear_Afiliados(request, id):
     u = Afiliado.objects.get(id=id)
@@ -505,6 +549,7 @@ def Bloquear_Afiliados(request, id):
     messages.add_message(request, messages.INFO, 'El afiliado ha sido bloqueado')
     form = BuscarAfiliado()
     return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': u})
+
 
 @login_required(login_url='/login')
 def Eliminar_Afiliados(request, id):
@@ -541,12 +586,14 @@ def editarAfiliados(request, id):
             u = Afiliado.objects.get(id=id)
         except:
             messages.add_message(request, messages.INFO, 'El afiliado no existe en la base de datos')
-            form.fields["tipoAfiliado"].queryset = TipoAfiliado.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
+            form.fields["tipoAfiliado"].queryset = TipoAfiliado.objects.all().values_list('nombre',
+                                                                                          flat=True)  # se llena el form con los valores
             return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': u})
         form = AfiliadoForm(instance=u)
 
     idafiliado = u.id
-    form.fields["tipoAfiliado"].queryset = TipoAfiliado.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
+    form.fields["tipoAfiliado"].queryset = TipoAfiliado.objects.all().values_list('nombre',
+                                                                                  flat=True)  # se llena el form con los valores
     return render(request, 'Afiliado/Editar.html', {'form': form, 'idafiliado': idafiliado})
 
 
@@ -568,8 +615,8 @@ def insertarTipoAfiliado(request):
 
 @login_required(login_url='/login')
 def BuscarTipoAfiliado(request):
-     u = None
-     if request.method == 'POST':
+    u = None
+    if request.method == 'POST':
         form = Buscar_TipoAfiliado(request.POST)
         idform = form.data['idAfi']
         form.data = form.data.copy()
@@ -579,9 +626,10 @@ def BuscarTipoAfiliado(request):
             u = TipoAfiliado.objects.get(id=idr)
             form = Buscar_TipoAfiliado()
             return render(request, 'TipoAfiliado/Buscar.html', {'form': form, 'TipoAfiliado': u})
-     else:
+    else:
         form = Buscar_TipoAfiliado()
-     return render(request, 'TipoAfiliado/Buscar.html', {'form': form, 'TipoAfiliado': u})
+    return render(request, 'TipoAfiliado/Buscar.html', {'form': form, 'TipoAfiliado': u})
+
 
 @login_required(login_url='/login')
 def editarTipoAfiliados(request, id):
@@ -643,6 +691,7 @@ def BuscarCuenta(request):
         form = BuscarCuentaForm()
 
     return render(request, 'Caja/Buscar.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def BuscarCuentaAjax(request):
@@ -734,11 +783,11 @@ def PagarCuenta(request, id):
         form = PagarCuentaForm()
     return render(request, 'Caja/pago.html', {'form': form, 'cuenta': c})
 
+
 @login_required(login_url='/login')
 def CrearRecibo(request):
-    if request.method =='POST':
+    if request.method == 'POST':
         form = ReciboForm(request.POST)
-
 
         idTransaccion = form.data['idTrasaccion']
         idLote = form.data['idLote']
@@ -754,17 +803,22 @@ def CrearRecibo(request):
             form = ReciboForm()
             messages.add_message(request, messages.INFO, 'El Recibo ha sido creado')
 
-        form.fields["idLote"].queryset = Lote.objects.all().values_list('id',flat=True)  # se llena el form con los valores
-        form.fields["idTrasaccion"].queryset = Transaccion.objects.all().values_list('id',flat=True)  # se llena el form con los valores
-        form.fields["idUsuario"].queryset = Usuario.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+        form.fields["idLote"].queryset = Lote.objects.all().values_list('id',
+                                                                        flat=True)  # se llena el form con los valores
+        form.fields["idTrasaccion"].queryset = Transaccion.objects.all().values_list('id',
+                                                                                     flat=True)  # se llena el form con los valores
+        form.fields["idUsuario"].queryset = Usuario.objects.all().values_list('id',
+                                                                              flat=True)  # se llena el form con los valores
         return render(request, 'Caja/CrearRecibo.html', {'form': form})
     else:
         form = ReciboForm()
-        form.fields["idLote"].queryset = Lote.objects.all().values_list('id',flat=True)  # se llena el form con los valores
-        form.fields["idTrasaccion"].queryset = Transaccion.objects.all().values_list('id',flat=True)  # se llena el form con los valores
-        form.fields["idUsuario"].queryset = Usuario.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+        form.fields["idLote"].queryset = Lote.objects.all().values_list('id',
+                                                                        flat=True)  # se llena el form con los valores
+        form.fields["idTrasaccion"].queryset = Transaccion.objects.all().values_list('id',
+                                                                                     flat=True)  # se llena el form con los valores
+        form.fields["idUsuario"].queryset = Usuario.objects.all().values_list('id',
+                                                                              flat=True)  # se llena el form con los valores
     return render(request, 'Caja/CrearRecibo.html', {'form': form})
-
 
 
 @login_required(login_url='/login')
@@ -776,7 +830,7 @@ def TransferenciaCuentas(request):
             monto = float(form.data['monto'])
             errores = False
             cOrigen = Cuenta()
-            cDestino= Cuenta()
+            cDestino = Cuenta()
             try:
                 cOrigen = Cuenta.objects.get(id=form.data['cuentaorigen'])
             except:
@@ -857,11 +911,12 @@ def TransferenciaCuentas(request):
                     messages.add_message(request, messages.INFO, 'La cuenta no tiene suficientes fondos')
 
                     form = TransferenciaCuentasForm()
-        return render(request, 'Caja/transferencia.html', {'form': form,'transferencia':t})
+        return render(request, 'Caja/transferencia.html', {'form': form, 'transferencia': t})
     else:
         form = TransferenciaCuentasForm()
 
     return render(request, 'Caja/transferencia.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def crearEstadoTarjeta(request):
@@ -878,6 +933,7 @@ def crearEstadoTarjeta(request):
 
     return render(request, 'Tarjetas/TipoEstado.html', {'form': form})
 
+
 @login_required(login_url='/login')
 def crearNota(request):
     if request.method == 'POST':
@@ -893,6 +949,7 @@ def crearNota(request):
 
     return render(request, 'Notas/Crear.html', {'form': form})
 
+
 @login_required(login_url='/login')
 def asignarUsuarioLote(request):
     if request.method == 'POST':
@@ -903,15 +960,19 @@ def asignarUsuarioLote(request):
         if form.is_valid():
             form.save()
             form = AsigUsuarioLoteForm()
-            form.fields["idLote"].queryset = Lote.objects.all().values_list('id',flat=True)  # se llena el form con los valores
-            form.fields["idUsuario"].queryset = Usuario.objects.all().values_list('usuario',flat=True)  # se llena el form con los valores
+            form.fields["idLote"].queryset = Lote.objects.all().values_list('id',
+                                                                            flat=True)  # se llena el form con los valores
+            form.fields["idUsuario"].queryset = Usuario.objects.all().values_list('usuario',
+                                                                                  flat=True)  # se llena el form con los valores
             messages.add_message(request, messages.INFO, 'El lote ha sido asignado al usuario')
             return render(request, 'Lote/AsignarUsuarioLote.html', {'form': form})
     else:
         form = AsigUsuarioLoteForm()
-    form.fields["idLote"].queryset = Lote.objects.all().values_list('id',flat=True)  # se llena el form con los valores
-    form.fields["idUsuario"].queryset = Usuario.objects.all().values_list('usuario',flat=True)  # se llena el form con los valores
+    form.fields["idLote"].queryset = Lote.objects.all().values_list('id', flat=True)  # se llena el form con los valores
+    form.fields["idUsuario"].queryset = Usuario.objects.all().values_list('usuario',
+                                                                          flat=True)  # se llena el form con los valores
     return render(request, 'Lote/AsignarUsuarioLote.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def asignarAfiliadoLote(request):
@@ -923,14 +984,17 @@ def asignarAfiliadoLote(request):
         if form.is_valid():
             form.save()
             form = AsigAfiliadoLoteForm()
-            form.fields["idLote"].queryset = Lote.objects.all().values_list('id',flat=True)  # se llena el form con los valores
-            form.fields["idAfiliado"].queryset = Afiliado.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
+            form.fields["idLote"].queryset = Lote.objects.all().values_list('id',
+                                                                            flat=True)  # se llena el form con los valores
+            form.fields["idAfiliado"].queryset = Afiliado.objects.all().values_list('nombre',
+                                                                                    flat=True)  # se llena el form con los valores
             messages.add_message(request, messages.INFO, 'El lote ha sido asignado al afiliado')
             return render(request, 'Lote/AsignarAfiliadoLote.html', {'form': form})
     else:
         form = AsigAfiliadoLoteForm()
-    form.fields["idLote"].queryset = Lote.objects.all().values_list('id',flat=True)  # se llena el form con los valores
-    form.fields["idAfiliado"].queryset = Afiliado.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
+    form.fields["idLote"].queryset = Lote.objects.all().values_list('id', flat=True)  # se llena el form con los valores
+    form.fields["idAfiliado"].queryset = Afiliado.objects.all().values_list('nombre',
+                                                                            flat=True)  # se llena el form con los valores
     return render(request, 'Lote/AsignarAfiliadoLote.html', {'form': form})
 
 
@@ -938,7 +1002,6 @@ def asignarAfiliadoLote(request):
 def crearLote(request):
     if request.method == 'POST':
         form = LoteForm(request.POST)
-
 
         if form.is_valid():
             form.save()
@@ -950,11 +1013,11 @@ def crearLote(request):
 
     return render(request, 'Lote/Crear.html', {'form': form})
 
+
 @login_required(login_url='/login')
 def crearVoucher(request):
-    if request.method =='POST':
+    if request.method == 'POST':
         form = VoucherForm(request.POST)
-
 
         idTransaccion = form.data['idTrasaccion']
         idLote = form.data['idLote']
@@ -967,13 +1030,17 @@ def crearVoucher(request):
             form = VoucherForm()
             messages.add_message(request, messages.INFO, 'El voucher ha sido creado')
 
-        form.fields["idLote"].queryset = Lote.objects.all().values_list('id',flat=True)  # se llena el form con los valores
-        form.fields["idTrasaccion"].queryset = Transaccion.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+        form.fields["idLote"].queryset = Lote.objects.all().values_list('id',
+                                                                        flat=True)  # se llena el form con los valores
+        form.fields["idTrasaccion"].queryset = Transaccion.objects.all().values_list('id',
+                                                                                     flat=True)  # se llena el form con los valores
         return render(request, 'Lote/CrearVoucher.html', {'form': form})
     else:
         form = VoucherForm()
-        form.fields["idLote"].queryset = Lote.objects.all().values_list('id',flat=True)  # se llena el form con los valores
-        form.fields["idTrasaccion"].queryset = Transaccion.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+        form.fields["idLote"].queryset = Lote.objects.all().values_list('id',
+                                                                        flat=True)  # se llena el form con los valores
+        form.fields["idTrasaccion"].queryset = Transaccion.objects.all().values_list('id',
+                                                                                     flat=True)  # se llena el form con los valores
     return render(request, 'Lote/CrearVoucher.html', {'form': form})
 
 
@@ -982,12 +1049,12 @@ def BuscarCuenta2(request):
     if request.method == 'POST':
         form = BuscarCuentaForm(request.POST)
         if form.is_valid():
-
-            return render(request,'Autorizacion/Buscar.html',{'form':form})
+            return render(request, 'Autorizacion/Buscar.html', {'form': form})
     else:
         form = BuscarCuentaForm()
 
-    return render(request,'Autorizacion/Buscar.html',{'form':form})
+    return render(request, 'Autorizacion/Buscar.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def BuscarCuentaAjax2(request):
@@ -998,10 +1065,12 @@ def BuscarCuentaAjax2(request):
 
     cuentas = Cuenta.objects.filter(id__startswith=search_text)
 
-    return render(request,'Autorizacion/busqueda_ajax.html',{'cuentas':cuentas})
+    return render(request, 'Autorizacion/busqueda_ajax.html', {'cuentas': cuentas})
+
+
 @login_required(login_url='/login')
-def retirar(request,id):
-    if request.method =='POST':
+def retirar(request, id):
+    if request.method == 'POST':
         c = Cuenta.objects.get(id=id)
         saldoInicial = c.saldo
         form = RetirarEfectivo(request.POST)
@@ -1067,24 +1136,25 @@ def retirar(request,id):
                 l.save()
 
                 form = RetirarEfectivo()
-        return render(request, 'Autorizacion/Retiro.html',{'form':form, 'cuenta':c})
+        return render(request, 'Autorizacion/Retiro.html', {'form': form, 'cuenta': c})
     else:
         c = Cuenta()
-        c = Cuenta.objects.get(id = id)
+        c = Cuenta.objects.get(id=id)
         form = RetirarEfectivo()
-    return render(request, 'Autorizacion/Retiro.html',{'form':form, 'cuenta':c})
+    return render(request, 'Autorizacion/Retiro.html', {'form': form, 'cuenta': c})
+
 
 @login_required(login_url='/login')
 def BuscarTarjeta(request):
     if request.method == 'POST':
         form = BuscarTarjetaForm(request.POST)
         if form.is_valid():
-
-            return render(request,'ListaNegra/Buscar.html',{'form':form})
+            return render(request, 'ListaNegra/Buscar.html', {'form': form})
     else:
         form = BuscarTarjetaForm()
 
-    return render(request,'ListaNegra/Buscar.html',{'form':form})
+    return render(request, 'ListaNegra/Buscar.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def BuscarTarjetaAjax(request):
@@ -1095,11 +1165,12 @@ def BuscarTarjetaAjax(request):
 
     tarjetas = Tarjeta.objects.filter(id__startswith=search_text)
 
-    return render(request,'ListaNegra/busqueda_ajax.html',{'tarjetas':tarjetas})
+    return render(request, 'ListaNegra/busqueda_ajax.html', {'tarjetas': tarjetas})
+
 
 @login_required(login_url='/login')
-def agregarTarjeta(request,id):
-    if request.method =='POST':
+def agregarTarjeta(request, id):
+    if request.method == 'POST':
         c = Tarjeta.objects.get(id=id)
         form = TarjetaListaNegra(request.POST)
         if form.is_valid():
@@ -1111,12 +1182,13 @@ def agregarTarjeta(request,id):
             messages.add_message(request, messages.INFO, 'La tarjeta se ha agregado a la lista negra')
 
         form = TarjetaListaNegra()
-        return render(request, 'ListaNegra/AgregarTarjeta.html',{'form':form, 'tarjeta':c})
+        return render(request, 'ListaNegra/AgregarTarjeta.html', {'form': form, 'tarjeta': c})
     else:
         c = Tarjeta()
-        c = Tarjeta.objects.get(id = id)
+        c = Tarjeta.objects.get(id=id)
         form = TarjetaListaNegra()
-    return render(request, 'ListaNegra/AgregarTarjeta.html',{'form':form, 'tarjeta':c})
+    return render(request, 'ListaNegra/AgregarTarjeta.html', {'form': form, 'tarjeta': c})
+
 
 @login_required(login_url='/login')
 def declararCambios(request):
@@ -1128,14 +1200,18 @@ def declararCambios(request):
         if form.is_valid():
             form.save()
             form = DeclaCambioForm()
-            form.fields["idEstado"].queryset = TipoEstado.objects.all().values_list('tipoEstado',flat=True)  # se llena el form con los valores
-            form.fields["idTarjeta"].queryset = Tarjeta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+            form.fields["idEstado"].queryset = TipoEstado.objects.all().values_list('tipoEstado',
+                                                                                    flat=True)  # se llena el form con los valores
+            form.fields["idTarjeta"].queryset = Tarjeta.objects.all().values_list('id',
+                                                                                  flat=True)  # se llena el form con los valores
             messages.add_message(request, messages.INFO, 'La tarjeta ha sido declarada')
             return render(request, 'Tarjetas/DeclaracionCambios.html', {'form': form})
     else:
         form = DeclaCambioForm()
-    form.fields["idEstado"].queryset = TipoEstado.objects.all().values_list('tipoEstado',flat=True)  # se llena el form con los valores
-    form.fields["idTarjeta"].queryset = Tarjeta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+    form.fields["idEstado"].queryset = TipoEstado.objects.all().values_list('tipoEstado',
+                                                                            flat=True)  # se llena el form con los valores
+    form.fields["idTarjeta"].queryset = Tarjeta.objects.all().values_list('id',
+                                                                          flat=True)  # se llena el form con los valores
     return render(request, 'Tarjetas/DeclaracionCambios.html', {'form': form})
 
 
@@ -1157,6 +1233,7 @@ def consultar_Saldo(request):
 
     return render(request, 'Cuentas/ConsultaSaldo.html', {'form': form})
 
+
 @login_required(login_url='/login')
 def asignarInteresEmisor(request):
     if request.method == 'POST':
@@ -1168,13 +1245,16 @@ def asignarInteresEmisor(request):
         if form.is_valid():
             form.save()
             form = AsigInteresEmisorForm()
-            form.fields["idEmisor"].queryset = Emisor.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
+            form.fields["idEmisor"].queryset = Emisor.objects.all().values_list('nombre',
+                                                                                flat=True)  # se llena el form con los valores
             messages.add_message(request, messages.INFO, 'El Interes ha sido asignado al emisor')
             return render(request, 'Emisor/AsignarInteres.html', {'form': form})
     else:
         form = AsigInteresEmisorForm()
-    form.fields["idEmisor"].queryset = Emisor.objects.all().values_list('nombre',flat=True)  # se llena el form con los valores
+    form.fields["idEmisor"].queryset = Emisor.objects.all().values_list('nombre',
+                                                                        flat=True)  # se llena el form con los valores
     return render(request, 'Emisor/AsignarInteres.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def crearEmisor(request):
@@ -1191,6 +1271,7 @@ def crearEmisor(request):
 
     return render(request, 'Emisor/Crear.html', {'form': form})
 
+
 @login_required(login_url='/login')
 def asignarInteresCuenta(request):
     if request.method == 'POST':
@@ -1200,12 +1281,15 @@ def asignarInteresCuenta(request):
             form.save()
             form = AsigInteresCuentaForm()
             messages.add_message(request, messages.INFO, 'El Interes ha sido asignado a la cuenta')
-            form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+            form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',
+                                                                                flat=True)  # se llena el form con los valores
             return render(request, 'Cuentas/AsignarInteres.html', {'form': form})
     else:
         form = AsigInteresCuentaForm()
-    form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+    form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',
+                                                                        flat=True)  # se llena el form con los valores
     return render(request, 'Cuentas/AsignarInteres.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def crearRol(request):
@@ -1222,12 +1306,13 @@ def crearRol(request):
 
     return render(request, 'Rol/Crear.html', {'form': form})
 
+
 @login_required(login_url='/login')
 def autorizarRol(request):
     if request.method == 'POST':
         form = AutorizarRolForm(request.POST)
 
-         # se coloca el valor valido en el form, es decir el id en vez del nombre
+        # se coloca el valor valido en el form, es decir el id en vez del nombre
         idform = form.data['idRol']
         form.data = form.data.copy()
         form.data['idRol'] = Rol.objects.filter(rol=idform).values_list('id', flat=True)
@@ -1236,21 +1321,23 @@ def autorizarRol(request):
             form.save()
             form = AutorizarRolForm()
             messages.add_message(request, messages.INFO, 'La autorizacion ha sido asignada')
-            form.fields["idRol"].queryset = Rol.objects.all().values_list('rol',flat=True)  # se llena el form con los valoress
+            form.fields["idRol"].queryset = Rol.objects.all().values_list('rol',
+                                                                          flat=True)  # se llena el form con los valoress
             return render(request, 'Rol/Autorizacion.html', {'form': form})
 
     else:
         form = AutorizarRolForm()
-        form.fields["idRol"].queryset = Rol.objects.all().values_list('rol',flat=True)  # se llena el form con los valores
+        form.fields["idRol"].queryset = Rol.objects.all().values_list('rol',
+                                                                      flat=True)  # se llena el form con los valores
     return render(request, 'Rol/Autorizacion.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def privilegioRol(request):
-
     if request.method == 'POST':
         form = PrivilegioRolForm(request.POST)
 
-         # se coloca el valor valido en el form, es decir el id en vez del nombre
+        # se coloca el valor valido en el form, es decir el id en vez del nombre
         idform = form.data['idRol']
         form.data = form.data.copy()
         form.data['idRol'] = Rol.objects.filter(rol=idform).values_list('id', flat=True)
@@ -1259,13 +1346,16 @@ def privilegioRol(request):
             form.save()
             form = PrivilegioRolForm()
             messages.add_message(request, messages.INFO, 'El privilegio ha sido asignado')
-            form.fields["idRol"].queryset = Rol.objects.all().values_list('rol',flat=True)  # se llena el form con los valores
+            form.fields["idRol"].queryset = Rol.objects.all().values_list('rol',
+                                                                          flat=True)  # se llena el form con los valores
             return render(request, 'Rol/Privilegio.html', {'form': form})
 
     else:
         form = PrivilegioRolForm()
-        form.fields["idRol"].queryset = Rol.objects.all().values_list('rol',flat=True)  # se llena el form con los valores
+        form.fields["idRol"].queryset = Rol.objects.all().values_list('rol',
+                                                                      flat=True)  # se llena el form con los valores
     return render(request, 'Rol/Privilegio.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def buscarRol(request):
@@ -1283,6 +1373,7 @@ def buscarRol(request):
     else:
         form = Buscar_RolForm()
     return render(request, 'Rol/Buscar.html', {'form': form, 'Rol': u})
+
 
 @login_required(login_url='/login')
 def editarRol(request, id):
@@ -1306,12 +1397,14 @@ def editarRol(request, id):
     idRol = u.id
     return render(request, 'Rol/Editar.html', {'form': form, 'idRol': idRol})
 
+
 @login_required(login_url='/login')
 def eliminarRol(request, id):
     Rol.objects.get(id=id).delete()
     messages.add_message(request, messages.INFO, 'El rol ha sido eliminado')
     form = Buscar_RolForm()
     return render(request, 'Rol/Buscar.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def crearTipoTarjeta(request):
@@ -1327,6 +1420,7 @@ def crearTipoTarjeta(request):
         form = TipoTarjetaForm()
 
     return render(request, 'TipoTarjeta/CrearTT.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def buscarTipoTarjeta(request):
@@ -1344,6 +1438,7 @@ def buscarTipoTarjeta(request):
     else:
         form = Buscar_TTarjetaForm()
     return render(request, 'TipoTarjeta/BuscarTT.html', {'form': form, 'TT': u})
+
 
 @login_required(login_url='/login')
 def editarTipoTarjeta(request, id):
@@ -1367,12 +1462,14 @@ def editarTipoTarjeta(request, id):
     idTT = u.id
     return render(request, 'TipoTarjeta/EditarTT.html', {'form': form, 'idTT': idTT})
 
+
 @login_required(login_url='/login')
 def eliminarTipoTarjeta(request, id):
     TipoTarjeta.objects.get(id=id).delete()
     messages.add_message(request, messages.INFO, 'El tipo de tarjeta ha sido eliminado')
     form = Buscar_TTarjetaForm()
     return render(request, 'TipoTarjeta/BuscarTT.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def buscarEmisor(request):
@@ -1390,6 +1487,7 @@ def buscarEmisor(request):
     else:
         form = Buscar_EmisorForm()
     return render(request, 'Emisor/Buscar.html', {'form': form, 'Emisor': u})
+
 
 @login_required(login_url='/login')
 def BuscarEmisorAjax(request):
@@ -1425,12 +1523,14 @@ def editarEmisor(request, id):
     idEmisor = u.id
     return render(request, 'Emisor/Editar.html', {'form': form, 'idEmisor': idEmisor})
 
+
 @login_required(login_url='/login')
 def eliminarEmisor(request, id):
     Emisor.objects.get(id=id).delete()
     messages.add_message(request, messages.INFO, 'El Emisor ha sido eliminado')
     form = Buscar_EmisorForm()
     return render(request, 'Emisor/Buscar.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def buscarPrivilegio(request):
@@ -1448,6 +1548,7 @@ def buscarPrivilegio(request):
     else:
         form = Buscar_PrivilegioForm()
     return render(request, 'Rol/BuscarPrivilegio.html', {'form': form, 'Privilegio': u})
+
 
 @login_required(login_url='/login')
 def editarPrivilegio(request, id):
@@ -1471,12 +1572,14 @@ def editarPrivilegio(request, id):
     idPrivilegio = u.id
     return render(request, 'Rol/EditarPrivilegio.html', {'form': form, 'idPrivilegio': idPrivilegio})
 
+
 @login_required(login_url='/login')
 def eliminarPrivilegio(request, id):
     Privilegio.objects.get(id=id).delete()
     messages.add_message(request, messages.INFO, 'El Privilegio ha sido eliminado')
     form = Buscar_PrivilegioForm()
     return render(request, 'Rol/BuscarPrivilegio.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def buscarAutorizacion(request):
@@ -1494,6 +1597,7 @@ def buscarAutorizacion(request):
     else:
         form = Buscar_AutorizacionForm()
     return render(request, 'Rol/BuscarAutorizacion.html', {'form': form, 'Autorizacion': u})
+
 
 @login_required(login_url='/login')
 def editarAutorizacion(request, id):
@@ -1517,12 +1621,14 @@ def editarAutorizacion(request, id):
     idAutorizacion = u.id
     return render(request, 'Rol/EditarAutorizacion.html', {'form': form, 'idAutorizacion': idAutorizacion})
 
+
 @login_required(login_url='/login')
 def eliminarAutorizacion(request, id):
     Autorizacion.objects.get(id=id).delete()
     messages.add_message(request, messages.INFO, 'El Autorizacion ha sido eliminado')
     form = Buscar_AutorizacionForm()
     return render(request, 'Rol/BuscarAutorizacion.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def buscarTipoEstado(request):
@@ -1540,6 +1646,7 @@ def buscarTipoEstado(request):
     else:
         form = Buscar_TipoEstadoForm()
     return render(request, 'Tarjetas/BuscarTE.html', {'form': form, 'TipoEstado': u})
+
 
 @login_required(login_url='/login')
 def editarTipoEstado(request, id):
@@ -1563,12 +1670,14 @@ def editarTipoEstado(request, id):
     idTipoEstado = u.id
     return render(request, 'Tarjetas/EditarTE.html', {'form': form, 'idTipoEstado': idTipoEstado})
 
+
 @login_required(login_url='/login')
 def eliminarTipoEstado(request, id):
     TipoEstado.objects.get(id=id).delete()
     messages.add_message(request, messages.INFO, 'El TipoEstado ha sido eliminado')
     form = Buscar_TipoEstadoForm()
     return render(request, 'Tarjetas/BuscarTE.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def buscarTipoCuenta(request):
@@ -1586,6 +1695,7 @@ def buscarTipoCuenta(request):
     else:
         form = Buscar_TipoCuentaForm()
     return render(request, 'Cuentas/BuscarTC.html', {'form': form, 'TipoCuenta': u})
+
 
 @login_required(login_url='/login')
 def editarTipoCuenta(request, id):
@@ -1609,9 +1719,47 @@ def editarTipoCuenta(request, id):
     idTipoCuenta = u.id
     return render(request, 'Cuentas/EditarTC.html', {'form': form, 'idTipoCuenta': idTipoCuenta})
 
+
 @login_required(login_url='/login')
 def eliminarTipoCuenta(request, id):
     TipoCuenta.objects.get(id=id).delete()
     messages.add_message(request, messages.INFO, 'El TipoCuenta ha sido eliminado')
     form = Buscar_TipoCuentaForm()
     return render(request, 'Cuentas/BuscarTC.html', {'form': form})
+
+
+MYSQL_CMD = 'mysqldump'
+BACKUP_DIR = "%s/backups" % os.path.dirname(__file__)
+logging.basicConfig(level=logging.WARN)
+
+from django.utils.encoding import smart_str
+
+@login_required(login_url='/login')
+def backUp(request):
+    if not os.path.exists(BACKUP_DIR):
+        logging.debug("Created backup directory %s" % BACKUP_DIR)
+        os.mkdir(BACKUP_DIR)
+    else:
+        logging.debug("Using backup directory %s" % BACKUP_DIR)
+
+    if request.method == "POST":
+        outputfile = "BackUp" + datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S")+".sql"
+        cmd = "%(mysqldump)s -u %(user)s --password=%(password)s --databases %(database)s > %(log_dir)s/%(file)s" % {
+            'mysqldump': MYSQL_CMD,
+            'user': "root",
+            'password': "bases2",
+            'database': "Creditos",
+            'log_dir': BACKUP_DIR,
+            'file': outputfile}
+        os.system(cmd)
+        file = open(BACKUP_DIR+"/"+outputfile, 'r')
+        response = HttpResponse(file.read(), content_type='text/plain')
+        response['Content-Disposition'] = 'attachment; filename='+outputfile
+        return response
+    return render(request, 'DBA/backup.html')
+
+
+
+@login_required(login_url='/login')
+def restaurarDB(request):
+    return render(request, 'DBA/restaurar.html')
