@@ -22,6 +22,7 @@ import os
 import datetime
 import logging
 
+
 class TempTablaEmisor(models.Model):
     emisor = models.CharField(max_length=200)
     saldo = models.FloatField()
@@ -29,12 +30,14 @@ class TempTablaEmisor(models.Model):
     class Meta:
         app_label = 'proyecto1'
 
+
 class TempTablaPromedio(models.Model):
     fecha = models.CharField(max_length=200)
     saldo = models.FloatField()
 
     class Meta:
         app_label = 'proyecto1'
+
 
 def index(request):
     return render(request, 'Index.html')
@@ -217,36 +220,37 @@ def SaldosEmisor(request):
 
     weatherdata = \
         DataPool(
-           series=
+            series=
             [{'options': {
-               'source': TempTablaEmisor.objects.all()},
-              'terms': [
-                'emisor',
-                'saldo']}
-             ])
+                'source': TempTablaEmisor.objects.all()},
+                'terms': [
+                    'emisor',
+                    'saldo']}
+            ])
 
     cht = Chart(
-            datasource = weatherdata,
-            series_options =
-              [{'options':{
-                  'type': 'pie',
-                  'stacking': False},
-                'terms':{
-                  'emisor': [
+        datasource=weatherdata,
+        series_options=
+        [{'options': {
+            'type': 'pie',
+            'stacking': False},
+            'terms': {
+                'emisor': [
                     'saldo']
-                  }}],
-            chart_options =
-              {'title': {
-                   'text': 'Saldos por Emisor'},
-           'xAxis': {
+            }}],
+        chart_options=
+        {'title': {
+            'text': 'Saldos por Emisor'},
+            'xAxis': {
                 'title': {
-                   'text': 'Emisor'}}})
+                    'text': 'Emisor'}}})
 
     cursor = connection.cursor()
     cursor.execute('DROP TABLE `proyecto1_temptablaemisor`')
     cursor.execute('DROP TABLE `proyecto1_temptablapromedio`')
 
     return render_to_response('Gerente/SaldosEmisor.html', {'weatherchart': cht})
+
 
 @login_required(login_url='/login')
 def EvolucionSaldos(request):
@@ -262,30 +266,30 @@ def EvolucionSaldos(request):
 
     weatherdata = \
         DataPool(
-           series=
+            series=
             [{'options': {
-               'source': TempTablaPromedio.objects.all()},
-              'terms': [
-                'fecha',
-                'saldo']}
-             ])
+                'source': TempTablaPromedio.objects.all()},
+                'terms': [
+                    'fecha',
+                    'saldo']}
+            ])
 
     cht = Chart(
-            datasource = weatherdata,
-            series_options =
-              [{'options':{
-                  'type': 'line',
-                  'stacking': False},
-                'terms':{
-                  'fecha': [
+        datasource=weatherdata,
+        series_options=
+        [{'options': {
+            'type': 'line',
+            'stacking': False},
+            'terms': {
+                'fecha': [
                     'saldo']
-                  }}],
-            chart_options =
-              {'title': {
-                   'text': 'Evolucion de Saldos Promedio'},
-           'xAxis': {
+            }}],
+        chart_options=
+        {'title': {
+            'text': 'Evolucion de Saldos Promedio'},
+            'xAxis': {
                 'title': {
-                   'text': 'Fecha'}}})
+                    'text': 'Fecha'}}})
 
     cursor = connection.cursor()
     cursor.execute('DROP TABLE `proyecto1_temptablapromedio`')
@@ -496,14 +500,18 @@ def asignarTarjeta(request):
         if form.is_valid():
             form.save()
             form = AsigTarjetaForm()
-            form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
-            form.fields["idTarjeta"].queryset = Tarjeta.objects.all().values_list('noTarjeta',flat=True)  # se llena el form con los valores
+            form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',
+                                                                                flat=True)  # se llena el form con los valores
+            form.fields["idTarjeta"].queryset = Tarjeta.objects.all().values_list('noTarjeta',
+                                                                                  flat=True)  # se llena el form con los valores
             messages.add_message(request, messages.INFO, 'La tarjeta ha sido asignada')
             return render(request, 'Tarjetas/AsignarTarjeta.html', {'form': form})
     else:
         form = AsigTarjetaForm()
-    form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
-    form.fields["idTarjeta"].queryset = Tarjeta.objects.all().values_list('noTarjeta',flat=True)  # se llena el form con los valores                                                                    flat=True)  # se llena el form con los valores
+    form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',
+                                                                        flat=True)  # se llena el form con los valores
+    form.fields["idTarjeta"].queryset = Tarjeta.objects.all().values_list('noTarjeta',
+                                                                          flat=True)  # se llena el form con los valores                                                                    flat=True)  # se llena el form con los valores
     return render(request, 'Tarjetas/AsignarTarjeta.html', {'form': form})
 
 
@@ -1743,10 +1751,12 @@ def eliminarTipoCuenta(request, id):
 
 
 MYSQL_CMD = 'mysqldump'
+MYSQL_CMD_R = 'mysql'
 BACKUP_DIR = "%s/backups" % os.path.dirname(__file__)
 logging.basicConfig(level=logging.WARN)
 
 from django.utils.encoding import smart_str
+
 
 @login_required(login_url='/login')
 def backUp(request):
@@ -1757,7 +1767,7 @@ def backUp(request):
         logging.debug("Using backup directory %s" % BACKUP_DIR)
 
     if request.method == "POST":
-        outputfile = "BackUp" + datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S")+".sql"
+        outputfile = "BackUp" + datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S") + ".sql"
         cmd = "%(mysqldump)s -u %(user)s --password=%(password)s --databases %(database)s > %(log_dir)s/%(file)s" % {
             'mysqldump': MYSQL_CMD,
             'user': "root",
@@ -1766,26 +1776,54 @@ def backUp(request):
             'log_dir': BACKUP_DIR,
             'file': outputfile}
         os.system(cmd)
-        file = open(BACKUP_DIR+"/"+outputfile, 'r')
+        file = open(BACKUP_DIR + "/" + outputfile, 'r')
         response = HttpResponse(file.read(), content_type='text/plain')
-        response['Content-Disposition'] = 'attachment; filename='+outputfile
+        response['Content-Disposition'] = 'attachment; filename=' + outputfile
         return response
     return render(request, 'DBA/backup.html')
 
 
+def handle_uploaded_file(f):
+    if not os.path.exists(BACKUP_DIR):
+       logging.debug("Created backup directory %s" % BACKUP_DIR)
+       os.mkdir(BACKUP_DIR)
+    else:
+        logging.debug("Using backup directory %s" % BACKUP_DIR)
+
+    with open((BACKUP_DIR+'/restore.sql'), 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
+    cmd = "%(mysql)s -u %(user)s --password=%(password)s %(database)s < %(log_dir)s/%(file)s" % {
+            'mysql': MYSQL_CMD_R,
+            'user': "root",
+            'password': "bases2",
+            'database': "Creditos",
+            'log_dir': BACKUP_DIR,
+            'file': "restore.sql"}
+    os.system(cmd)
+
 
 @login_required(login_url='/login')
 def restaurarDB(request):
-    return render(request, 'DBA/restaurar.html')
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            handle_uploaded_file(request.FILES['file'])
+            messages.add_message(request, messages.INFO, 'Restauracion realizada')
+            return render(request, 'DBA/restaurar.html', {'form': form})
 
-class Bin(object):
-    nombre=""
+    else:
+        form = UploadFileForm()
+    return render(request, 'DBA/restaurar.html', {'form': form})
+
 
 @login_required(login_url='/login')
 def Query_emisorGas(request):
     cursor = connection.cursor()
 
-    cursor.execute("Select distinct E.nombre from Emisor E, Tarjeta T,(select M.idTarjeta_id as id from AsignacionTarjeta M,(select distinct L.idCuenta_id as id from Log L,(select V.idTrasaccion_id as id from Voucher V,(select B.idLote_id as id from AsignacionLoteAfiliado B, (select B.id as id from TipoAfiliado A, Afiliado B where A.nombre ='gasolinera' and A.id = B.id) A where A.id = B.idAfiliado_id) B where V.idLote_id = B.id) B where L.idTrasaccion_id = B.id) B where M.idCuenta_id = B.id) G where G.id = T.id and T.idEmisor_id = E.id")
+    cursor.execute(
+        "Select distinct E.nombre from Emisor E, Tarjeta T,(select M.idTarjeta_id as id from AsignacionTarjeta M,(select distinct L.idCuenta_id as id from Log L,(select V.idTrasaccion_id as id from Voucher V,(select B.idLote_id as id from AsignacionLoteAfiliado B, (select B.id as id from TipoAfiliado A, Afiliado B where A.nombre ='gasolinera' and A.id = B.id) A where A.id = B.idAfiliado_id) B where V.idLote_id = B.id) B where L.idTrasaccion_id = B.id) B where M.idCuenta_id = B.id) G where G.id = T.id and T.idEmisor_id = E.id")
     rows = cursor.fetchall()
 
     lista = []
@@ -1798,11 +1836,13 @@ def Query_emisorGas(request):
 
     return render(request, 'Gerente/QueryGas.html', {'rows': lista})
 
+
 @login_required(login_url='/login')
 def Query_emisorNoGas(request):
     cursor = connection.cursor()
 
-    cursor.execute("Select E.nombre from Emisor E, Tarjeta T, (Select G.id from  Tarjeta G where not exists (select M.idTarjeta_id as id from AsignacionTarjeta M,(select distinct L.idCuenta_id as id from Log L,(select V.idTrasaccion_id as id from Voucher V,(select B.idLote_id as id from AsignacionLoteAfiliado B, (select B.id as id from TipoAfiliado A, Afiliado B where A.nombre ='gasolinera' and A.id = B.id) A where A.id = B.idAfiliado_id) B where V.idLote_id = B.id) B where L.idTrasaccion_id = B.id) B where M.idCuenta_id = B.id and M.idTarjeta_id = G.id) ) K where T.id = K.id and E.id = T.idEmisor_id")
+    cursor.execute(
+        "Select E.nombre from Emisor E, Tarjeta T, (Select G.id from  Tarjeta G where not exists (select M.idTarjeta_id as id from AsignacionTarjeta M,(select distinct L.idCuenta_id as id from Log L,(select V.idTrasaccion_id as id from Voucher V,(select B.idLote_id as id from AsignacionLoteAfiliado B, (select B.id as id from TipoAfiliado A, Afiliado B where A.nombre ='gasolinera' and A.id = B.id) A where A.id = B.idAfiliado_id) B where V.idLote_id = B.id) B where L.idTrasaccion_id = B.id) B where M.idCuenta_id = B.id and M.idTarjeta_id = G.id) ) K where T.id = K.id and E.id = T.idEmisor_id")
     rows = cursor.fetchall()
 
     lista = []
@@ -1814,6 +1854,3 @@ def Query_emisorNoGas(request):
         lista.append(bin)
 
     return render(request, 'Gerente/QueryNoGas.html', {'rows': lista})
-
-
-

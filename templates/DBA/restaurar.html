@@ -13,4 +13,9 @@
         {% endif %}
 
 
+        <form enctype="multipart/form-data"  action="/DBA/restaurar/" method="post">
+         {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Restaurar">
+        </form>
 {% endblock %}

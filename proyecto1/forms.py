@@ -282,3 +282,6 @@ class Buscar_TipoEstadoForm(forms.Form):
 class Buscar_TipoCuentaForm(forms.Form):
     idTipoCuenta = forms.ModelChoiceField(label='TipoCuenta',
                                           queryset=TipoCuenta.objects.all().values_list('tipoCuenta', flat=True))
+
+class UploadFileForm(forms.Form):
+    file = forms.FileField()
