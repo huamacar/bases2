@@ -1,0 +1,19 @@
+{% extends "Gerente/Base.html" %}
+
+{% block content %}
+    {% if rows %}
+        <table style="width:100%">
+        <tr>
+            <th>Emisores</th>
+        </tr>
+            {% for row in rows %}
+            <tr>
+                <td>{{row.nombre}}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    {% else %}
+        No hay Emisores para mostrar
+    {% endif %}
+{% endblock %}

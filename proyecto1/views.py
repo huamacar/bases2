@@ -1,6 +1,7 @@
 import datetime
 
 from django.shortcuts import render, render_to_response
+from django.db import connection
 # Create your views here.
 
 from .forms import *
@@ -488,17 +489,21 @@ def asignarTarjeta(request):
     if request.method == 'POST':
         form = AsigTarjetaForm(request.POST)
 
+        idform = form.data['idTarjeta']
+        form.data = form.data.copy()
+        form.data['idTarjeta'] = Tarjeta.objects.filter(noTarjeta=idform).values_list('id', flat=True)
+
         if form.is_valid():
             form.save()
             form = AsigTarjetaForm()
-            form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',
-                                                                                flat=True)  # se llena el form con los valores
+            form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+            form.fields["idTarjeta"].queryset = Tarjeta.objects.all().values_list('noTarjeta',flat=True)  # se llena el form con los valores
             messages.add_message(request, messages.INFO, 'La tarjeta ha sido asignada')
             return render(request, 'Tarjetas/AsignarTarjeta.html', {'form': form})
     else:
         form = AsigTarjetaForm()
-    form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',
-                                                                        flat=True)  # se llena el form con los valores
+    form.fields["idCuenta"].queryset = Cuenta.objects.all().values_list('id',flat=True)  # se llena el form con los valores
+    form.fields["idTarjeta"].queryset = Tarjeta.objects.all().values_list('noTarjeta',flat=True)  # se llena el form con los valores                                                                    flat=True)  # se llena el form con los valores
     return render(request, 'Tarjetas/AsignarTarjeta.html', {'form': form})
 
 
@@ -1772,3 +1777,43 @@ def backUp(request):
 @login_required(login_url='/login')
 def restaurarDB(request):
     return render(request, 'DBA/restaurar.html')
+
+class Bin(object):
+    nombre=""
+
+@login_required(login_url='/login')
+def Query_emisorGas(request):
+    cursor = connection.cursor()
+
+    cursor.execute("Select distinct E.nombre from Emisor E, Tarjeta T,(select M.idTarjeta_id as id from AsignacionTarjeta M,(select distinct L.idCuenta_id as id from Log L,(select V.idTrasaccion_id as id from Voucher V,(select B.idLote_id as id from AsignacionLoteAfiliado B, (select B.id as id from TipoAfiliado A, Afiliado B where A.nombre ='gasolinera' and A.id = B.id) A where A.id = B.idAfiliado_id) B where V.idLote_id = B.id) B where L.idTrasaccion_id = B.id) B where M.idCuenta_id = B.id) G where G.id = T.id and T.idEmisor_id = E.id")
+    rows = cursor.fetchall()
+
+    lista = []
+    for row in rows:
+        b = str(row)
+        r = b[3:-3]
+        bin = Bin()
+        bin.nombre = r
+        lista.append(bin)
+
+    return render(request, 'Gerente/QueryGas.html', {'rows': lista})
+
+@login_required(login_url='/login')
+def Query_emisorNoGas(request):
+    cursor = connection.cursor()
+
+    cursor.execute("Select E.nombre from Emisor E, Tarjeta T, (Select G.id from  Tarjeta G where not exists (select M.idTarjeta_id as id from AsignacionTarjeta M,(select distinct L.idCuenta_id as id from Log L,(select V.idTrasaccion_id as id from Voucher V,(select B.idLote_id as id from AsignacionLoteAfiliado B, (select B.id as id from TipoAfiliado A, Afiliado B where A.nombre ='gasolinera' and A.id = B.id) A where A.id = B.idAfiliado_id) B where V.idLote_id = B.id) B where L.idTrasaccion_id = B.id) B where M.idCuenta_id = B.id and M.idTarjeta_id = G.id) ) K where T.id = K.id and E.id = T.idEmisor_id")
+    rows = cursor.fetchall()
+
+    lista = []
+    for row in rows:
+        b = str(row)
+        r = b[3:-3]
+        bin = Bin()
+        bin.nombre = r
+        lista.append(bin)
+
+    return render(request, 'Gerente/QueryNoGas.html', {'rows': lista})
+
+
+

@@ -42,6 +42,8 @@ urlpatterns = patterns('',
     url(r'^Gerente/index/$', 'proyecto1.views.indexGerente', name='Gerente'),
     url(r'^Gerente/saldosemisor/$', 'proyecto1.views.SaldosEmisor', name='SaldosEmisor'),
     url(r'^Gerente/evolucionsaldos/$', 'proyecto1.views.EvolucionSaldos', name='EvolucionSaldos'),
+    url(r'^Gerente/querygas/$', 'proyecto1.views.Query_emisorGas', name='QueryGas'),
+    url(r'^Gerente/querynogas/$', 'proyecto1.views.Query_emisorNoGas', name='QueryNoGas'),
 
     #listaNegra
     url(r'^ListaNegra/index/$', 'proyecto1.views.indexListaNegra', name='ListaNegra'),
