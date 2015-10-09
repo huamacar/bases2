@@ -207,11 +207,9 @@ def SaldosEmisor(request):
     for emisor in Emisor.objects.all():
         datoTablaEmisor = TempTablaEmisor()
         datoTablaEmisor.emisor = emisor.nombre
-        print(emisor.nombre)
         tarjetas_ids = Tarjeta.objects.filter(idEmisor=emisor.id)
         asignaciontarjeta_ids = AsignacionTarjeta.objects.filter(id__in=tarjetas_ids)
         sumaSaldo = Cuenta.objects.filter(id__in=asignaciontarjeta_ids).aggregate(Sum('saldo')).get('saldo__sum', 0.00)
-        print(sumaSaldo)
         datoTablaEmisor.saldo = sumaSaldo
         if not sumaSaldo is None:
             datoTablaEmisor.save()
