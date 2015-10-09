@@ -78,32 +78,17 @@ class AsignacionCuenta(models.Model):
     class Meta:
         db_table = 'AsignacionCuenta'
 
-class AsignacionTarjeta(models.Model):
-    idCuenta = models.ForeignKey(Cuenta)
-    noTarjeta = models.BigIntegerField(validators=[MinValueValidator(1000000000000000),MaxValueValidator(9999999999999999)])
-    fechaAsignacion = models.DateField()
-
-    class Meta:
-        db_table = 'AsignacionTarjeta'
-
-class TipoTarjeta(models.Model):
-    tipoTarjeta = models.CharField(max_length=200, validators=[RegexValidator(r'^[0-9a-zA-Z\'\-\'\' \']*$', 'El tipo de tarjeta no permite simbolos extranios')])
-
-    class Meta:
-        db_table = 'TipoTarjeta'
-
 class Emisor(models.Model):
     nombre = models.CharField(max_length=200)
 
     class Meta:
         db_table = 'Emisor'
 
-class AsignacionTasaEmisor(models.Model):
-    idEmisor = models.ForeignKey(Emisor)
-    idInteresEmisor = models.FloatField(choices=INTERES_CHOICES)
+class TipoTarjeta(models.Model):
+    tipoTarjeta = models.CharField(max_length=200, validators=[RegexValidator(r'^[0-9a-zA-Z\'\-\'\' \']*$', 'El tipo de tarjeta no permite simbolos extranios')])
 
     class Meta:
-        db_table = 'AsignacionTasaEmisor'
+        db_table = 'TipoTarjeta'
 
 class Tarjeta(models.Model):
     noTarjeta = models.BigIntegerField(validators=[MinValueValidator(1000000000000000),MaxValueValidator(9999999999999999)])
@@ -115,6 +100,21 @@ class Tarjeta(models.Model):
 
     class Meta:
         db_table = 'Tarjeta'
+
+class AsignacionTarjeta(models.Model):
+    idCuenta = models.ForeignKey(Cuenta)
+    idTarjeta = models.ForeignKey(Tarjeta)
+    fechaAsignacion = models.DateField()
+
+    class Meta:
+        db_table = 'AsignacionTarjeta'
+
+class AsignacionTasaEmisor(models.Model):
+    idEmisor = models.ForeignKey(Emisor)
+    idInteresEmisor = models.FloatField(choices=INTERES_CHOICES)
+
+    class Meta:
+        db_table = 'AsignacionTasaEmisor'
 
 class PagoMinimo(models.Model):
     idTarjeta = models.ForeignKey(Tarjeta)

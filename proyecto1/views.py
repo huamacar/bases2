@@ -9,6 +9,7 @@ from django.db.models import Q
 from django.contrib import messages  # para emitir aletrs
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from chartit import DataPool, Chart
 
 
 def index(request):
@@ -32,6 +33,11 @@ def indexSenda(request):
     return render(request, 'Senda/Index.html')
 
 @login_required(login_url='/login')
+def indexGerente(request):
+    messages.add_message(request, messages.INFO, 'Ver Graficas')
+    return render(request, 'Gerente/Index.html')
+
+@login_required(login_url='/login')
 def indexEstado(request):
     messages.add_message(request, messages.INFO, 'Ver Estados de Cuenta.')
     return render(request, 'EstadoCuenta/Index.html')
@@ -50,16 +56,13 @@ def indexCaja(request):
     recibos = Recibo.objects.all()
     return render(request, 'Caja/Index.html', {'recibos':recibos})
 
-
 @login_required(login_url='/login')
 def indexTarjetas(request):
     return render(request, 'Tarjetas/Index.html')
 
-
 @login_required(login_url='/login')
 def indexAfiliado(request):
     return render(request, 'Afiliado/Index.html')
-
 
 @login_required(login_url='/login')
 def indexTipoAfiliado(request):
@@ -151,7 +154,83 @@ def BuscarClienteAjax(request):
 
     return render(request, 'Clientes/busqueda_ajax.html', {'clientes': clientes})
 
+@login_required(login_url='/login')
+def SaldosEmisor(request):
 
+
+    #Step 1: Create a DataPool with the data we want to retrieve.
+    weatherdata = \
+        DataPool(
+           series=
+            [{'options': {
+               'source': Cuenta.objects.all()},
+              'terms': [
+                'id',
+                'idTipoCuenta',
+                'limite',
+                'fechaCreacion',
+                'diasMorosos',
+                'saldo']}
+             ])
+
+    #Step 2: Create the Chart object
+    cht = Chart(
+            datasource = weatherdata,
+            series_options =
+              [{'options':{
+                  'type': 'pie',
+                  'stacking': False},
+                'terms':{
+                  'limite': [
+                    'saldo']
+                  }}],
+            chart_options =
+              {'title': {
+                   'text': 'Saldos por Emisor'},
+           'xAxis': {
+                'title': {
+                   'text': 'No. Cuenta'}}})
+
+    return render_to_response('Gerente/SaldosEmisor.html', {'weatherchart': cht})
+
+@login_required(login_url='/login')
+def EvolucionSaldos(request):
+
+
+    #Step 1: Create a DataPool with the data we want to retrieve.
+    weatherdata = \
+        DataPool(
+           series=
+            [{'options': {
+               'source': Cuenta.objects.all()},
+              'terms': [
+                'id',
+                'idTipoCuenta',
+                'limite',
+                'fechaCreacion',
+                'diasMorosos',
+                'saldo']}
+             ])
+
+    #Step 2: Create the Chart object
+    cht = Chart(
+            datasource = weatherdata,
+            series_options =
+              [{'options':{
+                  'type': 'line',
+                  'stacking': False},
+                'terms':{
+                  'limite': [
+                    'saldo']
+                  }}],
+            chart_options =
+              {'title': {
+                   'text': 'Saldos por Emisor'},
+           'xAxis': {
+                'title': {
+                   'text': 'No. Cuenta'}}})
+
+    return render_to_response('Gerente/EvolucionSaldos.html', {'weatherchart': cht})
 
 @login_required(login_url='/login')
 def consumo(request):

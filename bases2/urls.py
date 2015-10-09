@@ -38,6 +38,11 @@ urlpatterns = patterns('',
     url(r'^Senda/senda/$', 'proyecto1.views.senda', name='VerSenda'),
     url(r'^Senda/buscar/$', 'proyecto1.views.buscarSenda', name='BuscarSenda'),
 
+    #gerente
+    url(r'^Gerente/index/$', 'proyecto1.views.indexGerente', name='Gerente'),
+    url(r'^Gerente/saldosemisor/$', 'proyecto1.views.SaldosEmisor', name='SaldosEmisor'),
+    url(r'^Gerente/evolucionsaldos/$', 'proyecto1.views.EvolucionSaldos', name='EvolucionSaldos'),
+
     #listaNegra
     url(r'^ListaNegra/index/$', 'proyecto1.views.indexListaNegra', name='ListaNegra'),
     url(r'^ListaNegra/listanegra/$', 'proyecto1.views.listanegra', name='VerListaNegra'),

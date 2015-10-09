@@ -1,0 +1,11 @@
+{% extends "Gerente/Base.html" %}
+
+{% block content %}
+    <head>
+        {% load chartit %}
+        {{ weatherchart|load_charts:"container" }}
+    </head>
+    <body>
+        <div id='container'> Chart will be rendered here </div>
+    </body>
+{% endblock %}

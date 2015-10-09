@@ -1,0 +1,16 @@
+{%  extends "Base.html" %}
+    {% load staticfiles %}
+    {% block title %}
+        <title>Gerente</title>
+    {% endblock %}
+    {% block sidebar %}
+        <ul >
+            <li><a href="/">Inicio</a></li>
+            <li><a href="{% url 'SaldosEmisor' %}">Saldos por Emisor</a></li>
+            <li><a href="{% url 'EvolucionSaldos' %}">Evolucion de Saldos Promedios</a></li>
+        </ul>
+    {% endblock %}
+
+    {% block content %}
+
+    {% endblock %}
