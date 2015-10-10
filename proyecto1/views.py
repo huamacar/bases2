@@ -204,6 +204,10 @@ def BuscarClienteAjax(request):
 
 @login_required(login_url='/login')
 def SaldosEmisor(request):
+    cursor = connection.cursor()
+    cursor.execute('DROP TABLE `proyecto1_temptablaemisor`')
+    cursor.execute('DROP TABLE `proyecto1_temptablapromedio`')
+
     models.register_models('proyecto1', TempTablaEmisor)
     models.signals.post_syncdb.disconnect(update_contenttypes)
     call_command('syncdb')
@@ -218,11 +222,13 @@ def SaldosEmisor(request):
         if not sumaSaldo is None:
             datoTablaEmisor.save()
 
+    datos = TempTablaEmisor.objects.all()
+
     weatherdata = \
         DataPool(
             series=
             [{'options': {
-                'source': TempTablaEmisor.objects.all()},
+                'source': datos},
                 'terms': [
                     'emisor',
                     'saldo']}
@@ -245,15 +251,15 @@ def SaldosEmisor(request):
                 'title': {
                     'text': 'Emisor'}}})
 
-    cursor = connection.cursor()
-    cursor.execute('DROP TABLE `proyecto1_temptablaemisor`')
-    cursor.execute('DROP TABLE `proyecto1_temptablapromedio`')
-
-    return render_to_response('Gerente/SaldosEmisor.html', {'weatherchart': cht})
+    return render_to_response('Gerente/SaldosEmisor.html', {'weatherchart': cht, 'datos': datos})
 
 
 @login_required(login_url='/login')
 def EvolucionSaldos(request):
+    cursor = connection.cursor()
+    cursor.execute('DROP TABLE `proyecto1_temptablaemisor`')
+    cursor.execute('DROP TABLE `proyecto1_temptablapromedio`')
+
     models.register_models('proyecto1', TempTablaPromedio)
     models.signals.post_syncdb.disconnect(update_contenttypes)
     call_command('syncdb')
@@ -264,11 +270,13 @@ def EvolucionSaldos(request):
         datoTablaPromedio.saldo = log.saldo
         datoTablaPromedio.save()
 
+    datos = TempTablaPromedio.objects.all()
+
     weatherdata = \
         DataPool(
             series=
             [{'options': {
-                'source': TempTablaPromedio.objects.all()},
+                'source': datos},
                 'terms': [
                     'fecha',
                     'saldo']}
@@ -291,11 +299,7 @@ def EvolucionSaldos(request):
                 'title': {
                     'text': 'Fecha'}}})
 
-    cursor = connection.cursor()
-    cursor.execute('DROP TABLE `proyecto1_temptablapromedio`')
-    cursor.execute('DROP TABLE `proyecto1_temptablaemisor`')
-
-    return render_to_response('Gerente/EvolucionSaldos.html', {'weatherchart': cht})
+    return render_to_response('Gerente/EvolucionSaldos.html', {'weatherchart': cht, 'datos': datos})
 
 
 @login_required(login_url='/login')

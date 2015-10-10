@@ -2,7 +2,7 @@
 
 {% block content %}
     {% if logs.count %}
-        <table style="width:100%">
+        <table style="width:100%" border="1">
         <tr>
             <th>Id</th>
             <th>idUsuario</th>
@@ -21,20 +21,20 @@
         </tr>
             {% for log in logs %}
             <tr>
-                <td>{{ log.id}}</td>
-                <td>{{ log.idUsuario.id }}</td>
-                <td>{{ log.idTrasaccion.id}}</td>
-                <td>{{ log.idCuenta.id}}</td>
-                <td>{{ log.idPrograma}}</td>
-                <td>{{ log.fecha}}</td>
-                <td>{{ log.hora}}</td>
-                <td>{{ log.saldo_inicial}}</td>
-                <td>{{ log.saldo}}</td>
-                <td>{{ log.debito}}</td>
-                <td>{{ log.credito}}</td>
-                <td>{{ log.autorizacion}}</td>
-                <td>{{ log.rechazo}}</td>
-                <td>{{ log.razonRechazo}}</td>
+                <td align="center">{{ log.id}}</td>
+                <td align="center">{{ log.idUsuario.id }}</td>
+                <td align="center">{{ log.idTrasaccion.id}}</td>
+                <td align="center">{{ log.idCuenta.id}}</td>
+                <td align="center">{{ log.idPrograma}}</td>
+                <td align="center">{{ log.fecha}}</td>
+                <td align="center">{{ log.hora}}</td>
+                <td align="center">{{ log.saldo_inicial}}</td>
+                <td align="center">{{ log.saldo}}</td>
+                <td align="center">{{ log.debito}}</td>
+                <td align="center">{{ log.credito}}</td>
+                <td align="center">{{ log.autorizacion}}</td>
+                <td align="center">{{ log.rechazo}}</td>
+                <td align="center">{{ log.razonRechazo}}</td>
             </tr>
             {% endfor %}
 

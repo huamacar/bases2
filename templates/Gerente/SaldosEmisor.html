@@ -7,5 +7,23 @@
     </head>
     <body>
         <div id='container'> Chart will be rendered here </div>
+
+        {% if datos.count %}
+            <table style="width:100%" border="1" align="center">
+            <tr>
+                <th>Emisor</th>
+                <th>Saldo</th>
+            </tr>
+                {% for dato in datos %}
+                <tr>
+                    <td align="center">{{ dato.emisor }}</td>
+                    <td align="center">{{ dato.saldo }}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        {% else %}
+            No hay datos para mostrar
+        {% endif %}
     </body>
 {% endblock %}
